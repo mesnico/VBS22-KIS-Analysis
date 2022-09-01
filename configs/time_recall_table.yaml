@@ -1,0 +1,9 @@
+teams: ['visione']
+
+generate:
+  function: generate.TimeRecallTable
+  cache_team_logs: True # TODO: to be implemented
+
+  args:
+    cache: True
+    cache_path: cache

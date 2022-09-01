@@ -1,0 +1,14 @@
+{
+    "visione": {
+        "output_name": "VISIONE",
+        "name_in_logs": "VISIONE",
+        "rank_zero": false,
+        "log_path": "../VBS-2021/logs/VISIONE"
+    },
+    "viret": {
+        "output_name": "viret",
+        "name_in_logs": "VIRET",
+        "rank_zero": true,
+        "log_path": "../VBS-2021/logs/viret"
+    }
+}
