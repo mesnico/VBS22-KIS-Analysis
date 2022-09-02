@@ -20,7 +20,7 @@ def main(args):
         args.v3c_segments_files)
 
     teams = cfg["teams"]
-    plot_cfgs = [c for c in cfg["generate"] for c["name"] in args.graphs]
+    plot_cfgs = [c for c in cfg["generate"] if c["name"] in args.graphs]
     plot_cfg = plot_cfgs[0]
 
     # create or load logs, for each team

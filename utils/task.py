@@ -123,7 +123,7 @@ class Task:
         return self.name
     
     def add_correct_shot_and_video(self, shotId, videoId):
-        self.correct_video = videoId
+        self.correct_video = int(videoId)
         self.correct_shot = int(shotId)
         
     def get_rel_info(self, rank_zero=False):

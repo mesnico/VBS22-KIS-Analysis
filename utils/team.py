@@ -78,7 +78,7 @@ class TeamLogs:
         final_df = pd.concat(dfs, axis=0).reset_index()
 
         # sort by timestamp, important for filter_by_timestamp
-        final_df = final_df.sort_values(by=['timestamp'])
+        # final_df = final_df.sort_values(by=['timestamp'])
 
         return final_df
 
@@ -103,14 +103,14 @@ class TeamLogs:
 
     def filter_by_timestep(self, start_timestep, end_timestep):
         # easy but expensive solution
-        # t1 = self.df[self.df['timestamp'].between(start_timestep, end_timestep)].copy()
+        t1 = self.df[self.df['timestamp'].between(start_timestep, end_timestep)].copy()
         
         # efficient implementation using bisect
-        timestamps = self.df['timestamp'].to_list()
-        start_idx = bisect.bisect_right(timestamps, start_timestep)
-        end_idx = bisect.bisect_right(timestamps, end_timestep)
-        t2 = self.df.iloc[start_idx:end_idx].copy()
-        return t2
+        # timestamps = self.df['timestamp'].to_list()
+        # start_idx = bisect.bisect_right(timestamps, start_timestep)
+        # end_idx = bisect.bisect_right(timestamps, end_timestep)
+        # t2 = self.df.iloc[start_idx:end_idx].copy()
+        return t1
 
 
 class Team:

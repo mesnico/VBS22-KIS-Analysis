@@ -5,7 +5,7 @@ from generate.utils import get_team_values_df
 import matplotlib.pyplot as plt
 
 class BestShotRankBoxplot(Result):
-    def __init__(self, data, teams, **kwargs):
+    def __init__(self, data, teams, logs, **kwargs):
         super().__init__(**kwargs, cache_filename='TimeRecallTable.pkl')
         self.data = data
         self.teams = teams
@@ -17,7 +17,7 @@ class BestShotRankBoxplot(Result):
 
         dfs = []
         for team in self.teams:
-            df = get_team_values_df(self.data, team)
+            df = get_team_values_df(self.data, team, self.logs[team])
             dfs.append(df)
 
         total_df = pd.concat(dfs, axis=0)

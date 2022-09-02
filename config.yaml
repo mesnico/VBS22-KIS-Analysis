@@ -1,4 +1,4 @@
-teams: ['visione']
+teams: ['visione', 'viret']
 
 generate:
   - name: time_recall_table
@@ -6,7 +6,7 @@ generate:
     generate_args: {}
     render_args: {}
 
-  - name: best_shot_rank_boixplot
+  - name: best_shot_rank_boxplot
     function: generate.BestShotRankBoxplot
     generate_args: {}
     render_args: {}
