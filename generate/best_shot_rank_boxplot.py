@@ -5,8 +5,8 @@ from generate.utils import get_team_values_df
 import matplotlib.pyplot as plt
 
 class BestShotRankBoxplot(Result):
-    def __init__(self, data, teams):
-        super().__init__()
+    def __init__(self, data, teams, **kwargs):
+        super().__init__(**kwargs, cache_filename='TimeRecallTable.pkl')
         self.data = data
         self.teams = teams
 

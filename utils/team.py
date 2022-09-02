@@ -1,4 +1,5 @@
 from collections import OrderedDict
+from pathlib import Path
 import pandas as pd
 import os
 import tqdm
@@ -10,13 +11,23 @@ from utils.task import TaskCount
 
 
 class TeamLogs:
-    def __init__(self, data, team, max_records=10000):
+    def __init__(self, data, team, max_records=10000, use_cache=False, cache_path='cache/logs'):
         self.v3c_videos = data['v3c_videos']
         self.get_info_fn_dict = {
             'visione': self.get_infos_visione,
             'viret': self.get_infos_viret
         }
-        self.df = self.get_data(data, team, max_records)
+
+        # some caching logic
+        cache_path = Path(cache_path)
+        if not cache_path.exists():
+            cache_path.mkdir(parents=True, exist_ok=True)
+        cache_file = cache_path / '{}.pkl'.format(team)
+        if use_cache and cache_file.exists():
+            self.df = pd.read_pickle(cache_file)
+        else:
+            self.df = self.get_data(data, team, max_records)
+            self.df.to_pickle(cache_file)
 
     def get_infos_visione(self, result):
         shotId = result['frame']

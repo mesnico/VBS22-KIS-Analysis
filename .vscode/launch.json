@@ -19,7 +19,7 @@
             "program": "main.py",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args": ["configs/best_shot_rank_boxplot.yaml"]
+            "args": ["best_shot_rank_boxplot"]
         },
         {
             "name": "Time Recall Table",
@@ -28,7 +28,7 @@
             "program": "main.py",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args": ["configs/time_recall_table.yaml"]
+            "args": ["time_recall_table"]
         },
     ]
 }

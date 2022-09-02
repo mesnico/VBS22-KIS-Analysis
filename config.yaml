@@ -1,0 +1,12 @@
+teams: ['visione']
+
+generate:
+  - name: time_recall_table
+    function: generate.TimeRecallTable
+    generate_args: {}
+    render_args: {}
+
+  - name: best_shot_rank_boixplot
+    function: generate.BestShotRankBoxplot
+    generate_args: {}
+    render_args: {}

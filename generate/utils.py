@@ -5,11 +5,9 @@ from utils.task import Task
 from utils.team import TeamLogs
 import tqdm
 
-def get_team_values_df(data, team):
+def get_team_values_df(data, team, team_logs):
         run, v3c_videos = data['run'], data['v3c_videos']
 
-        # collect team log
-        team_logs = TeamLogs(data, team)
         tasks = []
         teamId = ''
 

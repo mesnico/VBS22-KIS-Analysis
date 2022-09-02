@@ -4,10 +4,11 @@ from generate.result import Result
 from generate.utils import get_team_values_df
 
 class TimeRecallTable(Result):
-    def __init__(self, data, teams):
-        super().__init__()
+    def __init__(self, data, teams, logs, **kwargs):
+        super().__init__(**kwargs)
         self.data = data
         self.teams = teams
+        self.logs = logs
 
     def _generate(self):
         """
@@ -16,7 +17,7 @@ class TimeRecallTable(Result):
 
         dfs = []
         for team in self.teams:
-            df = get_team_values_df(self.data, team)
+            df = get_team_values_df(self.data, team, self.logs[team])
             dfs.append(df)
 
         total_df = pd.concat(dfs, axis=0)

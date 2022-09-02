@@ -3,30 +3,31 @@ import pandas as pd
 
 
 class Result:
-    def __init__(self) -> None:
-        pass
+    def __init__(self, use_cache=True, cache_path='cache/results', cache_filename=None) -> None:
+        self.use_cache = use_cache
+        self.cache_path = cache_path
+        self.cache_filename = cache_filename
 
-    def generate(self, cache=True, cache_path='cache', cache_filename=None, **kwargs):
-        path = Path(cache_path)
-        if cache:
+    def generate(self, **kwargs):
+        path = Path(self.cache_path)
+        if not path.exists():
             path.mkdir(parents=True, exist_ok=True)
-        if cache_filename is None:
+        if self.cache_filename is None:
             fname = path / '{}.pkl'.format(type(self).__name__)
         else:
-            fname = path / cache_filename
+            fname = path / self.cache_filename
 
         # include some caching logic (cache df to pickle)
-        if fname.exists() and cache:
+        if fname.exists() and self.use_cache:
             self.df = pd.read_pickle(fname)
         else:
             self.df = self._generate(**kwargs)
-            if cache:
-                self.df.to_pickle(fname)
+            self.df.to_pickle(fname)
 
-    def render(self):
-        self._render(self.df)
+    def render(self, **kwargs):
+        self._render(self.df, **kwargs)
 
-    def generate_and_render(self, kwargs):
-        self.generate(**kwargs)
-        self.render()
+    def generate_and_render(self, generate_kwargs, render_kwargs):
+        self.generate(**generate_kwargs)
+        self.render(**render_kwargs)
     
