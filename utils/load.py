@@ -1,6 +1,7 @@
 import json
 import csv
 
+from utils.videos import Videos
 
 class Shot:
     def __init__(self, shotStart, shotEnd, segmentId):
@@ -31,23 +32,23 @@ def load_data(
         audit.append(json.loads(line))
 
     # load v3c segments
-    v3c_ids = dict()
-    v3c_ids_shots = dict()
-    for seg_file in v3c_segments_files:    
-        with open(seg_file, mode='r') as infile:
-            reader = csv.reader(infile)
-            is_header = True
-            for row in reader:
-                if is_header:
-                    is_header = False
-                    continue
-                if row[0] not in v3c_ids_shots:
-                    v3c_ids_shots[row[0]] = []
-                v3c_ids_shots[row[0]].append(Shot(row[3], row[5], row[1]))
+    
+    v3c_videos = Videos(v3c_segments_files)
+    # for seg_file in v3c_segments_files:    
+    #     with open(seg_file, mode='r') as infile:
+    #         reader = csv.reader(infile)
+    #         is_header = True
+    #         for row in reader:
+    #             if is_header:
+    #                 is_header = False
+    #                 continue
+    #             if row[0] not in v3c_ids_shots:
+    #                 v3c_ids_shots[row[0]] = []
+    #             v3c_ids_shots[row[0]].append(Shot(row[3], row[5], row[1]))
 
-                if row[0] not in v3c_ids:
-                    v3c_ids[row[0]] = dict()
-                v3c_ids[row[0]][row[2]] = row[1]
+    #             if row[0] not in v3c_ids:
+    #                 v3c_ids[row[0]] = dict()
+    #             v3c_ids[row[0]][row[2]] = row[1]
 
     # load teams metadata
     with open(teams_metadata_file) as f:
@@ -56,7 +57,6 @@ def load_data(
     return {
         'audit': audit, 
         'run': run,
-        'v3c_ids': v3c_ids,
-        'v3c_ids_shots': v3c_ids_shots,
+        'v3c_videos': v3c_videos,
         'teams_metadata': teams_metadata
     }

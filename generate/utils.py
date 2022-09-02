@@ -6,7 +6,7 @@ from utils.team import TeamLogs
 import tqdm
 
 def get_team_values_df(data, team):
-        run, v3c_ids = data['run'], data['v3c_ids']
+        run, v3c_videos = data['run'], data['v3c_videos']
 
         # collect team log
         team_logs = TeamLogs(data, team)
@@ -34,22 +34,23 @@ def get_team_values_df(data, team):
                 task.add_correct_submission_time(cst)
                 videoId = t['description']['target']['item']['name']
                 timeshot = int(t['description']['target']['temporalRange']['start']['value'] * 1000)
-                shotId = -1
-                sorted_list = list(map(int, v3c_ids[videoId].keys()))
-                next_key = 0
-                for k in sorted_list:
-                    iter_key = next_key
-                    next_key = k
-                    if timeshot >= iter_key and timeshot < next_key:
-                        shotId = v3c_ids[videoId][str(iter_key)]
-                        break
+                shotId = v3c_videos.get_shot_from_video_and_frame(videoId, timeshot, unit='milliseconds')
+
+                # sorted_list = list(map(int, v3c_ids[videoId].keys()))
+                # next_key = 0
+                # for k in sorted_list:
+                #     iter_key = next_key
+                #     next_key = k
+                #     if timeshot >= iter_key and timeshot < next_key:
+                #         shotId = v3c_ids[videoId][str(iter_key)]
+                #         break
                 task.add_correct_shot_and_video(shotId, videoId)
                 tasks.append(task)
 
         # for each task, accumulate the statistics for this team
-        for task in tqdm.tqdm(tasks):
+        for task in tqdm.tqdm(tasks, desc='Accumulating statistics for {}'.format(team)):
             df = team_logs.filter_by_timestep(task.started, task.ended)
-            df['adj_logged_time'] = df.apply(lambda x: task.get_logged_time(x['timestamp']), axis=1)
+            df['adj_logged_time'] = task.get_logged_time(df['timestamp'])
             task.add_new_ranking(df)            
 
         # prepare the output dataframe
@@ -71,10 +72,5 @@ def get_team_values_df(data, team):
             calc_dict['t_cs'].append(t_cs)
         df = pd.DataFrame(calc_dict)
         df.set_index(['team', 'task'])
-        # df = df.drop(columns=['name'])
         df.replace([np.inf, -np.inf], -1, inplace=True)
-        # df = df.astype('int32')
-        # df[df < 0] = -1
-        # df = df.astype('str')
-        # df.replace(['-1'], '-', inplace=True)
         return df

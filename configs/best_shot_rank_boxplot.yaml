@@ -2,7 +2,7 @@ teams: ['visione']
 
 generate:
   function: generate.BestShotRankBoxplot
-  cache_team_logs: True # TODO: to be implemented
+  # cache_team_logs: True # TODO: to be implemented
 
   args:
     cache: True

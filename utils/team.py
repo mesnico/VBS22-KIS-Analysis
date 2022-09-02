@@ -3,16 +3,41 @@ import pandas as pd
 import os
 import tqdm
 import json
+import numpy as np
+import bisect
 
 from utils.task import TaskCount
 
 
 class TeamLogs:
-    def __init__(self, data, team):
-        self.v3c_ids_shots = data['v3c_ids_shots']
-        self.df = self.get_data(data, team)
+    def __init__(self, data, team, max_records=10000):
+        self.v3c_videos = data['v3c_videos']
+        self.get_info_fn_dict = {
+            'visione': self.get_infos_visione,
+            'viret': self.get_infos_viret
+        }
+        self.df = self.get_data(data, team, max_records)
 
-    def get_data(self, data, team):
+    def get_infos_visione(self, result):
+        shotId = result['frame']
+        videoId = result['item']
+        if result['rank'] is None:
+            rank = 0
+        else:
+            rank = result['rank']
+        return shotId, videoId, rank
+
+    def get_infos_viret(self, result):
+        videoId = result['item']
+        shotId = self.v3c_videos.get_shot_from_video_and_frame(videoId, result['frame'], unit='frames')
+        videoId = videoId
+        if result['rank'] is None:
+            rank = 0
+        else:
+            rank = result['rank']
+        return shotId, videoId, rank
+
+    def get_data(self, data, team, max_records):
         """
         retrieve all the data
         """
@@ -20,7 +45,7 @@ class TeamLogs:
         team_log = data['teams_metadata'][team]['log_path']
 
         for root, _, files in os.walk(team_log):
-            for file in tqdm.tqdm(files):
+            for file in tqdm.tqdm(files, desc="Reading {} logs".format(team)):
                 path = os.path.join(root, file)
                 if file == '.DS_Store':
                     continue
@@ -31,7 +56,7 @@ class TeamLogs:
                     timestamp = int(os.path.splitext(file)[0])
 
                     # do the magic and grab relevant infos from different team log files
-                    infos = self._get_relevant_info(team, ranked_list['results'])
+                    infos = self.get_teams_info(ranked_list['results'], self.get_info_fn_dict[team], max_records)
 
                     d = {'team': team, 'timestamp': timestamp}
                     d.update(infos)
@@ -40,53 +65,41 @@ class TeamLogs:
 
         # prepare the final dataframe
         final_df = pd.concat(dfs, axis=0).reset_index()
+
+        # sort by timestamp, important for filter_by_timestamp
+        final_df = final_df.sort_values(by=['timestamp'])
+
         return final_df
 
-    def filter_by_timestep(self, start_timestep, end_timestep):
-        return self.df[self.df['timestamp'].between(start_timestep, end_timestep)].copy()
+    def get_teams_info(self, results, info_fn, max_records):
+        shotIds = np.zeros(len(results), dtype=int)
+        videoIds = np.zeros(len(results), dtype=int)
+        ranks = np.zeros(len(results), dtype=int)
 
-    def _get_relevant_info(self, team, results):
-        """
-        retrieves shotId, videoId, ranks or other info from the logs of the given team
-        """
+        for index, result in enumerate(results[:max_records]):
+            shotId, videoId, rank = info_fn(result)
+            assert rank <= max_records
 
-        shotIds = []
-        videoIds = []
-        ranks = []
-
-        for index, result in enumerate(results):
-            if team=='vitrivr' or team=='divexplore':
-                videoId = result['item'][2:]
-            else:
-                videoId = result['item']
-            
-            if team=='visione':
-                shotId = result['frame']
-            elif team=='somHunter' or team=='viret' or team=='diveXplore':
-                for segment in self.v3c_ids_shots[videoId]:
-                    if segment.isWithin(int(result['frame'])):
-                        shotId = segment.get_segmentId()
-                        break
-            else:
-                shotId = result['segment']
-
-            if result['rank'] is None:
-                rank = 0
-            else:
-                rank = result['rank']
-
-            if team=='somhunter':
-                rank = index
-
-            shotIds.append(shotId)
-            videoIds.append(videoId)
-            ranks.append(rank)
+            shotIds[index] = shotId
+            videoIds[index] = videoId
+            ranks[index] = rank
 
         return {
-            "shotId": shotIds, 
-            "videoId": videoIds, 
+            "videoId": videoIds,
+            "shotId": shotIds,
             "rank": ranks
         }
+
+    def filter_by_timestep(self, start_timestep, end_timestep):
+        # easy but expensive solution
+        # t1 = self.df[self.df['timestamp'].between(start_timestep, end_timestep)].copy()
+        
+        # efficient implementation using bisect
+        timestamps = self.df['timestamp'].to_list()
+        start_idx = bisect.bisect_right(timestamps, start_timestep)
+        end_idx = bisect.bisect_right(timestamps, end_timestep)
+        t2 = self.df.iloc[start_idx:end_idx].copy()
+        return t2
 
 
 class Team:

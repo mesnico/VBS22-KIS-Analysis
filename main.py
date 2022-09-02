@@ -25,8 +25,8 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Perform evaluation on test set')
     parser.add_argument('config', help='config file to generate the graph')
-    parser.add_argument('--audits_file', default='data/audits.json')
-    parser.add_argument('--run_file', default='data/run.json')
+    parser.add_argument('--audits_file', default='data/2021/audits.json')
+    parser.add_argument('--run_file', default='data/2021/run.json')
     parser.add_argument('--teams_metadata_file', default='data/teams_metadata.json')
     parser.add_argument('--v3c_segments_files', nargs='+', default=['data/v3c1_frame_segments.csv'])
 
