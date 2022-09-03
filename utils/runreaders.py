@@ -12,7 +12,7 @@ def build_runreader(run, v3c_videos, teams_metadata, teams):
     return runreader
 
 
-class RunReader2021:
+class RunReader:
     def __init__(self, run, v3c_videos, teams_metadata, teams) -> None:
         self.run = run
         self.v3c_videos = v3c_videos
@@ -84,12 +84,7 @@ class RunReader2021:
             if t['description']['taskType']['name'] == 'Visual KIS' or t['description']['taskType']['name'] == 'Textual KIS':
                 task = Task(t['started'], t['ended'], t['duration'], t['position'], t['uid'], t['description']['taskType']['name'])
                 task.add_name(t['description']['name'])
-                # cst = -1
-                # for s in t['submissions']:
-                #     if s['status'] == 'CORRECT' and s['teamId'] == teamId:
-                #         cst = s['timestamp']
-                #         break
-                # task.add_correct_submission_time(cst)
+
                 videoId = t['description']['target']['item']['name']
                 timeshot = int(t['description']['target']['temporalRange']['start']['value'] * 1000)
                 shotId = self.v3c_videos.get_shot_from_video_and_frame(videoId, timeshot, unit='milliseconds')
@@ -111,11 +106,21 @@ class RunReader2021:
         f_start_idx = bisect.bisect_right(starts.tolist(), timestamp) - 1
         f_end_idx = bisect.bisect_right(ends.tolist(), timestamp)
 
-        assert f_end_idx == f_start_idx
+        if f_end_idx != f_start_idx:
+            # in the middle between two tasks, so not a valid submission
+            return None
         
         correct_task_idx = task_names[sorting_idxs[f_start_idx]]
         return correct_task_idx
-        
 
-        # intervals = [{'name': t.get_name(), 'start': t.start, 'end': t.end} for t in self.tasks()]
-        # intervals = pd.DataFrame(intervals)
+
+class RunReader2021(RunReader):
+    def __init__(self, run, v3c_videos, teams_metadata, teams):
+        super().__init__(run, v3c_videos, teams_metadata, teams)
+
+    def get_teams_iterator(self):
+        for t in self.run['description']['teams']:
+            yield t
+        
+    def get_teams_iterator(self):
+        

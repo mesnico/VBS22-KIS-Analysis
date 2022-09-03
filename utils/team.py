@@ -81,7 +81,10 @@ class TeamLogs:
                     df = pd.DataFrame(d)
                     dfs.append(df)
 
-                    user_idx += 1
+            if Path(root) != Path(team_log):
+                user_idx += 1   # number of user is the number of folders
+
+        assert user_idx <= 2
 
         # prepare the final dataframe
         final_df = pd.concat(dfs, axis=0).reset_index()
