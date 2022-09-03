@@ -5,7 +5,6 @@ import os
 import tqdm
 import json
 import numpy as np
-import bisect
 
 from utils.task import TaskCount
 
@@ -13,6 +12,7 @@ from utils.task import TaskCount
 class TeamLogs:
     def __init__(self, data, team, max_records=10000, use_cache=False, cache_path='cache/logs'):
         self.v3c_videos = data['v3c_videos']
+        self.runreader = data['runreader']
         self.get_info_fn_dict = {
             'visione': self.get_infos_visione,
             'viret': self.get_infos_viret
@@ -55,6 +55,7 @@ class TeamLogs:
         dfs = []
         team_log = data['teams_metadata'][team]['log_path']
 
+        user_idx = 0
         for root, _, files in os.walk(team_log):
             for file in tqdm.tqdm(files, desc="Reading {} logs".format(team)):
                 path = os.path.join(root, file)
@@ -66,13 +67,21 @@ class TeamLogs:
                     # assume that every team has the timestamp in the filename
                     timestamp = int(os.path.splitext(file)[0])
 
+                    # retrieve the task we are in at the moment
+                    task_name = self.runreader.get_taskname_from_timestamp(timestamp)
+                    if task_name is None:
+                        # the logs outside task ranges are not important for us
+                        continue
+
                     # do the magic and grab relevant infos from different team log files
                     infos = self.get_teams_info(ranked_list['results'], self.get_info_fn_dict[team], max_records)
 
-                    d = {'team': team, 'timestamp': timestamp}
+                    d = {'user': user_idx, 'task': task_name, 'team': team, 'timestamp': timestamp}
                     d.update(infos)
                     df = pd.DataFrame(d)
                     dfs.append(df)
+
+                    user_idx += 1
 
         # prepare the final dataframe
         final_df = pd.concat(dfs, axis=0).reset_index()
@@ -110,6 +119,10 @@ class TeamLogs:
         # start_idx = bisect.bisect_right(timestamps, start_timestep)
         # end_idx = bisect.bisect_right(timestamps, end_timestep)
         # t2 = self.df.iloc[start_idx:end_idx].copy()
+        return t1
+
+    def filter_by_task_name(self, task_name):
+        t1 = self.df[self.df['task'] == task_name].copy()
         return t1
 
 

@@ -1,3 +1,6 @@
+from calendar import c
+
+
 class TaskCount:
     """
     Count and store the number of Correct or Incorrect to a task
@@ -32,15 +35,10 @@ class TaskCount:
 
 class Task:
     """
-    Store all the necessary information to a task as well as optional additional information for various data crunching
+    Store all the necessary information to a task
     """
 
     def __init__(self, started, ended, duration, position, uid, taskType):
-        self.best_logged_rank_video = float('inf')
-        self.best_logged_rank_shot = float('inf')
-        self.best_logged_time_video = -1
-        self.best_logged_time_shot = -1
-        self.correct_submission_time = -1
         self.submissions = []
         self.started = started
         self.ended = ended
@@ -96,28 +94,6 @@ class Task:
     
     def get_logged_time(self, logged_time):
         return (logged_time - self.started) / 1000
-    
-    def add_new_ranking(self, results):
-        for _, res in results.iterrows():
-            shotId, videoId, rank, adjusted_logged_time = res['shotId'], res['videoId'], res['rank'], res['adj_logged_time']
-
-            #print('videoId: ' + str(videoId) + ' shotId: ' + str(shotId))
-            if shotId is None:
-                continue
-            if videoId == self.correct_video:
-                if rank is None:
-                        rank = 0
-
-                if shotId == self.correct_shot:
-                    if rank < self.best_logged_rank_shot and (adjusted_logged_time <= self.correct_submission_time or self.correct_submission_time < 0):
-                        self.best_logged_rank_shot = rank
-                        self.best_logged_time_shot = adjusted_logged_time
-                if rank < self.best_logged_rank_video and (adjusted_logged_time <= self.correct_submission_time or self.correct_submission_time < 0):
-                    self.best_logged_rank_video = rank
-                    self.best_logged_time_video = adjusted_logged_time
-                    
-    def add_correct_submission_time(self, cst):
-        self.correct_submission_time = (cst - self.started) / 1000
         
     def get_name(self):
         return self.name
@@ -125,19 +101,6 @@ class Task:
     def add_correct_shot_and_video(self, shotId, videoId):
         self.correct_video = int(videoId)
         self.correct_shot = int(shotId)
-        
-    def get_rel_info(self, rank_zero=False):
-        if rank_zero:
-            best_rank_shot = self.best_logged_rank_shot + 1
-            best_rank_video = self.best_logged_rank_video + 1
-        else:
-            best_rank_shot = self.best_logged_rank_shot
-            best_rank_video = self.best_logged_rank_video
-        if self.best_logged_time_shot == -1:
-            best_ranked_time = self.best_logged_time_video
-        else:
-            best_ranked_time = self.best_logged_time_shot
-        return best_rank_shot, best_rank_video, best_ranked_time, self.correct_submission_time
         
     def get_bins(self, nr_bins):
         interval = (self.ended - self.started) / nr_bins
@@ -244,3 +207,81 @@ class Task:
             if submission.status == 'CORRECT':
                 correct[index] += 1
         return correct
+
+
+class TaskResult:
+    """
+    Store all the information concerning the results of a team on a particular task
+    """
+
+    def __init__(self, team, task, csts):
+
+        self.team = team
+        self.task = task
+        self.correct_submission_time = (csts[team][task.get_name()] - task.started) / 1000
+        self.best_logged_rank_video = float('inf')
+        self.best_logged_rank_shot = float('inf')
+        self.best_logged_time_video = -1
+        self.best_logged_time_shot = -1
+
+    def get_task_name(self):
+        return self.task.get_name()
+    
+    def add_new_ranking(self, results):
+        # efficient implementation using pandas constructs
+
+        # filter results by task
+        res = results #self.task.filter_by_task_name(res) # TODO!
+
+        # find correct videos
+        res = res[res['videoId'] == self.task.correct_video]
+
+        if not res.empty:
+            # filter rows using adjusted_logged_time, if correct_submission_time is provided
+            if self.correct_submission_time >= 0:
+                res = res[res['adj_logged_time'] <= self.correct_submission_time]
+            
+            best_video_rank_idx = res[['rank']].idxmin().iat[0]
+            self.best_logged_rank_video = res[['rank']].at[best_video_rank_idx, 'rank']
+            self.best_logged_time_video = res[['adj_logged_time']].at[best_video_rank_idx, 'adj_logged_time']
+
+            res = res[res['shotId'] == self.task.correct_shot]
+
+            # check also for best shot rank
+            if not res.empty:
+                best_video_rank_idx = res[['rank']].idxmin().iat[0]
+                self.best_logged_rank_shot = res[['rank']].at[best_video_rank_idx, 'rank']
+                self.best_logged_time_shot = res[['adj_logged_time']].at[best_video_rank_idx, 'adj_logged_time']
+
+
+        # inefficient java-like implementation 
+        # for _, res in results.iterrows():
+        #     shotId, videoId, rank, adjusted_logged_time = res['shotId'], res['videoId'], res['rank'], res['adj_logged_time']
+
+        #     #print('videoId: ' + str(videoId) + ' shotId: ' + str(shotId))
+        #     if shotId is None:
+        #         continue
+        #     if videoId == self.task.correct_video:
+        #         if rank is None:
+        #                 rank = 0
+
+        #         if shotId == self.task.correct_shot:
+        #             if rank < self.best_logged_rank_shot and (adjusted_logged_time <= self.correct_submission_time or self.correct_submission_time < 0):
+        #                 self.best_logged_rank_shot = rank
+        #                 self.best_logged_time_shot = adjusted_logged_time
+        #         if rank < self.best_logged_rank_video and (adjusted_logged_time <= self.correct_submission_time or self.correct_submission_time < 0):
+        #             self.best_logged_rank_video = rank
+        #             self.best_logged_time_video = adjusted_logged_time
+        
+    def get_rel_info(self, rank_zero=False):
+        if rank_zero:
+            best_rank_shot = self.best_logged_rank_shot + 1
+            best_rank_video = self.best_logged_rank_video + 1
+        else:
+            best_rank_shot = self.best_logged_rank_shot
+            best_rank_video = self.best_logged_rank_video
+        if self.best_logged_time_shot == -1:
+            best_ranked_time = self.best_logged_time_video
+        else:
+            best_ranked_time = self.best_logged_time_shot
+        return best_rank_shot, best_rank_video, best_ranked_time, self.correct_submission_time

@@ -13,13 +13,14 @@ def main(args):
         cfg = yaml.load(f, Loader=yaml.FullLoader)
 
     # load competition data
+    teams = cfg["teams"]
     competition_data = load_data(
+        teams,
         args.audits_file, 
         args.run_file, 
         args.teams_metadata_file, 
         args.v3c_segments_files)
 
-    teams = cfg["teams"]
     plot_cfgs = [c for c in cfg["generate"] if c["name"] in args.graphs]
     plot_cfg = plot_cfgs[0]
 
