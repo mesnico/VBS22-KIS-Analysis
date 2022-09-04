@@ -10,7 +10,7 @@ from utils.task import TaskCount
 
 
 class TeamLogs:
-    def __init__(self, data, team, max_records=10000, use_cache=False, cache_path='cache/logs'):
+    def __init__(self, data, team, max_records=10000, use_cache=False, cache_path='cache/team_logs'):
         self.v3c_videos = data['v3c_videos']
         self.runreader = data['runreader']
         self.get_info_fn_dict = {
@@ -19,7 +19,7 @@ class TeamLogs:
         }
 
         # some caching logic
-        cache_path = Path(cache_path)
+        cache_path = Path(cache_path) / data['version'] # append the version to the cache_path
         if not cache_path.exists():
             cache_path.mkdir(parents=True, exist_ok=True)
         cache_file = cache_path / '{}.pkl'.format(team)

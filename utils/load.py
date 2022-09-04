@@ -40,11 +40,19 @@ def load_data(
     with open(teams_metadata_file) as f:
         teams_metadata = json.load(f)
 
-    runreader = build_runreader(run, v3c_videos, teams_metadata, teams)
+    # load the run file
+    if '2021' in run_file:
+        version = '2021'
+    elif '2022' in run_file:
+        version = '2022'
+    else:
+        raise ValueError("Cannot infer the version to use to read the run file!")
+    runreader = build_runreader(run, v3c_videos, teams_metadata, teams, version=version)
 
     return {
         'audit': audit,
         'runreader': runreader,
         'v3c_videos': v3c_videos,
-        'teams_metadata': teams_metadata
+        'teams_metadata': teams_metadata,
+        'version': version
     }

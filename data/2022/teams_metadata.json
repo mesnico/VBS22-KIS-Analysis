@@ -1,0 +1,8 @@
+{
+    "visione": {
+        "output_name": "VISIONE",
+        "name_in_logs": "VISIONE",
+        "rank_zero": false,
+        "log_path": "team_logs/VISIONE"
+    }
+}

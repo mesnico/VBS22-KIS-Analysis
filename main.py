@@ -32,7 +32,7 @@ def main(args):
             team,
             max_records=10000, 
             use_cache=args.log_cache, 
-            cache_path='cache/logs')
+            cache_path='cache/team_logs')
         logs[team] = team_log
 
     # generate results
@@ -46,7 +46,7 @@ if __name__ == '__main__':
     parser.add_argument('--config', default='config.yaml', help='config file to generate the graph')
     parser.add_argument('--audits_file', default='data/2021/audits.json')
     parser.add_argument('--run_file', default='data/2021/run.json')
-    parser.add_argument('--teams_metadata_file', default='data/teams_metadata.json')
+    parser.add_argument('--teams_metadata_file', default='data/2021/teams_metadata.json')
     parser.add_argument('--v3c_segments_files', nargs='+', default=['data/v3c1_frame_segments.csv'])
     parser.add_argument('--no_log_cache', action='store_true', help='Wether to use the log cache from each team')
     parser.add_argument('--no_result_cache', action='store_true', help='Wether to use the result cache for rendering results')
