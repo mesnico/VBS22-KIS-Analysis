@@ -77,9 +77,16 @@ class TeamLogs:
                     timestamp = int(os.path.splitext(file)[0])
 
                     # retrieve the task we are in at the moment
-                    task_name = self.runreader.get_taskname_from_timestamp(timestamp)
-                    if task_name is None:
+                    task = self.runreader.get_task_from_timestamp(timestamp)
+                    if task is None:
                         # the logs outside task ranges are not important for us
+                        continue
+                    task_name = task.get_name()
+
+                    # if a team already submitted, all the subsequent logs are just noise, delete them
+                    csts = self.runreader.get_correct_submission_times()
+                    cst = csts[team][task_name]
+                    if cst > 0 and timestamp > cst:
                         continue
 
                     # do the magic and grab relevant infos from different team log files
@@ -94,6 +101,7 @@ class TeamLogs:
 
                     if len(ranked_list['events']) > 0:
                         events_df = self.get_teams_events(ranked_list['events'], log_parser.get_events)
+
                         events_df['user'] = user_idx
                         events_df['task'] = task_name
                         events_df['team'] = team
@@ -105,21 +113,21 @@ class TeamLogs:
         assert user_idx <= 2
 
         # prepare the final dataframe
-        results_df = pd.concat(results_dfs, axis=0).reset_index()
-        events_df = pd.concat(events_dfs, axis=0).reset_index()
+        results_df = pd.concat(results_dfs, axis=0).reset_index(drop=True)
+        events_df = pd.concat(events_dfs, axis=0).reset_index(drop=True)
+
+        # for each timestamp, find the ranks of correct results
+        ranks_df = results_df.groupby('timestamp').apply(lambda x: self.get_rank_of_correct_results(x))
+        ranks_df = ranks_df.reset_index()
+        # merge this table with the events, the key is the timestamp column
+        events_and_ranks_df = events_df.merge(ranks_df, on='timestamp')
 
         # sort by timestamp, important for filter_by_timestamp
         # final_df = final_df.sort_values(by=['timestamp'])
 
-        return results_df, events_df
+        return results_df, events_and_ranks_df
 
     def get_teams_events(self, events, events_fn):
-        # categories = []
-        # types = []
-        # values = []
-
-        # for index, event in enumerate(events):
-        #     category, typ, value = events_fn(event)
         events = pd.DataFrame(events)
         return events_fn(events)
 
@@ -127,23 +135,46 @@ class TeamLogs:
         results = results[:max_records]
         results = pd.DataFrame(results)
         return results_fn(results)
-        # shotIds = np.zeros(len(results), dtype=int)
-        # videoIds = np.zeros(len(results), dtype=int)
-        # ranks = np.zeros(len(results), dtype=int)
 
-        # for index, result in enumerate(results[:max_records]):
-        #     shotId, videoId, rank = results_fn(result)
-        #     assert rank <= max_records
+    def get_rank_of_correct_results(self, result, method='shotid'): # 'shotid' or 'timeinterval'
+        best_logged_rank_video = float('inf')
+        best_logged_rank_shot = float('inf')
+        assert not result.empty
+        task_name = result['task'].iloc[0]
+        task = self.runreader.get_task_from_taskname(task_name)
+        res = result
 
-        #     shotIds[index] = shotId
-        #     videoIds[index] = videoId
-        #     ranks[index] = rank
+        # find correct videos
+        res = res[res['videoId'] == task.correct_video]
 
-        # return {
-        #     "videoId": videoIds,
-        #     "shotId": shotIds,
-        #     "rank": ranks
-        # }
+        if not res.empty:           
+            best_video_rank_idx = res[['rank']].idxmin().iat[0]
+            best_logged_rank_video = res[['rank']].at[best_video_rank_idx, 'rank']
+            # best_logged_time_video = res[['adj_logged_time']].at[best_video_rank_idx, 'adj_logged_time']
+
+            res = res[res['shotId'] == task.correct_shot]
+
+            # check also for best shot rank
+            if not res.empty:
+                if method == 'shotid':
+                    best_video_rank_idx = res[['rank']].idxmin().iat[0]
+                    best_logged_rank_shot = res[['rank']].at[best_video_rank_idx, 'rank']
+                    # best_logged_time_shot = res[['adj_logged_time']].at[best_video_rank_idx, 'adj_logged_time']
+                elif method == 'timeinterval':
+                    return NotImplementedError
+
+        return pd.Series({
+            'rank_video': best_logged_rank_video,
+            'rank_shot': best_logged_rank_shot
+            })
+
+        # for each task, accumulate the statistics for this team
+        # for task in tqdm.tqdm(tasks, desc='Accumulating statistics for {}'.format(task)):
+        #     task_result = TaskResult(team, task, csts)
+        #     # df = team_logs.filter_by_timestep(task.started, task.ended)
+        #     df = team_logs.filter_by_task_name(task.get_name())
+        #     task_result.add_new_ranking(df)
+        #     task_results.append(task_result)
 
     def filter_by_timestep(self, start_timestep, end_timestep):
         # easy but expensive solution
@@ -159,6 +190,12 @@ class TeamLogs:
     def filter_by_task_name(self, task_name):
         t1 = self.df_results[self.df_results['task'] == task_name].copy()
         return t1
+
+    def get_events_dataframe(self):
+        return self.df_events
+
+    def get_raw_results_dataframe(self):
+        return self.df_results
 
 
 class Team:

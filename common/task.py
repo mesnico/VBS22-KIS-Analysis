@@ -236,11 +236,7 @@ class TaskResult:
         # find correct videos
         res = res[res['videoId'] == self.task.correct_video]
 
-        if not res.empty:
-            # filter rows using adjusted_logged_time, if correct_submission_time is provided
-            if self.correct_submission_time >= 0:
-                res = res[res['adj_logged_time'] <= self.correct_submission_time]
-            
+        if not res.empty:           
             best_video_rank_idx = res[['rank']].idxmin().iat[0]
             self.best_logged_rank_video = res[['rank']].at[best_video_rank_idx, 'rank']
             self.best_logged_time_video = res[['adj_logged_time']].at[best_video_rank_idx, 'adj_logged_time']

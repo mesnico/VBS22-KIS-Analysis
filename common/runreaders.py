@@ -31,8 +31,11 @@ class RunReader:
     def get_teamid_from_teamname(self, team_name):
         return NotImplementedError
 
+    def get_task_from_taskname(self, task_name):
+        return self.tasks[task_name]
+
     def get_tasks(self):
-        return self.tasks
+        return list(self.tasks.values())
 
     def get_correct_submission_times(self):
         return self.csts
@@ -50,8 +53,8 @@ class RunReader:
         """
         return NotImplementedError
 
-    def get_taskname_from_timestamp(self, timestamp):
-        task_names, starts, ends = zip(*[(t.get_name(), t.started, t.ended) for t in self.tasks])
+    def get_task_from_timestamp(self, timestamp):
+        names, starts, ends = zip(*[(n, t.started, t.ended) for n, t in self.tasks.items()])
         sorting_idxs = np.array(starts).argsort()
         starts = np.array(starts)[sorting_idxs]
         ends = np.array(ends)[sorting_idxs]
@@ -66,8 +69,9 @@ class RunReader:
             # in the middle between two tasks, so not a valid submission
             return None
         
-        correct_task_idx = task_names[sorting_idxs[f_start_idx]]
-        return correct_task_idx
+        correct_name = names[sorting_idxs[f_start_idx]]
+        correct_task = self.tasks[correct_name]
+        return correct_task
 
 
 class RunReader2021(RunReader):
@@ -86,7 +90,7 @@ class RunReader2021(RunReader):
         """
         Mine tasks from the run file, including the correct video and shot ids
         """
-        tasks = []
+        tasks = {}
 
         for t in self.run['tasks']:
             if t['description']['taskType']['name'] == 'Visual KIS' or t['description']['taskType']['name'] == 'Textual KIS':
@@ -98,7 +102,7 @@ class RunReader2021(RunReader):
                 shotId = self.v3c_videos.get_shot_from_video_and_frame(videoId, timeshot, unit='milliseconds')
 
                 task.add_correct_shot_and_video(shotId, videoId)
-                tasks.append(task)
+                tasks[task.name] = task
 
         return tasks
         
@@ -152,7 +156,7 @@ class RunReader2022(RunReader):
         """
         Mine tasks from the run file, including the correct video and shot ids
         """
-        tasks = []
+        tasks = {}
 
         for t in self.run['tasks']:
             if t['description']['taskType']['name'] == 'Visual KIS' or t['description']['taskType']['name'] == 'Textual KIS':
@@ -164,7 +168,7 @@ class RunReader2022(RunReader):
                 shotId = self.v3c_videos.get_shot_from_video_and_frame(videoId, timeshot, unit='milliseconds')
 
                 task.add_correct_shot_and_video(shotId, videoId)
-                tasks.append(task)
+                tasks[task.name] = task
 
         return tasks
         
