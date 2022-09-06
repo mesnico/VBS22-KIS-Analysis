@@ -9,7 +9,11 @@ class Videos:
         """
         shots: pandas dataframe containing shots information
         """
-        videos = pd.read_csv(v3c_segments_files[0]) # TODO: extend with V3C2
+        dfs = []
+        for v3cx in v3c_segments_files:
+            dfs.append(pd.read_csv(v3cx))
+            
+        videos = pd.concat(dfs, axis=0)
         videos = videos.groupby("video")
 
         # create a dict of dataframes, where the key is the videoid

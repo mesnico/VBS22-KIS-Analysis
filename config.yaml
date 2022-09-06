@@ -1,4 +1,4 @@
-teams: ['visione', 'viret']
+teams: ['visione']
 
 generate:
   - name: time_recall_table

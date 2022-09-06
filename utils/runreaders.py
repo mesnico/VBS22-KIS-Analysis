@@ -189,8 +189,8 @@ class RunReader2022(RunReader):
                 taskname = t['description']['name']
                 remaining_team_ids = set(team_ids)
                 for s in t['submissions']:
-                    if s['status'] == 'CORRECT' and s['teamId'] in remaining_team_ids:
-                        csts[id_to_tname[s['teamId']]][taskname] = s['timestamp']
+                    if s['status'] == 'CORRECT' and s['teamId']['string'] in remaining_team_ids:
+                        csts[id_to_tname[s['teamId']['string']]][taskname] = s['timestamp']
                         remaining_team_ids.remove(s['teamId']['string'])
                         if len(remaining_team_ids) == 0:
                             break
