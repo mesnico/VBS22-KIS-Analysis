@@ -1,11 +1,11 @@
 import tqdm
-from utils.load import load_data
+from common.load import load_data
 import generate
 import argparse
 import yaml
 import argparse
 
-from utils.team import TeamLogs
+from common.team import TeamLogs
 
 def main(args):
     # load config file for this plot

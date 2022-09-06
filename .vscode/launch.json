@@ -16,7 +16,7 @@
             "name": "Best Shot Rank Boxplot",
             "type": "python",
             "request": "launch",
-            "program": "main.py",
+            "program": "plot.py",
             "console": "integratedTerminal",
             "justMyCode": true,
             "args": ["best_shot_rank_boxplot"]
@@ -25,7 +25,7 @@
             "name": "Time Recall Table",
             "type": "python",
             "request": "launch",
-            "program": "main.py",
+            "program": "plot.py",
             "console": "integratedTerminal",
             "justMyCode": true,
             "args": ["time_recall_table", "--no_result_cache", "--no_log_cache"]

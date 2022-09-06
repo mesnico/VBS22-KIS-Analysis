@@ -1,6 +1,6 @@
 
 import bisect
-from utils.task import Task
+from common.task import Task
 import numpy as np
 
 

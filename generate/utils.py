@@ -1,9 +1,7 @@
 
 import numpy as np
 import pandas as pd
-from utils.runreaders import RunReader2021
-from utils.task import Task, TaskResult
-from utils.team import TeamLogs
+from common.task import TaskResult
 import tqdm
 
 def get_team_values_df(data, team, team_logs):

@@ -1,8 +1,8 @@
 import json
 import csv
-from utils.runreaders import build_runreader
+from common.runreaders import build_runreader
 
-from utils.videos import Videos
+from common.videos import Videos
 
 class Shot:
     def __init__(self, shotStart, shotEnd, segmentId):

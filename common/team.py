@@ -7,7 +7,7 @@ import tqdm
 import json
 import numpy as np
 
-from utils.task import TaskCount
+from common.task import TaskCount
 
 class TeamLogParser():
     def __init__(self, version, team, v3c_videos) -> None:
@@ -85,6 +85,7 @@ class TeamLogs:
                     # do the magic and grab relevant infos from different team log files
                     if len(ranked_list['results']) > 0:
                         results_df = self.get_teams_results(ranked_list['results'], log_parser.get_results, max_records)
+
                         results_df['timestamp'] = timestamp # note that in events the timestamp should be already present
                         results_df['user'] = user_idx
                         results_df['task'] = task_name
