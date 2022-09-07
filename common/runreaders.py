@@ -154,7 +154,7 @@ class RunReader2022(RunReader):
 
     def build_tasks(self):
         """
-        Mine tasks from the run file, including the correct video and shot ids
+        Mine tasks from the run file, including the correct video, the predefined shot ids, the target shot start and end in milliseconds #
         """
         tasks = {}
 
@@ -164,10 +164,12 @@ class RunReader2022(RunReader):
                 task.add_name(t['description']['name'])
 
                 videoId = t['description']['target']['item']['name']
-                timeshot = int(t['description']['target']['temporalRange']['start']['millisecond'])
-                shotId = self.v3c_videos.get_shot_from_video_and_frame(videoId, timeshot, unit='milliseconds')
-
+                target_start_ms = int(t['description']['target']['temporalRange']['start']['millisecond'])  # start time of TARGET video segment
+                target_end_ms = int(t['description']['target']['temporalRange']['end']['millisecond']) # end time of TARGET video segment
+                shotId = self.v3c_videos.get_shot_from_video_and_frame(videoId, target_start_ms, unit='milliseconds')
+                #TODO: what happens if the tagert video segment overlaps between two predefined shots, for example, if target_end_ms falls into the shot (shotID+1)? Perhaps the shotID should be a list of the predefined shots that intersect the target video segment. We should check it
                 task.add_correct_shot_and_video(shotId, videoId)
+                task.add_correct_shot_start_and_end_milliseconds(target_start_ms,target_end_ms)
                 tasks[task.name] = task
 
         return tasks

@@ -1,5 +1,5 @@
 from calendar import c
-
+from common.submission import Submission
 
 class TaskCount:
     """
@@ -48,6 +48,8 @@ class Task:
         self.taskType = taskType
         self.correct_video = -1
         self.correct_shot = -1
+        self.target_start_ms=-1
+        self.target_end_ms=-1
         self.name = ''
         
     def add_name(self, name):
@@ -101,7 +103,11 @@ class Task:
     def add_correct_shot_and_video(self, shotId, videoId):
         self.correct_video = int(videoId)
         self.correct_shot = int(shotId)
-        
+
+    def add_correct_shot_start_and_end_milliseconds(self, target_start_ms, target_end_ms): ##
+        self.target_start_ms = target_start_ms
+        self.target_end_ms = target_end_ms
+
     def get_bins(self, nr_bins):
         interval = (self.ended - self.started) / nr_bins
         correct = [0] * nr_bins
