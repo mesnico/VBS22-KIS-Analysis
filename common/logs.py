@@ -1,25 +1,24 @@
-from collections import OrderedDict
-from gc import get_referents
 from pathlib import Path
 import pandas as pd
 import os
 import tqdm
 import json
-import numpy as np
-
-from common.task import TaskCount
 
 class TeamLogParser():
     def __init__(self, version, team, v3c_videos) -> None:
         self.version = version
         self.v3c_videos = v3c_videos
-        if team == 'visione':
-            self.get_results = self.get_results_visione_2022 if version == '2022' else self.get_results_visione_2021
-            self.get_events = self.get_events_visione
+        if version == '2022':
+            self.get_results = self.get_results_standard_2022 # if version == '2022' else self.get_results_visione_2021
+            self.get_events = self.get_events_standard_2022 # if version == '2022' else None
+        else:
+            self.get_results = self.get_results_visione_2021
+            self.get_events = self.get_events_standard_2022
 
-    def get_results_visione_2022(self, result):
+    def get_results_standard_2022(self, result):
         result = result.rename(columns={'item': 'videoId'})
         result['shotId'] = result.apply(lambda x: self.v3c_videos.get_shot_from_video_and_frame(x['videoId'], x['frame'], unit='milliseconds'), axis=1)
+        # TODO: result['shotTime']
         result = result.filter(['shotId', 'videoId', 'rank'])
         result = result.astype(int)
         return result
@@ -30,10 +29,9 @@ class TeamLogParser():
         result = result.astype(int)
         return result
 
-    def get_events_visione(self, events):
+    def get_events_standard_2022(self, events):
         events = events.filter(['timestamp', 'category', 'type', 'value'])
         return events
-        
     
 
 class TeamLogs:
@@ -55,13 +53,22 @@ class TeamLogs:
             self.df_results.to_pickle(results_cache_file)
             self.df_events.to_pickle(events_cache_file)
 
+    def _retrieve_timestamp(self, filename, js_list):
+        try:
+            # assume that every team has the timestamp in the filename
+            timestamp = int(os.path.splitext(filename)[0])
+        except ValueError:
+            # try to search for a "timestamp" field in the json and return that one (e.g., vibro)
+            timestamp = int(js_list['timestamp'])
+        return timestamp
+
     def get_data(self, data, team, max_records):
         """
         retrieve all the data
         """
         results_dfs = []
         events_dfs = []
-        team_log = data['teams_metadata'][team]['log_path']
+        team_log = data['config']['logs'][team]
 
         user_idx = 0
         log_parser = TeamLogParser(data['version'], team, self.v3c_videos)
@@ -73,23 +80,22 @@ class TeamLogs:
                 with open(path) as f:
                     ranked_list = json.load(f)
 
-                    # assume that every team has the timestamp in the filename
-                    timestamp = int(os.path.splitext(file)[0])
+                    timestamp = self._retrieve_timestamp(file, ranked_list)                    
 
                     # retrieve the task we are in at the moment
-                    task = self.runreader.get_task_from_timestamp(timestamp)
+                    task = self.runreader.tasks.get_task_from_timestamp(timestamp)
                     if task is None:
                         # the logs outside task ranges are not important for us
                         continue
-                    task_name = task.get_name()
+                    task_name = task['name'].iat[0]
 
                     # if a team already submitted, all the subsequent logs are just noise, delete them
-                    csts = self.runreader.get_correct_submission_times()
+                    csts = self.runreader.get_csts()
                     cst = csts[team][task_name]
                     if cst > 0 and timestamp > cst:
                         continue
 
-                    # do the magic and grab relevant infos from different team log files
+                    # grab relevant infos from different team log files
                     if len(ranked_list['results']) > 0:
                         results_df = self.get_teams_results(ranked_list['results'], log_parser.get_results, max_records)
 
@@ -122,37 +128,44 @@ class TeamLogs:
         # merge this table with the events, the key is the timestamp column
         events_and_ranks_df = events_df.merge(ranks_df, on='timestamp')
 
-        # sort by timestamp, important for filter_by_timestamp
-        # final_df = final_df.sort_values(by=['timestamp'])
-
         return results_df, events_and_ranks_df
 
     def get_teams_events(self, events, events_fn):
+        if isinstance(events, dict):
+            events = [events]
         events = pd.DataFrame(events)
         return events_fn(events)
 
     def get_teams_results(self, results, results_fn, max_records):
         results = results[:max_records]
         results = pd.DataFrame(results)
-        return results_fn(results)
+        results = results_fn(results)
+
+        # correct if rank is zero-based
+        min_rank = results['rank'].min()
+        assert min_rank in [0, 1]
+        if min_rank == 0:
+            results['rank'] = results['rank'] + 1
+            
+        return results
 
     def get_rank_of_correct_results(self, result, method='shotid'): # 'shotid' or 'timeinterval'
         best_logged_rank_video = float('inf')
         best_logged_rank_shot = float('inf')
         assert not result.empty
         task_name = result['task'].iloc[0]
-        task = self.runreader.get_task_from_taskname(task_name)
+        task = self.runreader.tasks.get_task_from_taskname(task_name)
         res = result
 
         # find correct videos
-        res = res[res['videoId'] == task.correct_video]
+        res = res[res['videoId'] == task['correct_video'].iat[0]]
 
         if not res.empty:           
             best_video_rank_idx = res[['rank']].idxmin().iat[0]
             best_logged_rank_video = res[['rank']].at[best_video_rank_idx, 'rank']
             # best_logged_time_video = res[['adj_logged_time']].at[best_video_rank_idx, 'adj_logged_time']
 
-            res = res[res['shotId'] == task.correct_shot]
+            res = res[res['shotId'] == task['correct_shot'].iat[0]]
 
             # check also for best shot rank
             if not res.empty:
@@ -167,14 +180,6 @@ class TeamLogs:
             'rank_video': best_logged_rank_video,
             'rank_shot': best_logged_rank_shot
             })
-
-        # for each task, accumulate the statistics for this team
-        # for task in tqdm.tqdm(tasks, desc='Accumulating statistics for {}'.format(task)):
-        #     task_result = TaskResult(team, task, csts)
-        #     # df = team_logs.filter_by_timestep(task.started, task.ended)
-        #     df = team_logs.filter_by_task_name(task.get_name())
-        #     task_result.add_new_ranking(df)
-        #     task_results.append(task_result)
 
     def filter_by_timestep(self, start_timestep, end_timestep):
         # easy but expensive solution
@@ -196,84 +201,3 @@ class TeamLogs:
 
     def get_raw_results_dataframe(self):
         return self.df_results
-
-
-class Team:
-    
-    def __init__(self, teamId, name):
-        self.teamId = teamId
-        self.name = name
-        self.tasksDicts = dict()
-        self.tasksDicts['KIS-Visual'] = dict()
-        self.tasksDicts['KIS-Textual'] = dict()
-        self.tasksDicts['AVS'] = dict()
-        self.avsTasksList = dict()
-        
-    def get_name(self):
-        return self.name
-        
-    def add_avs_task(self, task, index):
-        self.avsTasksList[index] = task
-        
-    def get_avs_task(self, index):
-        return self.avsTasksList[index]
-    
-    def add_avs_submission(self, index, memberId, status, teamId, uid, timestamp, itemName):
-        self.avsTasksList[index].add_submission(memberId, status, teamId, uid, timestamp, itemName)
-    
-    def add_task(self, position, status, task_type):
-        if position in self.tasksDicts[task_type]:
-            self.tasksDicts[task_type][position].add_status(status)
-        else:
-            tc = TaskCount()
-            tc.add_status(status)
-            self.tasksDicts[task_type][position] = tc
-            
-    def to_df(self):
-        data_dict = OrderedDict()
-        total_sum = 0
-        sumup = 0
-        for key in sorted(self.tasksDicts['KIS-Textual']):
-            value = self.tasksDicts['KIS-Textual'][key].get_incorrect()
-            str_val = str(value)
-            if value < 0:
-                value = 0
-            sumup += value
-            if str_val == '-1':
-                str_val = ' '
-            if str_val == '0':
-                str_val = '-1'
-            data_dict['T_' + str(key)] = str_val
-        data_dict['Sigma1'] = sumup
-        total_sum += sumup
-        sumup = 0
-        for key in sorted(self.tasksDicts['KIS-Visual']):
-            value = self.tasksDicts['KIS-Visual'][key].get_incorrect()
-            str_val = str(value)
-            if value < 0:
-                value = 0
-            sumup += value
-            if str_val == '-1':
-                str_val = ' '
-            if str_val == '0':
-                str_val = '-1'
-            data_dict['V_' + str(key)] = str_val
-        data_dict['Sigma2'] = sumup
-        total_sum += sumup
-        sumup = 0
-        for key in sorted(self.tasksDicts['AVS']):
-            value = self.tasksDicts['AVS'][key].get_incorrect()
-            str_val = str(value)
-            if value < 0:
-                value = 0
-            sumup += value
-            if str_val == '-1':
-                str_val = ' '
-            if str_val == '0':
-                str_val = '-1'
-            data_dict['A_' + str(key)] = str_val
-        data_dict['Sigma3'] = sumup
-        total_sum += sumup
-        data_dict['Sigma4'] = total_sum
-        df = pd.DataFrame(data=data_dict, index=[self.name])
-        return df

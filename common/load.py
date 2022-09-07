@@ -20,8 +20,8 @@ class Shot:
 def load_data(
         teams,
         audits_file, 
-        run_file, 
-        teams_metadata_file, 
+        run_file,
+        fps_file,
         v3c_segments_files=None):
 
     # load run file
@@ -34,11 +34,7 @@ def load_data(
         audit.append(json.loads(line))
 
     # load v3c segments
-    v3c_videos = Videos(v3c_segments_files)
-
-    # load team metadata
-    with open(teams_metadata_file) as f:
-        teams_metadata = json.load(f)
+    v3c_videos = Videos(v3c_segments_files, fps_file)
 
     # load the run file
     if '2021' in run_file:
@@ -47,12 +43,11 @@ def load_data(
         version = '2022'
     else:
         raise ValueError("Cannot infer the version to use to read the run file!")
-    runreader = build_runreader(run, v3c_videos, teams_metadata, teams, version=version)
+    runreader = build_runreader(run, v3c_videos, teams, version=version)
 
     return {
         'audit': audit,
         'runreader': runreader,
         'v3c_videos': v3c_videos,
-        'teams_metadata': teams_metadata,
         'version': version
     }

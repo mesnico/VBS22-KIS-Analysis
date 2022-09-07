@@ -28,7 +28,7 @@
             "program": "plot.py",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args": ["time_recall_table", "--no_result_cache", "--no_log_cache"]
+            "args": ["time_recall_table", "--no_result_cache"]
         },
     ]
 }
