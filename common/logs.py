@@ -17,9 +17,9 @@ class TeamLogParser():
 
     def get_results_standard_2022(self, result):
         result = result.rename(columns={'item': 'videoId'})
-        result['shotId'] = result.apply(lambda x: self.v3c_videos.get_shot_from_video_and_frame(x['videoId'], x['frame'], unit='milliseconds'), axis=1)
-        # TODO: result['shotTime']
-        result = result.filter(['shotId', 'videoId', 'rank'])
+        # result['shotId'] = result.apply(lambda x: self.v3c_videos.get_shot_from_video_and_frame(x['videoId'], x['frame'], unit='milliseconds'), axis=1)
+        result['shotTimeMs'] = result.apply(lambda x: self.v3c_videos.get_shot_time_from_video_and_frame(x['videoId'], x['frame']), axis=1)
+        result = result.filter(['shotTimeMs', 'shotId', 'videoId', 'rank'])
         result = result.astype(int)
         return result
 
@@ -87,7 +87,7 @@ class TeamLogs:
                     if task is None:
                         # the logs outside task ranges are not important for us
                         continue
-                    task_name = task['name'].iat[0]
+                    task_name = task['name']
 
                     # if a team already submitted, all the subsequent logs are just noise, delete them
                     csts = self.runreader.get_csts()
@@ -149,7 +149,7 @@ class TeamLogs:
             
         return results
 
-    def get_rank_of_correct_results(self, result, method='shotid'): # 'shotid' or 'timeinterval'
+    def get_rank_of_correct_results(self, result, method='timeinterval'): # 'shotid' or 'timeinterval'
         best_logged_rank_video = float('inf')
         best_logged_rank_shot = float('inf')
         assert not result.empty
@@ -158,23 +158,25 @@ class TeamLogs:
         res = result
 
         # find correct videos
-        res = res[res['videoId'] == task['correct_video'].iat[0]]
+        res = res[res['videoId'] == task['correct_video']]
 
         if not res.empty:           
             best_video_rank_idx = res[['rank']].idxmin().iat[0]
             best_logged_rank_video = res[['rank']].at[best_video_rank_idx, 'rank']
             # best_logged_time_video = res[['adj_logged_time']].at[best_video_rank_idx, 'adj_logged_time']
 
-            res = res[res['shotId'] == task['correct_shot'].iat[0]]
+            if method == 'shotid':
+                # use shot id to discriminate the correct results
+                res = res[res['shotId'] == task['correct_shot']]
+            elif method == 'timeinterval':
+                # use the time interval of the shot target to discriminate the correct results
+                res = res[res['shotTimeMs'].between(task['target_start_ms'], task['target_end_ms'])]
 
             # check also for best shot rank
             if not res.empty:
-                if method == 'shotid':
-                    best_video_rank_idx = res[['rank']].idxmin().iat[0]
-                    best_logged_rank_shot = res[['rank']].at[best_video_rank_idx, 'rank']
-                    # best_logged_time_shot = res[['adj_logged_time']].at[best_video_rank_idx, 'adj_logged_time']
-                elif method == 'timeinterval':
-                    return NotImplementedError
+                best_shot_rank_idx = res[['rank']].idxmin().iat[0]
+                best_logged_rank_shot = res[['rank']].at[best_shot_rank_idx, 'rank']
+                # best_logged_time_shot = res[['adj_logged_time']].at[best_video_rank_idx, 'adj_logged_time']
 
         return pd.Series({
             'rank_video': best_logged_rank_video,

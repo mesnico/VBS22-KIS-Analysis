@@ -1,8 +1,8 @@
-teams: ['VISIONE']
+teams: ['vibro', 'VISIONE']
 
 logs:
   VISIONE: team_logs/logs_VISIONE/DRES_log
-  vireo: team_logs/vibro
+  vibro: team_logs/vibro
   diveXplore: team_logs/divexplore_logs"
 
 generate:

@@ -45,3 +45,16 @@ class Videos:
         # efficiently search the id of the shot using binary search
         idx_after_start = bisect.bisect_right(start, frame)
         return idx_after_start
+
+    def get_shot_time_from_video_and_frame(self, videoId, frame):
+        # use FPS to infer the time in milliseconds from the frame
+        videoId = int(videoId)
+        try:
+            frame = int(frame)
+        except ValueError:
+            logging.warning('Found an invalid frame number in logs. Setting to -1')
+            return -1
+        fps = self.fps['FPS'][videoId]
+        time = frame * 1000 / fps
+
+        return time

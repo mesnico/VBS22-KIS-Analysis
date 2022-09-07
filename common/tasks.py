@@ -46,10 +46,10 @@ class Tasks:
         
         correct_name = names[sorting_idxs[f_start_idx]]
         correct_task = self.tasks_df[self.tasks_df['name'] == correct_name]
-        return correct_task
+        return correct_task.iloc[0].to_dict()
 
     def get_task_from_taskname(self, name):
-        return self.tasks_df[self.tasks_df['name'] == name]
+        return self.tasks_df[self.tasks_df['name'] == name].iloc[0].to_dict()
 
     # def get_logged_time(self, logged_time):
     #     return (logged_time - self.started) / 1000
