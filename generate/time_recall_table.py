@@ -34,4 +34,5 @@ class TimeRecallTable(Result):
         df = df.astype('str')
         df.replace(['-1'], '-', inplace=True)
         print(df)
+        df.to_csv('output/time_recall_table.csv')
 

@@ -46,6 +46,31 @@ class Videos:
         idx_after_start = bisect.bisect_right(start, frame)
         return idx_after_start
 
+    def get_shots_from_video_and_segment(self, videoId, startpoint, endpoint, unit="milliseconds"):
+        """
+        get shotIds from videoId and video segment
+        unit : 'frames' | 'milliseconds'
+        """
+
+        assert unit in ["frames", "milliseconds"]
+        videoId = int(videoId) if isinstance(videoId, str) else videoId
+        try:
+            startpoint = int(startpoint) if isinstance(startpoint, str) else startpoint
+        except ValueError:
+            logging.warning('Found an invalid frame number in logs. Setting to -1')
+            frame = -1
+
+        df = self.videos[videoId]
+        start = df['startframe'] if unit == 'frames' else df['start']
+        start = start.to_list()
+
+        # efficiently search the id of the shot using binary search
+
+        id_shot_left = max(bisect.bisect_right(start, startpoint) - 1, 0)  # the smallest shot ID that intersect the target segment
+        id_shot_right = bisect.bisect_left(start, endpoint)   # thet fisrt shot ID greather than id_shot_left that do not intersect the target segment
+        correct_shots_ids=list(range(id_shot_left,id_shot_right))
+        return correct_shots_ids
+
     def get_shot_time_from_video_and_frame(self, videoId, frame):
         # use FPS to infer the time in milliseconds from the frame
         videoId = int(videoId)

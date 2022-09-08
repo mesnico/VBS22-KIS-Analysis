@@ -11,8 +11,10 @@ class Tasks:
         self.v3c_videos = v3c_videos
         self.tasks_df = pd.DataFrame()
 
-    def add_task(self, name, started, ended, duration, position, uid, taskType, correct_video, target_start_ms, target_end_ms):
+    def add_task(self, name, started, ended, duration, position, uid, taskType, correct_video, target_start_ms, target_end_ms, submissions=[]):
         correct_shot = self.v3c_videos.get_shot_from_video_and_frame(correct_video, target_start_ms, unit='milliseconds')
+        correct_shots = self.v3c_videos.get_shots_from_video_and_segment(correct_video, target_start_ms,target_end_ms,unit='milliseconds')
+        #TODO substitute correct_shot with correct_shots (that is a list)
         self.tasks_df = self.tasks_df.append({
             'name': name,
             'started': started,
@@ -24,9 +26,11 @@ class Tasks:
             'correct_video': correct_video,
             'correct_shot': correct_shot,
             'target_start_ms': target_start_ms,
-            'target_end_ms': target_end_ms}, ignore_index=True
+            'target_end_ms': target_end_ms ,
+            'submissions':submissions}, ignore_index=True
         )
         self.tasks_df['correct_video'] = self.tasks_df['correct_video'].astype(int)
+
     
     def get_task_from_timestamp(self, timestamp):
         names, starts, ends = zip(*self.tasks_df[['name', 'started', 'ended']].values.tolist())
