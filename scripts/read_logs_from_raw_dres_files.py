@@ -161,12 +161,14 @@ def main(args):
         for user in users:
             out_folder=f"{args.output_folder}/{team}/user{user}"
             os.makedirs(out_folder, exist_ok=True)
-            print (f"Saving logs of {team} - user{user}")
+            print(f"Saving logs of {team} - user{user}", end=" ...")
             logs=df.loc[df['user'] == user]['logs']
             for log in logs:
                 filename=f"{out_folder}/{log['timestamp']}.json"
                 with open(filename, 'w') as fp:
                     json.dump(log, fp)
+            print("[DONE]")
+    print("End")
 
 
 if __name__ == '__main__':
