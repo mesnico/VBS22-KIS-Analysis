@@ -1,9 +1,12 @@
-teams: ['vibro', 'VISIONE']
+teams: ['vitrivr']
 
 logs:
   VISIONE: team_logs/logs_VISIONE/DRES_log
   vibro: team_logs/vibro
-  diveXplore: team_logs/divexplore_logs"
+  diveXplore: team_logs/diveXplore
+  VERGE: team_logs/from_dres/verge
+  vitrivr: team_logs/from_dres/vitrivr
+  CVHunter: null  # data is injected directly inside the cache folder, given that the team already provided processed data (see scripts/cvhunter_to_pandas.csv)
 
 generate:
   - name: time_recall_table

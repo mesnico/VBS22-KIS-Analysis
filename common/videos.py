@@ -1,6 +1,7 @@
 import pandas as pd
 import bisect
 import logging
+import numpy as np
 
 class Videos:
     """
@@ -83,3 +84,28 @@ class Videos:
         time = frame * 1000 / fps
 
         return time
+
+    def get_shot_time_from_video_and_segment(self, videoId, segment, method="middle_frame"):
+        """
+        get middle frame of the given input segment
+        """
+
+        videoId = int(videoId) if isinstance(videoId, str) else videoId
+        df = self.videos[videoId]
+        row = df[df['segment'] == segment]
+
+        if method == 'middle_frame':
+            # TODO: to be consistent with get_shot_time_from_video_and_frame, I use the frame numbers and then convert them to milliseconds using fixed FPS. Is this correct?
+            shot_frame = (row['end'] - row['start']) / 2
+        else:
+            raise ValueError('Method {} not recognized!'.format(method))
+
+        if shot_frame.empty:
+            logging.warning('Video {}: segment {} not found (Max is {})'.format(videoId, segment, self.videos[videoId]['segment'].max()))
+            shot_frame = np.nan
+        else:
+            shot_frame = shot_frame.iat[0]
+
+        fps = self.fps['FPS'][videoId]
+        shot_ms = shot_frame * 1000 / fps
+        return shot_ms

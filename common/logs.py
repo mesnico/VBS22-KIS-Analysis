@@ -1,15 +1,26 @@
+from multiprocessing.sharedctypes import Value
 from pathlib import Path
 import pandas as pd
+import numpy as np
 import os
 import tqdm
 import json
+import logging
 
 class TeamLogParser():
     def __init__(self, version, team, v3c_videos) -> None:
         self.version = version
         self.v3c_videos = v3c_videos
         if version == '2022':
-            self.get_results = self.get_results_standard_2022 # if version == '2022' else self.get_results_visione_2021
+            if team == 'diveXplore':
+                self.get_results = self.get_results_divexplore_2022
+            elif team == 'VERGE':
+                self.get_results = self.get_results_verge_2022
+            elif team == 'vitrivr':
+                self.get_results = self.get_results_vitrivr_2022
+            else:
+                self.get_results = self.get_results_standard_2022 # if the team followed the standard, this function works just fine
+
             self.get_events = self.get_events_standard_2022 # if version == '2022' else None
         else:
             self.get_results = self.get_results_visione_2021
@@ -23,10 +34,40 @@ class TeamLogParser():
         result = result.astype(int)
         return result
 
+    # submitted the segment, not the frame
+    def get_results_verge_2022(self, result):
+        result = result.rename(columns={'item': 'videoId'})
+        result['shotTimeMs'] = result.apply(lambda x: self.v3c_videos.get_shot_time_from_video_and_segment(x['videoId'], x['segment'], method='middle_frame'), axis=1)
+        result = result.filter(['shotTimeMs', 'shotId', 'videoId', 'rank'])
+        result = result.astype(int)
+        return result
+
+    # submitted the segment, not the frame
+    def get_results_vitrivr_2022(self, result):
+        result = result.rename(columns={'item': 'videoId'})
+        result['videoId'] = result['videoId'].apply(lambda x: x.replace('v_', '')) # remove leading "v_"
+        result['shotTimeMs'] = result.apply(lambda x: self.v3c_videos.get_shot_time_from_video_and_segment(x['videoId'], x['segment'], method='middle_frame'), axis=1)
+        result = result.filter(['shotTimeMs', 'shotId', 'videoId', 'rank'])
+        result['videoId'] = result['videoId'].astype(int)
+        return result
+
+    def get_results_divexplore_2022(self, result):
+        # TODO: check if there are results in which frame is not present but segment is present instead.
+
+        result = result.rename(columns={'item': 'videoId'})
+        result['videoId'] = result['videoId'].apply(lambda x: x.replace('v_', '')) # remove leading "v_"
+        if 'frame' not in result.columns:
+            logging.warning('Found no "frame" information inside the results data. Setting to nan')
+            result['shotTimeMs'] = np.nan
+        else:
+            result['shotTimeMs'] = result.apply(lambda x: self.v3c_videos.get_shot_time_from_video_and_frame(x['videoId'], x['frame']), axis=1)
+        result['videoId'] = result['videoId'].astype(int)
+        result = result.filter(['shotTimeMs', 'shotId', 'videoId', 'rank'])
+        return result
+
     def get_results_visione_2021(self, result):
         result = result.rename(columns={'frame': 'shotId', 'item': 'videoId'})
         result = result.filter(['shotId', 'videoId', 'rank'])
-        result = result.astype(int)
         return result
 
     def get_events_standard_2022(self, events):
@@ -38,20 +79,29 @@ class TeamLogs:
     def __init__(self, data, team, max_records=10000, use_cache=False, cache_path='cache/team_logs'):
         self.v3c_videos = data['v3c_videos']
         self.runreader = data['runreader']
+        self.cache_path = cache_path
+        self.max_records = max_records
+        self.use_cache = use_cache
+        self.team = team
 
+        self.df_results, self.df_events = self._cache(data, force=False)
+
+    def _cache(self, data, force=False):
         # some caching logic for results
-        cache_path = Path(cache_path) / data['version'] # append the version to the cache_path
+        cache_path = Path(self.cache_path) / data['version'] # append the version to the cache_path
         if not cache_path.exists():
             cache_path.mkdir(parents=True, exist_ok=True)
-        results_cache_file = cache_path / '{}_results.pkl'.format(team)
-        events_cache_file = cache_path / '{}_events.pkl'.format(team)
-        if use_cache and (results_cache_file.exists() and events_cache_file.exists()):
-            self.df_results = pd.read_pickle(results_cache_file)
-            self.df_events = pd.read_pickle(events_cache_file)
+        results_cache_file = cache_path / '{}_results.pkl'.format(self.team)
+        events_cache_file = cache_path / '{}_events.pkl'.format(self.team)
+        if force or (self.use_cache and (results_cache_file.exists() and events_cache_file.exists())):
+            df_results = pd.read_pickle(results_cache_file)
+            df_events = pd.read_pickle(events_cache_file)
         else:
-            self.df_results, self.df_events = self.get_data(data, team, max_records)
-            self.df_results.to_pickle(results_cache_file)
-            self.df_events.to_pickle(events_cache_file)
+            df_results, df_events = self.get_data(data)
+            df_results.to_pickle(results_cache_file)
+            df_events.to_pickle(events_cache_file)
+
+        return df_results, df_events
 
     def _retrieve_timestamp(self, filename, js_list):
         try:
@@ -62,13 +112,18 @@ class TeamLogs:
             timestamp = int(js_list['timestamp'])
         return timestamp
 
-    def get_data(self, data, team, max_records):
+    def get_data(self, data):
         """
         retrieve all the data
         """
         results_dfs = []
         events_dfs = []
+        team = self.team
         team_log = data['config']['logs'][team]
+
+        if team_log is None:
+            logging.info('Log for {} is None. Forcing the use of the cache'.format(team))
+            return self._cache(data, force=True)
 
         user_idx = 0
         log_parser = TeamLogParser(data['version'], team, self.v3c_videos)
@@ -97,9 +152,9 @@ class TeamLogs:
 
                     # grab relevant infos from different team log files
                     if len(ranked_list['results']) > 0:
-                        results_df = self.get_teams_results(ranked_list['results'], log_parser.get_results, max_records)
+                        results_df = self.get_teams_results(ranked_list['results'], log_parser.get_results, self.max_records)
 
-                        results_df['timestamp'] = timestamp # note that in events the timestamp should be already present
+                        results_df['timestamp'] = timestamp
                         results_df['user'] = user_idx
                         results_df['task'] = task_name
                         results_df['team'] = team
@@ -107,6 +162,9 @@ class TeamLogs:
 
                     if len(ranked_list['events']) > 0:
                         events_df = self.get_teams_events(ranked_list['events'], log_parser.get_events)
+                        # note that in events the timestamp should be already present, but in some logs it is approximated (e.g., verge)
+                        # so it is better to get it directly from the file (otherwise the match using the timestamp does not work)
+                        events_df['timestamp'] = timestamp
 
                         events_df['user'] = user_idx
                         events_df['task'] = task_name
