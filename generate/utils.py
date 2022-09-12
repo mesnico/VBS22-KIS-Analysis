@@ -9,11 +9,14 @@ def get_team_values_df(data, team, team_logs):
         # for each (team, task), find the minimum ranks and the timestamps
         best_video_df = df.loc[df.groupby(['team', 'task'])['rank_video'].idxmin()]
         best_shot_df = df.loc[df.groupby(['team', 'task'])['rank_shot_margin_0'].idxmin()]
+        best_shot_df_5secs = df.loc[df.groupby(['team', 'task'])['rank_shot_margin_5'].idxmin()]
         
         best_video_df = best_video_df.filter(['team', 'task', 'rank_video', 'timestamp']).rename(columns={'timestamp': 'timestamp_best_video'})
-        best_shot_df = best_shot_df.filter(['team', 'task', 'rank_shot_margin_0', 'rank_shot_margin_5', 'rank_shot_margin_10', 'timestamp']).rename(columns={'timestamp': 'timestamp_best_shot'})
+        best_shot_df = best_shot_df.filter(['team', 'task', 'rank_shot_margin_0', 'timestamp']).rename(columns={'timestamp': 'timestamp_best_shot'})
+        best_shot_df_5secs = best_shot_df_5secs.filter(['team', 'task', 'rank_shot_margin_5', 'timestamp']).rename(columns={'timestamp': 'timestamp_best_shot_5secs'})
 
         df = best_video_df.merge(best_shot_df, on=['team', 'task'])
+        df = df.merge(best_shot_df_5secs, on=['team', 'task'])
 
         # convert timestamps in actual seconds from the start of the task
         df['task_start'] = df['task'].apply(lambda x: runreader.tasks.get_task_from_taskname(x)['started'])

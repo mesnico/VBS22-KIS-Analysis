@@ -127,6 +127,8 @@ class TeamLogs:
         ranks_df = ranks_df.reset_index()
         # merge this table with the events, the key is the timestamp column
         events_and_ranks_df = events_df.merge(ranks_df, on='timestamp')
+        # sometimes there are duplicated entries due to log repetitions. Remove them
+        events_and_ranks_df.drop_duplicates(inplace=True)
 
         return results_df, events_and_ranks_df
 
@@ -134,7 +136,12 @@ class TeamLogs:
         if isinstance(events, dict):
             events = [events]
         events = pd.DataFrame(events)
-        return events_fn(events)
+        standard_attrs = events_fn(events)
+
+        # collect non-standard attributes of the event in a single column "additionals"
+        non_standard_attrs = set(events.columns) - set(standard_attrs.columns)
+        standard_attrs['additionals'] = events[non_standard_attrs].apply(lambda x: x.to_json(), axis=1)
+        return standard_attrs
 
     def get_teams_results(self, results, results_fn, max_records):
         results = results[:max_records]
@@ -146,10 +153,10 @@ class TeamLogs:
         assert min_rank in [0, 1]
         if min_rank == 0:
             results['rank'] = results['rank'] + 1
-            
+
         return results
 
-    def get_rank_of_correct_results(self, result, method='timeinterval', target_shot_margins=[0, 5, 10]): # 'shotid' or 'timeinterval'
+    def get_rank_of_correct_results(self, result, method='timeinterval', target_shot_margins=[0, 5]): # 'shotid' or 'timeinterval'
         """
         computes the rank of correct video or shot
         method: "shotid" or "timeinterval". "timeinterval" is the default for the 2022 evaluation (uses target shot boundaries and not the shot id)
