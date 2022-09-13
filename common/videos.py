@@ -83,6 +83,11 @@ class Videos:
         fps = self.fps['FPS'][videoId]
         time = frame * 1000 / fps
 
+        # max_frames_in_msb = self.videos[videoId]['endframe'].max()
+        # logging.debug('Submitted frame is {} (total number of frames of video {} is {})'.format(frame, videoId, max_frames_in_msb))
+        # if time > max_time_in_msb:
+        #     logging.warning('Frame {} (millisecond {}) is out of the video {} length'.format(frame, time, videoId))
+
         return time
 
     def get_shot_time_from_video_and_segment(self, videoId, segment, method="middle_frame"):

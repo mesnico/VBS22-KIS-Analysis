@@ -6,10 +6,11 @@ import os
 import tqdm
 import json
 import logging
+from .videos import Videos
 
 class TeamLogParser():
-    def __init__(self, version, team, v3c_videos) -> None:
-        self.version = version
+    def __init__(self, data, team, v3c_videos) -> None:
+        version = data['version']
         self.v3c_videos = v3c_videos
         if version == '2022':
             if team == 'diveXplore':
@@ -22,6 +23,10 @@ class TeamLogParser():
                 self.get_results = self.get_results_standard_2022 # if the team followed the standard, this function works just fine
 
             self.get_events = self.get_events_standard_2022 # if version == '2022' else None
+
+            if team == 'vitrivr':
+                # patch the v3c_video to use their segments (cineast used other segments)
+                self.v3c_videos = Videos(['data/v3c1_2_cineast_segments.csv'], data['args'].v3c_fps_file)
         else:
             self.get_results = self.get_results_visione_2021
             self.get_events = self.get_events_standard_2022
@@ -126,7 +131,7 @@ class TeamLogs:
             return self._cache(data, force=True)
 
         user_idx = 0
-        log_parser = TeamLogParser(data['version'], team, self.v3c_videos)
+        log_parser = TeamLogParser(data, team, self.v3c_videos)
         for root, _, files in os.walk(team_log):
             for file in tqdm.tqdm(files, desc="Processing {} logs".format(team)):
                 path = os.path.join(root, file)

@@ -24,6 +24,7 @@ def main(args):
         args.v3c_fps_file,
         args.v3c_segments_files)
     competition_data['config'] = cfg
+    competition_data['args'] = args
     
     plot_cfgs = [c for c in cfg["generate"] if c["name"] in args.graphs]
     plot_cfg = plot_cfgs[0]
