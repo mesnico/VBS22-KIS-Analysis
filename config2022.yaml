@@ -1,4 +1,4 @@
-teams: ['vitrivr']
+teams: ['VISIONE', 'vibro', 'diveXplore', 'VERGE', 'vitrivr', 'vitrivr-VR', 'CVHunter']
 
 logs:
   VISIONE: team_logs/logs_VISIONE/DRES_log
@@ -6,6 +6,7 @@ logs:
   diveXplore: team_logs/diveXplore
   VERGE: team_logs/from_dres/verge
   vitrivr: team_logs/from_dres/vitrivr
+  vitrivr-VR: team_logs/from_dres/vitrivr-vr
   CVHunter: null  # data is injected directly inside the cache folder, given that the team already provided processed data (see scripts/cvhunter_to_pandas.csv)
 
 generate:
