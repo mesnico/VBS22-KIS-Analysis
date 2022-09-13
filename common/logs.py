@@ -192,6 +192,9 @@ class TeamLogs:
         events_and_ranks_df = events_df.merge(ranks_df, on='timestamp')
         # sometimes there are duplicated entries due to log repetitions. Remove them
         events_and_ranks_df.drop_duplicates(inplace=True)
+        # reordering columns
+        events_and_ranks_df= events_and_ranks_df[['task', 'team', 'user', 'timestamp', 'rank_video', 'rank_shot_margin_0',
+                             'rank_shot_margin_5', 'category', 'type', 'value', 'additionals']]
 
         return results_df, events_and_ranks_df
 

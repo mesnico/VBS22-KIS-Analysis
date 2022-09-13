@@ -29,6 +29,7 @@ class TimeRecallTable(Result):
         """
         df = df.melt(var_name="metric", id_vars=["team", "task"], value_name="value")
         df = df.pivot(index=['team', 'metric'], columns="task", values="value")
+        df=df.fillna(-1)
         df = df.astype('int32')
         df[df < 0] = -1
         df = df.astype('str')

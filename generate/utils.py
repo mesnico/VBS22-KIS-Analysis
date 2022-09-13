@@ -21,11 +21,12 @@ def get_team_values_df(data, team, team_logs):
         # convert timestamps in actual seconds from the start of the task
         df['task_start'] = df['task'].apply(lambda x: runreader.tasks.get_task_from_taskname(x)['started'])
         df['time_best_video'] = (df['timestamp_best_video'] - df['task_start']) / 1000
-        # df['time_best_shot'] = (df['timestamp_best_shot'] - df['task_start']) / 1000
+        df['time_best_shot'] = (df['timestamp_best_shot'] - df['task_start']) / 1000
+        df['time_best_shot_margin5'] = (df['timestamp_best_shot_5secs'] - df['task_start']) / 1000
         df['time_correct_submission'] = df.apply(lambda x: runreader.get_csts()[x['team']][x['task']] - runreader.tasks.get_task_from_taskname(x['task'])['started'], axis=1)
         df['time_correct_submission'] = df.apply(lambda x: x['time_correct_submission'] / 1000 if x['time_correct_submission'] > 0 else np.inf, axis=1)
 
         # df.set_index(['team', 'task'])
-        df = df.filter(['team', 'task', 'time_correct_submission', 'time_best_video', 'rank_video', 'rank_shot_margin_0', 'rank_shot_margin_5', 'rank_shot_margin_10'])
+        df = df.filter(['team', 'task', 'time_correct_submission', 'time_best_video','time_best_shot', 'time_best_shot_margin5','rank_video', 'rank_shot_margin_0', 'rank_shot_margin_5', 'rank_shot_margin_10'])
         df.replace([np.inf, -np.inf], -1, inplace=True)
         return df
