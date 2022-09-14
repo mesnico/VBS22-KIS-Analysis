@@ -12,7 +12,7 @@ logs:
 generate:
   - name: time_recall_table
     function: generate.TimeRecallTable
-    generate_args: {split_user: True, max_records: 1000}
+    generate_args: {split_user: False, max_records: 1000}
     render_args: {}
 
   - name: best_shot_rank_boxplot

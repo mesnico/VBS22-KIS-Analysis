@@ -15,6 +15,7 @@ def get_team_values_df(data, team_logs, split_users=False, max_rank=10000):
         df['rank_shot_margin_5'] = df['rank_shot_margin_5'].apply(replace_large_ranks)
 
         # for each (team, user, task), find the minimum ranks and the timestamps
+        df=df.sort_values('timestamp')
         best_video_df = df.loc[df.groupby(['team', 'user', 'task'])['rank_video'].idxmin()]
         best_shot_df = df.loc[df.groupby(['team', 'user', 'task'])['rank_shot_margin_0'].idxmin()]
         best_shot_df_5secs = df.loc[df.groupby(['team', 'user','task'])['rank_shot_margin_5'].idxmin()]
