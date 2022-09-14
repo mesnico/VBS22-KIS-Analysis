@@ -156,7 +156,7 @@ class TeamLogs:
                         continue
 
                     # grab relevant infos from different team log files
-                    if len(ranked_list.get('results',[])) > 0:
+                    if len(ranked_list['results']) > 0:
                         results_df = self.get_teams_results(ranked_list['results'], log_parser.get_results, self.max_records)
 
                         results_df['timestamp'] = timestamp
@@ -165,7 +165,7 @@ class TeamLogs:
                         results_df['team'] = team
                         results_dfs.append(results_df)
 
-                    if len(ranked_list.get('events',[])) > 0:
+                    if len(ranked_list['events']) > 0:
                         events_df = self.get_teams_events(ranked_list['events'], log_parser.get_events)
                         # note that in events the timestamp should be already present, but in some logs it is approximated (e.g., verge)
                         # so it is better to get it directly from the file (otherwise the match using the timestamp does not work)

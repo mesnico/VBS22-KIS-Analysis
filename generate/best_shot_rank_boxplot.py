@@ -17,7 +17,7 @@ class BestShotRankBoxplot(Result):
 
         dfs = []
         for team in self.teams:
-            df = get_team_values_df(self.data, self.logs[team])
+            df = get_team_values_df(self.data, team, self.logs[team])
             dfs.append(df)
 
         total_df = pd.concat(dfs, axis=0)

@@ -1,4 +1,4 @@
-teams: ['vibro','VISIONE','CVHunter', 'VERGE','vitrivr-VR', 'vitrivr', ] #'diveXplore',
+teams: ['VISIONE','CVHunter','vibro', 'VERGE', 'vitrivr', 'vitrivr-VR'] #'diveXplore',
 
 logs:
   VISIONE: data/2022/team_logs/VISIONE
@@ -12,7 +12,7 @@ logs:
 generate:
   - name: time_recall_table
     function: generate.TimeRecallTable
-    generate_args: {split_user: True, max_records: 1000}
+    generate_args: {}
     render_args: {}
 
   - name: best_shot_rank_boxplot
