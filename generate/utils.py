@@ -51,7 +51,7 @@ def get_team_values_df(data, team_logs, split_users=False, max_rank=10000):
         df['time_correct_submission'] = df['time_correct_submission'].apply(fix_time_fun)
 
 
-        df = df.filter(['team', 'user', 'task', 'time_correct_submission', 'time_best_video', 'time_best_shot',
+        df = df.filter(['team', 'user', 'task', 'task_start', 'time_correct_submission', 'time_best_video', 'time_best_shot',
                         'time_best_shot_margin5', 'rank_video', 'rank_shot_margin_0', 'rank_shot_margin_5',
                         'rank_shot_margin_10'])
 

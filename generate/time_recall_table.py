@@ -28,17 +28,23 @@ class TimeRecallTable(Result):
         """
         Render the dataframe into a table or into a nice graph
         """
+        #renaming task
+        tasks = df[['task','task_start']].sort_values(by=['task_start'])['task'].unique()
+        textual=[t for t in tasks if t.startswith('vbs22-kis-t')]
+        visual=[t for t in tasks if t.startswith('vbs22-kis-v')]
+        t_dic={t:  f'T_{i+1}'for i,t in enumerate(textual) }
+        t_dic.update( {t:  f'V_{i + 1}' for i,t in enumerate(visual)})
+        df['task'] = df['task'].map(t_dic)
+        textual=[t_dic[t] for t in textual ]
+        visual = [t_dic[t] for t in visual]
+        df.drop(columns='task_start', inplace=True)
+
         df = df.fillna(-1)
         col=[c for c in df.columns.values.tolist() if c!='team' and c!='task' and c!='user']
         df[col]= df[col].astype('int32')
         df[col] = df[col].applymap(lambda x: -1 if x< 0 else x)
         df = df.astype('str')
         df.replace(['-1'], '-', inplace=True)
-
-
-        #renaming tasks
-        rename_fun= lambda x : x.replace('vbs22-kis-t0', 'T_').replace('vbs22-kis-t', 'T_').replace('vbs22-kis-v0', 'V_').replace('vbs22-kis-v', 'V_')
-        df['task']=df['task'].apply(rename_fun)
 
         #aggregate
         agg_dic={c: (lambda x: ' / '.join(x)) for c in col}
@@ -76,6 +82,9 @@ class TimeRecallTable(Result):
         level_2 = ['rank', 'time (s)']
         df = df.reindex(pd.MultiIndex.from_product([level_0, level_1, level_2]))
         df.dropna(axis=0, inplace=True)  # 'correct submission'/rank shluld not be in the index
+
+        #ordering columns
+        df=df[textual+visual]
         df.to_csv('output/time_recall_table.csv')
         #formatting
 
