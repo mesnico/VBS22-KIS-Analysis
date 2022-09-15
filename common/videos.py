@@ -101,7 +101,7 @@ class Videos:
 
         if method == 'middle_frame':
             # TODO: to be consistent with get_shot_time_from_video_and_frame, I use the frame numbers and then convert them to milliseconds using fixed FPS. Is this correct?
-            shot_frame = (row['end'] + row['start']) / 2
+            shot_frame = (row['endframe'] + row['startframe']) / 2
         else:
             raise ValueError('Method {} not recognized!'.format(method))
 

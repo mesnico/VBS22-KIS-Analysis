@@ -29,14 +29,11 @@ class TimeRecallTable(Result):
         Render the dataframe into a table or into a nice graph
         """
         #renaming task
+        rename_fun = lambda x: x.replace('vbs22-kis-t', 'T_').replace('vbs22-kis-v', 'V_')
+        df['task'] = df['task'].apply(rename_fun)
         tasks = df[['task','task_start']].sort_values(by=['task_start'])['task'].unique()
-        textual=[t for t in tasks if t.startswith('vbs22-kis-t')]
-        visual=[t for t in tasks if t.startswith('vbs22-kis-v')]
-        t_dic={t:  f'T_{i+1}'for i,t in enumerate(textual) }
-        t_dic.update( {t:  f'V_{i + 1}' for i,t in enumerate(visual)})
-        df['task'] = df['task'].map(t_dic)
-        textual=[t_dic[t] for t in textual ]
-        visual = [t_dic[t] for t in visual]
+        textual=[t for t in tasks if t.startswith('T')] #used later to order the column
+        visual=[t for t in tasks if t.startswith('V')] #used later to order the column
         df.drop(columns='task_start', inplace=True)
 
         df = df.fillna(-1)
@@ -51,9 +48,14 @@ class TimeRecallTable(Result):
         agg_dic['time_correct_submission']="min"
         df=df.groupby(['team','task'])[col].agg(agg_dic ).reset_index()
         df.replace('- / -', '-', regex=True, inplace=True)
+        add_second= lambda x: x if x=='-' else x + 's'
+        df['time_correct_submission']=df['time_correct_submission'].apply(add_second)
+        df['time_best_shot']=df['time_best_shot'].apply(add_second)
+        df['rank_shot_margin_5'] = df['rank_shot_margin_5'].apply(add_second)
+        df['time_best_video'] = df['time_best_video'].apply(add_second)
 
         df = df.melt(var_name="metric", id_vars=["team", "task"], value_name="value")
-        df['unit'] = df['metric'].apply(lambda x: 'rank' if x.startswith('rank_') else 'time (s)')
+        df['unit'] = df['metric'].apply(lambda x: 'rank' if x.startswith('rank_') else 'time')
         replace_dic = {
             'rank_shot_margin_0': 'correct frame',
             'time_best_shot': 'correct frame',
@@ -69,9 +71,9 @@ class TimeRecallTable(Result):
 
 
         #sorting index desired order
-        level_0=self.teams #order in teh conf file
+        level_0=self.teams #order in the conf file
         level_1=['correct frame', 'frame in GT+2x5s', 'correct video','correct submission']
-        level_2=['rank','time (s)']
+        level_2=['rank','time']
         df = df.reindex(pd.MultiIndex.from_product([level_0,level_1,level_2]))
         df.dropna(axis=0, inplace=True)#'correct submission'/rank shluld not be in the index
         print(df)
@@ -79,7 +81,7 @@ class TimeRecallTable(Result):
         # sorting index desired order
         level_0 = self.teams  # order in teh conf file
         level_1 = ['correct frame', 'correct video', 'correct submission']
-        level_2 = ['rank', 'time (s)']
+        level_2 = ['rank', 'time']
         df = df.reindex(pd.MultiIndex.from_product([level_0, level_1, level_2]))
         df.dropna(axis=0, inplace=True)  # 'correct submission'/rank shluld not be in the index
 
