@@ -27,6 +27,7 @@ def main(args):
 
     
     out_path = Path(args.output_path)
+    out_path.mkdir(parents=True, exist_ok=True)
     events_df.to_pickle(out_path / 'CVHunter_events.pkl')
 
     # write also an empty result dataframe (so that this output is consistent with the cache system used in the TeamLog class)
