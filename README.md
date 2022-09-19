@@ -1,10 +1,10 @@
 # KIS Log Analysis - VBS 2022
-This repo provides a good code base for extracting and analyzing the logs from the different teams that participated to VBS 2022.
+This repo provides a good code base for extracting and analyzing the logs from the different teams that participated to [VBS 2022](https://videobrowsershowdown.org/).
 
 Hopefully, this repo will help to analyze also the logs from the future versions of VBS.
 
 ## Data Preparation
-First of all, run the following command. This will extract log data from 2022 teams and will prepare the environment.
+First of all, run the following command. This will extract log data from 2022 teams and will prepare the environment. Some data is collected from the local logs of the systems, others from the public [run file](https://github.com/lucaro/VBS-Archive/tree/main/2022) of the [DRES](https://github.com/dres-dev/DRES) server.
 ```
 ./prepare.sh
 source venv/bin/activate
@@ -12,8 +12,7 @@ source venv/bin/activate
 
 ## Generate a plot
 A plot can be generated following the configuration written in a yaml configuration file.
-
-This is an example call to construct the _time-recall_ table
+This is an example call to construct the _time-recall_ table:
 ```
 python plot.py time_recall_table --config config2022.yaml
 ```
