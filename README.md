@@ -4,7 +4,7 @@ This repo provides a good code base for extracting and analyzing the logs from t
 Hopefully, this repo will help to analyze also the logs from the future versions of VBS.
 
 ## Data Preparation
-First of all, run the following command. This will extract log data from 2022 teams and will prepare the environment. Some data is collected from the local logs of the systems, others from the public [run file](https://github.com/lucaro/VBS-Archive/tree/main/2022) of the [DRES](https://github.com/dres-dev/DRES) server.
+First of all, run the following command. This will extract log data from 2022 teams and will prepare the environment. Some data are collected from the local logs of the systems, others from the public [run file](https://github.com/lucaro/VBS-Archive/tree/main/2022) of the [DRES](https://github.com/dres-dev/DRES) server.
 ```
 ./prepare.sh
 source venv/bin/activate
