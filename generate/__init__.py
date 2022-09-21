@@ -1,2 +1,4 @@
 from .time_recall_table import TimeRecallTable
 from .best_shot_rank_boxplot import BestShotRankBoxplot
+from .browsing_efficiency_boxplot import BrowsingEfficiencyBoxplot
+from .browsing_efficiency_scatterplot import BrowsingEfficiencyScatterplot

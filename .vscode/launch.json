@@ -19,7 +19,25 @@
             "program": "plot.py",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args": ["best_shot_rank_boxplot"]
+            "args": ["best_shot_rank_boxplot", "--no_result_cache"]
+        },
+        {
+            "name": "Browsing Efficiency Boxplot",
+            "type": "python",
+            "request": "launch",
+            "program": "plot.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": ["browsing_efficiency_boxplot", "--no_result_cache"]
+        },
+        {
+            "name": "Browsing Efficiency Scatterplot",
+            "type": "python",
+            "request": "launch",
+            "program": "plot.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": ["browsing_efficiency_scatterplot", "--no_result_cache"]
         },
         {
             "name": "Time Recall Table",
@@ -28,7 +46,7 @@
             "program": "plot.py",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args": ["time_recall_table", "--no_result_cache", "--no_log_cache"]
+            "args": ["time_recall_table", "--no_result_cache"]
         },
     ]
 }

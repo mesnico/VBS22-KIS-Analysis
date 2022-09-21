@@ -19,3 +19,13 @@ generate:
     function: generate.BestShotRankBoxplot
     generate_args: {}
     render_args: {}
+
+  - name: browsing_efficiency_boxplot
+    function: generate.BrowsingEfficiencyBoxplot
+    generate_args: {max_records: 1000}
+    render_args: {}
+
+  - name: browsing_efficiency_scatterplot
+    function: generate.BrowsingEfficiencyScatterplot
+    generate_args: {max_records: 1000}
+    render_args: {}

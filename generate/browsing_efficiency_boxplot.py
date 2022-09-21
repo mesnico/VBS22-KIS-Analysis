@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import logging
 logging.basicConfig(level=logging.INFO)
 
-class BestShotRankBoxplot(Result):
+class BrowsingEfficiencyBoxplot(Result):
     def __init__(self, data, teams, logs, **kwargs):
         super().__init__(**kwargs, cache_filename='TimeRecallTable.pkl')
         self.data = data
@@ -20,6 +20,7 @@ class BestShotRankBoxplot(Result):
         """
         split_user=kwargs.get('split_user', False)
         max_records=kwargs.get('max_records', 10000)
+        self.max_records = max_records
         dfs = []
         for team in self.teams:
             df = get_team_values_df(self.data, self.logs[team],split_user, max_records)
@@ -32,10 +33,13 @@ class BestShotRankBoxplot(Result):
         """
         Render the dataframe into a table or into a nice graph
         """
-        # select only r_s
-        df = df[["rank_shot_margin_0", "team", "task"]]
+        
         # discard NaN values
-        df = df[df["rank_shot_margin_0"] != -1]
+        df = df[df["time_correct_submission"] != -1]
+
+        df["elapsed"] = df["time_correct_submission"] - df["time_first_appearance"]
+        df = df[["elapsed", "team", "task"]]
+        
 
         # df = df.pivot(columns="team", values="r_s")
         # print(df)
@@ -45,19 +49,19 @@ class BestShotRankBoxplot(Result):
         ax.set_yscale("log")
 
         # Plot the orbital period with horizontal boxes
-        sns.boxplot(x="team", y="rank_shot_margin_0", data=df,
+        sns.boxplot(x="team", y="elapsed", data=df,
                     whis=[0, 100], width=.6, palette="vlag")
 
         # Add in points to show each observation
-        sns.stripplot(x="team", y="rank_shot_margin_0", data=df,
+        sns.stripplot(x="team", y="elapsed", data=df,
                     size=4, color=".3", linewidth=0)
 
         # Tweak the visual presentation
         ax.xaxis.grid(True)
-        ax.set(ylabel="best shot rank")
+        ax.set(ylabel="time delta (seconds)")
         # sns.despine(trim=True, left=True)
 
         # # draw boxplot
         # bplot = df.boxplot(column="rank_shot_margin_0", by="team")
         # bplot.set_yscale('log')
-        plt.savefig('output/best_shot_rank_boxplot.pdf', format='pdf', bbox_inches="tight")
+        plt.savefig(f'output/browsing_efficiency_boxplot_shotrank{self.max_records}.pdf', format='pdf', bbox_inches="tight")
