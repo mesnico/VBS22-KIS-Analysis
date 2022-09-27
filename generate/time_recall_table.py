@@ -28,6 +28,10 @@ class TimeRecallTable(Result):
         """
         Render the dataframe into a table or into a nice graph
         """
+
+        # drop unuseful columns
+        df = df.drop(['time_first_appearance', 'rank_shot_first_appearance', 'time_last_appearance', 'rank_shot_last_appearance'], axis=1)
+
         #renaming task
         rename_fun = lambda x: x.replace('vbs22-kis-t', 'T_').replace('vbs22-kis-v', 'V_')
         df['task'] = df['task'].apply(rename_fun)
