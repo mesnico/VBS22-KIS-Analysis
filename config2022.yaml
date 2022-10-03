@@ -17,15 +17,20 @@ generate:
 
   - name: best_shot_rank_boxplot
     function: generate.BestShotRankBoxplot
-    generate_args: {}
-    render_args: {}
+    generate_args: {max_records: 10000, split_user: True, fill_missing: False}
+    render_args: {show_boxplot: False, figsize: [6, 5]}
 
   - name: browsing_efficiency_boxplot
     function: generate.BrowsingEfficiencyBoxplot
-    generate_args: {max_records: 1000}
-    render_args: {}
+    generate_args: {max_records: 10000, split_user: True, fill_missing: False}
+    render_args: {show_boxplot: False, figsize: [6, 5]}
 
-  - name: browsing_efficiency_scatterplot
+  - name: browsing_efficiency_scatterplot_firstappearance
     function: generate.BrowsingEfficiencyScatterplot
-    generate_args: {max_records: 1000}
-    render_args: {}
+    generate_args: {max_records: 10000}
+    render_args: {time_of: 'first_appearance', figsize: [6, 5], marker_size: 60}
+
+  - name: browsing_efficiency_scatterplot_lastappearance
+    function: generate.BrowsingEfficiencyScatterplot
+    generate_args: {max_records: 10000}
+    render_args: {time_of: 'last_appearance', figsize: [6, 5], marker_size: 60}

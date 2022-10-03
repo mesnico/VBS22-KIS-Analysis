@@ -31,13 +31,22 @@
             "args": ["browsing_efficiency_boxplot", "--no_result_cache"]
         },
         {
-            "name": "Browsing Efficiency Scatterplot",
+            "name": "Browsing Efficiency Scatterplot First Appearance",
             "type": "python",
             "request": "launch",
             "program": "plot.py",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args": ["browsing_efficiency_scatterplot", "--no_result_cache"]
+            "args": ["browsing_efficiency_scatterplot_firstappearance", "--no_result_cache"]
+        },
+        {
+            "name": "Browsing Efficiency Scatterplot Last Appearance",
+            "type": "python",
+            "request": "launch",
+            "program": "plot.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": ["browsing_efficiency_scatterplot_lastappearance", "--no_result_cache"]
         },
         {
             "name": "Time Recall Table",

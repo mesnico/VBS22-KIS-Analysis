@@ -29,7 +29,7 @@ class BrowsingEfficiencyScatterplot(Result):
         total_df = pd.concat(dfs, axis=0)
         return total_df
 
-    def _render(self, df):
+    def _render(self, df, time_of='first_appearance', marker_size=5, figsize=[7, 6]):
         """
         Render the dataframe into a table or into a nice graph
         """
@@ -41,14 +41,15 @@ class BrowsingEfficiencyScatterplot(Result):
         df["elapsed_last_appearance"] = df["time_correct_submission"] - df["time_last_appearance"]
         first_appearance_df = df[["elapsed_first_appearance", "rank_shot_first_appearance", "team", "task"]].rename(columns={"elapsed_first_appearance": "elapsed", "rank_shot_first_appearance": "rank_shot"})
         last_appearance_df = df[["elapsed_last_appearance", "rank_shot_last_appearance", "team", "task"]].rename(columns={"elapsed_last_appearance": "elapsed", "rank_shot_last_appearance": "rank_shot"})
-        df = pd.concat([first_appearance_df.assign(dataset='first appearance'), last_appearance_df.assign(dataset='last appearance')])
+        df = pd.concat([first_appearance_df.assign(dataset='first_appearance'), last_appearance_df.assign(dataset='last_appearance')])
 
         # Initialize the figure with a logarithmic x axis
-        f, ax = plt.subplots(figsize=(7, 6))
+        f, ax = plt.subplots(figsize=figsize)
         # ax.set_yscale("log")
 
         # Plot elapsed (time delta) vs rank of first occurrence
-        sns.scatterplot(data=df, x="rank_shot", y="elapsed", style='dataset', hue='team')
+        df = df[df['dataset'] == time_of]
+        sns.scatterplot(data=df, x="rank_shot", y="elapsed", style='team', hue='team', s=marker_size)
         # sns.scatterplot(data=df, x="rank_shot_last_appearance", y="elapsed_last_appearance")
 
         # Tweak the visual presentation
@@ -56,7 +57,5 @@ class BrowsingEfficiencyScatterplot(Result):
         ax.set(ylabel="time delta (seconds)", xlabel="shot rank")
         # sns.despine(trim=True, left=True)
 
-        # # draw boxplot
-        # bplot = df.boxplot(column="rank_shot_margin_0", by="team")
-        # bplot.set_yscale('log')
-        plt.savefig(f'output/browsing_efficiency_scatterplot_shotrank{self.max_records}.pdf', format='pdf', bbox_inches="tight")
+        ax.set_xscale('log')
+        plt.savefig(f'output/browsing_efficiency_scatterplot_timeof_{time_of}_shotrank{self.max_records}_.pdf', format='pdf', bbox_inches="tight")
