@@ -58,4 +58,4 @@ class BrowsingEfficiencyScatterplot(Result):
         # sns.despine(trim=True, left=True)
 
         ax.set_xscale('log')
-        plt.savefig(f'output/browsing_efficiency_scatterplot_timeof_{time_of}_shotrank{self.max_records}_.pdf', format='pdf', bbox_inches="tight")
+        plt.savefig(f'output/browsing_efficiency_scatterplot_timeof_{time_of}_shotrank{self.max_records}.pdf', format='pdf', bbox_inches="tight")

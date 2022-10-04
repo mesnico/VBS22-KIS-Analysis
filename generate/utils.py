@@ -23,7 +23,7 @@ def get_team_values_df(data, team_logs, split_users=False, max_rank=10000):
         first_appearance_time = df.loc[df.groupby(['team', 'user', 'task'])['timestamp'].idxmin()]
         last_appearance_time = df.loc[df.groupby(['team', 'user', 'task'])['timestamp'].idxmax()]
 
-        best_video_df = best_video_df.filter(['team', 'user', 'task', 'rank_video', 'timestamp']).rename(
+        best_video_df = best_video_df.filter(['team', 'user', 'task', 'rank_video', 'timestamp', 'correct_submission_time_ms']).rename(
                 columns={'timestamp': 'timestamp_best_video'})
         best_shot_df = best_shot_df.filter(['team', 'user','task', 'rank_shot_margin_0', 'timestamp']).rename(
                 columns={'timestamp': 'timestamp_best_shot'})
@@ -52,14 +52,14 @@ def get_team_values_df(data, team_logs, split_users=False, max_rank=10000):
         df['time_first_appearance'] = (df['timestamp_first_appearance'] - df['task_start'])
         df['time_last_appearance'] = (df['timestamp_last_appearance'] - df['task_start'])
         df['time_best_shot_margin5'] = (df['timestamp_best_shot_5secs'] - df['task_start'])
-        df['time_correct_submission'] = df.apply(lambda x: runreader.get_csts()[x['team']][x['task']] -
-                                                           runreader.tasks.get_task_from_taskname(x['task'])[
-                                                                   'started'], axis=1)
+        #df['time_correct_submission'] = df.apply(lambda x: runreader.get_csts()[x['team']][x['task']] -
+        #                                                   runreader.tasks.get_task_from_taskname(x['task'])[
+        #                                                           'started'], axis=1)
         fix_time_fun=lambda x: x / 1000 if x > 0 else np.inf
         df['time_best_video'] = df['time_best_video'].astype(float).apply(fix_time_fun)
         df['time_best_shot'] = df['time_best_shot'].astype(float).apply(fix_time_fun)
         df['time_best_shot_margin5'] = df['time_best_shot_margin5'].astype(float).apply(fix_time_fun)
-        df['time_correct_submission'] = df['time_correct_submission'].astype(float).apply(fix_time_fun)
+        df['time_correct_submission'] = df['correct_submission_time_ms'].astype(float).apply(fix_time_fun)
         df['time_first_appearance'] = df['time_first_appearance'].astype(float).apply(fix_time_fun)
         df['time_last_appearance'] = df['time_last_appearance'].astype(float).apply(fix_time_fun)
 
@@ -69,5 +69,5 @@ def get_team_values_df(data, team_logs, split_users=False, max_rank=10000):
                         'time_best_shot_margin5', 'rank_video', 'rank_shot_margin_0', 'rank_shot_margin_5',
                         'rank_shot_margin_10', 'time_first_appearance', 'rank_shot_first_appearance', 'time_last_appearance', 'rank_shot_last_appearance'])
 
-        df.replace([np.inf, -np.inf], -1, inplace=True)
+        df.replace([np.inf, -np.inf, np.nan], -1, inplace=True)
         return df

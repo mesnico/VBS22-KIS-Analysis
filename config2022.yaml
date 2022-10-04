@@ -12,7 +12,7 @@ logs:
 generate:
   - name: time_recall_table
     function: generate.TimeRecallTable
-    generate_args: {split_user: False, max_records: 1000}
+    generate_args: {split_user: False, only_best_user: False, max_records: 1000}
     render_args: {}
 
   - name: best_shot_rank_boxplot
@@ -22,7 +22,7 @@ generate:
 
   - name: browsing_efficiency_boxplot
     function: generate.BrowsingEfficiencyBoxplot
-    generate_args: {max_records: 10000, split_user: True, fill_missing: False}
+    generate_args: {max_records: 1000, split_user: True, fill_missing: False}
     render_args: {show_boxplot: False, figsize: [6, 5]}
 
   - name: browsing_efficiency_scatterplot_firstappearance

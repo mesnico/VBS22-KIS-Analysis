@@ -170,6 +170,8 @@ class TeamLogs:
                         # note that in events the timestamp should be already present, but in some logs it is approximated (e.g., verge)
                         # so it is better to get it directly from the file (otherwise the match using the timestamp does not work)
                         events_df['timestamp'] = timestamp
+                        events_df['elapsed_since_task_start_ms'] = timestamp - task['started']
+                        events_df['correct_submission_time_ms'] = cst - task['started'] if cst > 0 else np.nan
 
                         events_df['user'] = user_idx
                         events_df['task'] = task_name
@@ -193,8 +195,8 @@ class TeamLogs:
         # sometimes there are duplicated entries due to log repetitions. Remove them
         events_and_ranks_df.drop_duplicates(inplace=True)
         # reordering columns
-        events_and_ranks_df= events_and_ranks_df[['task', 'team', 'user', 'timestamp', 'rank_video', 'rank_shot_margin_0',
-                             'rank_shot_margin_5', 'category', 'type', 'value', 'additionals']]
+        events_and_ranks_df= events_and_ranks_df[['task', 'team', 'user', 'timestamp', 'elapsed_since_task_start_ms', 'correct_submission_time_ms', 
+                            'rank_video', 'rank_shot_margin_0', 'rank_shot_margin_5', 'category', 'type', 'value', 'additionals']]
 
         return results_df, events_and_ranks_df
 
