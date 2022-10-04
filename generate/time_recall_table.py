@@ -15,13 +15,28 @@ class TimeRecallTable(Result):
         Returns the view of the data interesting for the current analysis, in the form of a Pandas dataframe
         """
         split_user=kwargs.get('split_user', False)
+        only_best_user=kwargs.get('only_best_user', False)
         max_records=kwargs.get('max_records', 10000)
         dfs = []
         for team in self.teams:
-            df = get_team_values_df(self.data, self.logs[team],split_user, max_records)
+            df = get_team_values_df(self.data, self.logs[team], split_user if not only_best_user else True, max_records)
             dfs.append(df)
 
-        total_df = pd.concat(dfs, axis=0)
+        total_df = pd.concat(dfs, axis=0).reset_index()
+
+        # keep the results from the best user among the two, for each given (task, team)
+        if only_best_user:
+            # the best penalty contribution is given by the ranks. If they are equal, then the user that submitted earlier wins
+            rank_video_mod = total_df['rank_video'].replace(-1, max_records + 1)
+            rank_shot_mod = total_df['rank_shot_margin_0'].replace(-1, max_records + 1)
+            time_video_mod = total_df['time_best_video'].replace(-1, 1000)
+            time_shot_mod = total_df['time_best_shot'].replace(-1, 1000)
+
+            user_penalty = (rank_video_mod + rank_shot_mod) * 10000 + (time_video_mod + time_shot_mod)
+            total_df['user_penalty'] = user_penalty
+            total_df = total_df.loc[total_df.groupby(['team', 'task'])['user_penalty'].idxmin()]
+            total_df = total_df.drop(['user_penalty'], axis=1)
+
         return total_df
 
     def _render(self, df):
@@ -50,7 +65,7 @@ class TimeRecallTable(Result):
         #aggregate
         agg_dic={c: (lambda x: ' / '.join(x)) for c in col}
         agg_dic['time_correct_submission']="min"
-        df=df.groupby(['team','task'])[col].agg(agg_dic ).reset_index()
+        df=df.groupby(['team','task'])[col].agg(agg_dic).reset_index()
         df.replace('- / -', '-', regex=True, inplace=True)
         add_second= lambda x: x if x=='-' else x + 's'
         df['time_correct_submission']=df['time_correct_submission'].apply(add_second)

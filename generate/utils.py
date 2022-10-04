@@ -4,7 +4,7 @@ import numpy as np
 def get_team_values_df(data, team_logs, split_users=False, max_rank=10000):
         runreader = data['runreader']
 
-        df = team_logs.get_events_dataframe()
+        df = team_logs.get_events_dataframe().reset_index()
 
         if(not split_users):
                 df['user'] = 0
