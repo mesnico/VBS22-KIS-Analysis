@@ -1,10 +1,8 @@
 
 import numpy as np
 
-def get_team_values_df(data, team_logs, split_users=False, max_rank=10000):
+def get_team_values_df(data, df, split_users=False, max_rank=10000):
         runreader = data['runreader']
-
-        df = team_logs.get_events_dataframe().reset_index()
 
         if(not split_users):
                 df['user'] = 0
@@ -20,8 +18,9 @@ def get_team_values_df(data, team_logs, split_users=False, max_rank=10000):
         best_shot_df = df.loc[df.groupby(['team', 'user', 'task'])['rank_shot_margin_0'].idxmin()]
         best_shot_df_5secs = df.loc[df.groupby(['team', 'user','task'])['rank_shot_margin_5'].idxmin()]
         # find also the time of first and last appearance of a result in the ranked list
-        first_appearance_time = df.loc[df.groupby(['team', 'user', 'task'])['timestamp'].idxmin()]
-        last_appearance_time = df.loc[df.groupby(['team', 'user', 'task'])['timestamp'].idxmax()]
+        df_valid_rankshot = df[~df['rank_shot_margin_0'].isin([np.inf, -np.inf])]
+        first_appearance_time = df_valid_rankshot.loc[df_valid_rankshot.groupby(['team', 'user', 'task'])['timestamp'].idxmin()]
+        last_appearance_time = df_valid_rankshot.loc[df_valid_rankshot.groupby(['team', 'user', 'task'])['timestamp'].idxmax()]
 
         best_video_df = best_video_df.filter(['team', 'user', 'task', 'rank_video', 'timestamp', 'correct_submission_time_ms']).rename(
                 columns={'timestamp': 'timestamp_best_video'})
@@ -42,8 +41,8 @@ def get_team_values_df(data, team_logs, split_users=False, max_rank=10000):
 
         df = best_video_df.merge(best_shot_df, on=['team', 'user', 'task'])
         df = df.merge(best_shot_df_5secs, on=['team', 'user','task'])
-        df = df.merge(first_appearance_time, on=['team', 'user','task'])
-        df = df.merge(last_appearance_time, on=['team', 'user','task'])
+        df = df.merge(first_appearance_time, on=['team', 'user','task'], how="outer")
+        df = df.merge(last_appearance_time, on=['team', 'user','task'], how="outer")
 
         # convert timestamps in actual seconds from the start of the task
         df['task_start'] = df['task'].apply(lambda x: runreader.tasks.get_task_from_taskname(x)['started'])
@@ -71,3 +70,17 @@ def get_team_values_df(data, team_logs, split_users=False, max_rank=10000):
 
         df.replace([np.inf, -np.inf, np.nan], -1, inplace=True)
         return df
+
+def compute_user_penalty(df, max_records):
+        rank_video_mod = df['rank_video'].replace(-1, max_records + 1)
+        rank_shot_mod = df['rank_shot_margin_0'].replace(-1, max_records + 1)
+        time_video_mod = df['time_best_video'].replace(-1, 1000)
+        time_shot_mod = df['time_best_shot'].replace(-1, 1000)
+
+        task_duration = 420
+        user_penalty = time_video_mod + \
+                rank_video_mod * task_duration + \
+                time_shot_mod * task_duration * max_records + \
+                rank_shot_mod * (task_duration ** 2) * max_records
+        
+        return user_penalty

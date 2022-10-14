@@ -22,14 +22,23 @@
             "args": ["best_shot_rank_boxplot", "--no_result_cache"]
         },
         {
-            "name": "Browsing Efficiency Boxplot",
+            "name": "Browsing Efficiency Boxplot First Appearance",
             "type": "python",
             "request": "launch",
             "program": "plot.py",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args": ["browsing_efficiency_boxplot", "--no_result_cache"]
+            "args": ["browsing_efficiency_boxplot_firstappearance", "--no_result_cache"]
         },
+        // {
+        //     "name": "Browsing Efficiency Boxplot Last Appearance",
+        //     "type": "python",
+        //     "request": "launch",
+        //     "program": "plot.py",
+        //     "console": "integratedTerminal",
+        //     "justMyCode": true,
+        //     "args": ["browsing_efficiency_boxplot_lastappearance", "--no_result_cache"]
+        // },
         {
             "name": "Browsing Efficiency Scatterplot First Appearance",
             "type": "python",
@@ -39,15 +48,15 @@
             "justMyCode": true,
             "args": ["browsing_efficiency_scatterplot_firstappearance", "--no_result_cache"]
         },
-        {
-            "name": "Browsing Efficiency Scatterplot Last Appearance",
-            "type": "python",
-            "request": "launch",
-            "program": "plot.py",
-            "console": "integratedTerminal",
-            "justMyCode": true,
-            "args": ["browsing_efficiency_scatterplot_lastappearance", "--no_result_cache"]
-        },
+        // {
+        //     "name": "Browsing Efficiency Scatterplot Last Appearance",
+        //     "type": "python",
+        //     "request": "launch",
+        //     "program": "plot.py",
+        //     "console": "integratedTerminal",
+        //     "justMyCode": true,
+        //     "args": ["browsing_efficiency_scatterplot_lastappearance", "--no_result_cache"]
+        // },
         {
             "name": "Time Recall Table",
             "type": "python",

@@ -1,4 +1,4 @@
-teams: ['vibro','VISIONE','CVHunter', 'VERGE','vitrivr-VR', 'vitrivr', ] #'diveXplore',
+teams: ['vibro', 'CVHunter', 'VISIONE', 'VERGE', 'vitrivr', 'vitrivr-VR'] #'diveXplore',
 
 logs:
   VISIONE: data/2022/team_logs/VISIONE
@@ -12,25 +12,32 @@ logs:
 generate:
   - name: time_recall_table
     function: generate.TimeRecallTable
-    generate_args: {split_user: False, only_best_user: False, max_records: 1000}
+    generate_args: {split_user: False, only_best_user: True, max_records: 1000}
     render_args: {}
 
   - name: best_shot_rank_boxplot
     function: generate.BestShotRankBoxplot
-    generate_args: {max_records: 10000, split_user: True, fill_missing: False}
+    generate_args: {max_records: 10000, split_user: True, best_user_policy: True, fill_missing: True, aggregate_users_for: ['verge', 'vitrivr', 'vitrivr-VR']}
     render_args: {show_boxplot: False, figsize: [6, 5]}
 
-  - name: browsing_efficiency_boxplot
+  - name: browsing_efficiency_boxplot_firstappearance
     function: generate.BrowsingEfficiencyBoxplot
     generate_args: {max_records: 1000, split_user: True, fill_missing: False}
-    render_args: {show_boxplot: False, figsize: [6, 5]}
+    render_args: {show_boxplot: True, figsize: [6, 5], time_of: 'first_appearance'}
+
+  # Exclude
+  - name: browsing_efficiency_boxplot_lastappearance
+    function: generate.BrowsingEfficiencyBoxplot
+    generate_args: {max_records: 1000, split_user: True, fill_missing: False}
+    render_args: {show_boxplot: True, figsize: [6, 5], time_of: 'last_appearance'}
 
   - name: browsing_efficiency_scatterplot_firstappearance
     function: generate.BrowsingEfficiencyScatterplot
-    generate_args: {max_records: 10000}
-    render_args: {time_of: 'first_appearance', figsize: [6, 5], marker_size: 60}
+    generate_args: {max_records: 10000, split_user: True}
+    render_args: {time_of: 'first_appearance', figsize: [6, 5], marker_size: 60, include_incorrect_submissions: True}
 
+  # Exclude
   - name: browsing_efficiency_scatterplot_lastappearance
     function: generate.BrowsingEfficiencyScatterplot
-    generate_args: {max_records: 10000}
-    render_args: {time_of: 'last_appearance', figsize: [6, 5], marker_size: 60}
+    generate_args: {max_records: 10000, split_user: True}
+    render_args: {time_of: 'last_appearance', figsize: [6, 5], marker_size: 60, include_incorrect_submissions: True}

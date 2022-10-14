@@ -1,7 +1,7 @@
 import pandas as pd
 import seaborn as sns
 from generate.result import Result
-from generate.utils import get_team_values_df
+from generate.utils import compute_user_penalty, get_team_values_df
 
 import matplotlib.pyplot as plt
 import logging
@@ -23,34 +23,58 @@ class BrowsingEfficiencyScatterplot(Result):
         self.max_records = max_records
         dfs = []
         for team in self.teams:
-            df = get_team_values_df(self.data, self.logs[team],split_user, max_records)
+            team_df = self.logs[team].get_events_dataframe().reset_index()
+            df = get_team_values_df(self.data, team_df, split_user, max_records)
             dfs.append(df)
 
-        total_df = pd.concat(dfs, axis=0)
+        total_df = pd.concat(dfs, axis=0).reset_index()
+
+        user_penalty = compute_user_penalty(total_df, max_records)       
+        total_df['user_penalty'] = user_penalty
+        total_df['best_user'] = 1
+        total_df.loc[total_df.groupby(['team', 'task'])['user_penalty'].idxmin(), 'best_user'] = 0
+        total_df = total_df.drop(['user_penalty'], axis=1)
+        total_df = total_df[total_df["best_user"] == 0] # take only the best user directly
+
         return total_df
 
-    def _render(self, df, time_of='first_appearance', marker_size=5, figsize=[7, 6]):
+    def _render(self, df, time_of='first_appearance', marker_size=5, figsize=[7, 6], include_incorrect_submissions=False):
         """
         Render the dataframe into a table or into a nice graph
         """
         
+        if not include_incorrect_submissions:
+            df = df[df["time_correct_submission"] != -1]
+        
+        # remap time correct_submission
+        df["correct_submission"] = (df["time_correct_submission"] >= 0)
+
         # discard NaN values
-        df = df[(df["time_correct_submission"] != -1) & (df["rank_shot_last_appearance"] != -1) & (df["rank_shot_first_appearance"] != -1)]
+        df = df[(df["rank_shot_last_appearance"] != -1) & (df["rank_shot_first_appearance"] != -1)]
 
         df["elapsed_first_appearance"] = df["time_correct_submission"] - df["time_first_appearance"]
         df["elapsed_last_appearance"] = df["time_correct_submission"] - df["time_last_appearance"]
-        first_appearance_df = df[["elapsed_first_appearance", "rank_shot_first_appearance", "team", "task"]].rename(columns={"elapsed_first_appearance": "elapsed", "rank_shot_first_appearance": "rank_shot"})
-        last_appearance_df = df[["elapsed_last_appearance", "rank_shot_last_appearance", "team", "task"]].rename(columns={"elapsed_last_appearance": "elapsed", "rank_shot_last_appearance": "rank_shot"})
+        first_appearance_df = df[["elapsed_first_appearance", "rank_shot_first_appearance", "team", "task", "correct_submission"]].rename(columns={"elapsed_first_appearance": "elapsed", "rank_shot_first_appearance": "rank_shot"})
+        last_appearance_df = df[["elapsed_last_appearance", "rank_shot_last_appearance", "team", "task", "correct_submission"]].rename(columns={"elapsed_last_appearance": "elapsed", "rank_shot_last_appearance": "rank_shot"})
         df = pd.concat([first_appearance_df.assign(dataset='first_appearance'), last_appearance_df.assign(dataset='last_appearance')])
 
         # Initialize the figure with a logarithmic x axis
         f, ax = plt.subplots(figsize=figsize)
         # ax.set_yscale("log")
 
-        # Plot elapsed (time delta) vs rank of first occurrence
+        if include_incorrect_submissions:
+            df.loc[~df["correct_submission"], "elapsed"] = 420
+
         df = df[df['dataset'] == time_of]
+
+        # Plot elapsed (time delta) vs rank of first occurrence
         sns.scatterplot(data=df, x="rank_shot", y="elapsed", style='team', hue='team', s=marker_size)
         # sns.scatterplot(data=df, x="rank_shot_last_appearance", y="elapsed_last_appearance")
+
+        if include_incorrect_submissions:
+            ax.axhline(420, ls='--', alpha=0.3)
+            ax.text(500, 430, "Incorrect Submissions")
+            ax.set_ylim(0, 450)
 
         # Tweak the visual presentation
         ax.grid(True)

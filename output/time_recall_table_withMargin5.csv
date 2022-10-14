@@ -1,18 +1,11 @@
 ,,,T_01,T_02,T_03,T_06,T_07,T_08,T_09,T_10,T_11,T_12,V_01,V_02,V_03,V_04,V_05,V_06,V_07,V_08,V_09,V_10,V_11,V_12,V_13
 vibro,correct frame,rank,3,1,1,16,14,1,5,13,8,1,62,73,11,11,44,235,177,6,1,30,9,12,-
 vibro,correct frame,time,59s,402s,9s,85s,6s,40s,17s,50s,95s,27s,31s,46s,52s,53s,47s,33s,30s,64s,31s,56s,64s,26s,-
-vibro,frame in GT+2x5s,rank,3s,1s,1s,16s,14s,1s,5s,13s,8s,1s,62s,73s,11s,11s,44s,14s,27s,6s,1s,30s,9s,12s,-
-vibro,frame in GT+2x5s,time,59,402,9,85,6,40,17,50,95,27,31,46,52,53,47,35,48,64,31,56,64,26,-
-vibro,correct video,rank,1,1,1,16,14,1,5,13,8,1,62,49,8,11,36,14,7,6,1,30,9,12,1
-vibro,correct video,time,23s,402s,9s,85s,6s,40s,17s,50s,95s,27s,31s,59s,52s,53s,73s,35s,30s,64s,31s,56s,64s,26s,18s
+vibro,frame in GT+2x5s,rank,3s,1s,1s,16s,14s,1s,5s,13s,8s,1s,62s,73s,11s,11s,44s,235s,177s,6s,1s,30s,9s,12s,-
+vibro,frame in GT+2x5s,time,59,402,9,85,6,40,17,50,95,27,31,46,52,53,47,33,30,64,31,56,64,26,-
+vibro,correct video,rank,1,1,1,16,14,1,5,13,8,1,62,49,8,11,37,235,7,6,1,30,9,12,1
+vibro,correct video,time,59s,402s,9s,85s,6s,40s,17s,50s,95s,27s,31s,59s,52s,53s,47s,33s,30s,64s,31s,56s,64s,26s,18s
 vibro,correct submission,time,176s,-,36s,94s,14s,47s,35s,76s,123s,38s,63s,116s,110s,64s,119s,138s,78s,94s,59s,66s,69s,31s,63s
-VISIONE,correct frame,rank,87,1,3,454,1,1,2,9,2,11,5,104,88,9,122,12,751,13,10,9,8,4,179
-VISIONE,correct frame,time,9s,12s,145s,211s,15s,18s,13s,14s,339s,12s,67s,46s,29s,33s,88s,36s,27s,36s,40s,54s,16s,235s,16s
-VISIONE,frame in GT+2x5s,rank,87s,1s,3s,454s,1s,1s,2s,9s,1s,11s,5s,24s,44s,8s,122s,11s,751s,13s,10s,9s,8s,4s,179s
-VISIONE,frame in GT+2x5s,time,9,12,145,211,15,18,13,14,339,12,67,26,46,33,88,36,27,36,40,54,16,235,16
-VISIONE,correct video,rank,6,1,3,22,1,1,2,9,1,11,5,1,25,5,7,11,7,13,10,9,8,4,1
-VISIONE,correct video,time,9s,12s,145s,302s,15s,18s,13s,14s,339s,12s,67s,46s,53s,33s,41s,36s,27s,36s,40s,54s,16s,235s,16s
-VISIONE,correct submission,time,39s,214s,155s,-,30s,54s,29s,28s,-,68s,73s,80s,92s,54s,248s,48s,31s,47s,52s,56s,20s,243s,29s
 CVHunter,correct frame,rank,2,14,1,259,1,2,2,1,87,6,37,77,6,22,44,6,2,9,5,1,-,2,239
 CVHunter,correct frame,time,21s,44s,15s,27s,17s,268s,22s,20s,392s,40s,159s,95s,35s,74s,193s,111s,70s,191s,45s,23s,-,19s,16s
 CVHunter,frame in GT+2x5s,rank,2s,14s,1s,259s,1s,2s,2s,1s,87s,6s,37s,77s,6s,22s,44s,6s,2s,9s,5s,1s,442s,2s,239s
@@ -20,6 +13,13 @@ CVHunter,frame in GT+2x5s,time,21,44,15,27,17,268,22,20,392,40,159,95,35,74,193,
 CVHunter,correct video,rank,2,14,1,259,1,2,2,1,87,6,37,77,6,22,1,1,1,9,5,1,27,2,2
 CVHunter,correct video,time,21s,44s,15s,27s,17s,268s,22s,20s,392s,40s,159s,95s,35s,74s,193s,111s,32s,191s,45s,23s,22s,19s,16s
 CVHunter,correct submission,time,34s,173s,33s,-,23s,278s,27s,25s,413s,62s,179s,120s,39s,85s,214s,194s,76s,198s,55s,29s,34s,24s,36s
+VISIONE,correct frame,rank,87,1,3,454,1,1,2,9,2,11,5,104,88,9,122,12,751,13,10,9,8,4,179
+VISIONE,correct frame,time,9s,12s,145s,211s,15s,18s,13s,14s,339s,12s,67s,46s,29s,33s,88s,36s,27s,36s,40s,54s,16s,235s,16s
+VISIONE,frame in GT+2x5s,rank,87s,1s,3s,454s,1s,1s,2s,9s,1s,11s,5s,104s,44s,8s,122s,11s,751s,13s,10s,9s,8s,4s,179s
+VISIONE,frame in GT+2x5s,time,9,12,145,211,15,18,13,14,339,12,67,46,46,33,88,36,27,36,40,54,16,235,16
+VISIONE,correct video,rank,6,1,3,22,1,1,2,9,1,11,5,1,27,5,19,11,7,13,10,9,8,4,1
+VISIONE,correct video,time,9s,12s,145s,302s,15s,18s,13s,14s,339s,12s,67s,46s,91s,33s,88s,36s,27s,36s,40s,54s,16s,235s,16s
+VISIONE,correct submission,time,39s,214s,155s,-,30s,54s,29s,28s,-,68s,73s,80s,92s,54s,248s,48s,31s,47s,52s,56s,20s,243s,29s
 VERGE,correct frame,rank,45,23,445,-,11,126,3,1,120,22,680,4,69,45,58,191,9,6,5,15,548,39,-
 VERGE,correct frame,time,279s,273s,333s,-,88s,106s,21s,29s,294s,384s,104s,195s,33s,115s,250s,144s,32s,64s,41s,20s,105s,23s,-
 VERGE,frame in GT+2x5s,rank,13s,23s,445s,-,11s,126s,3s,1s,120s,22s,680s,4s,69s,45s,58s,29s,9s,6s,5s,15s,548s,39s,-
@@ -27,17 +27,17 @@ VERGE,frame in GT+2x5s,time,192,273,333,-,88,106,21,29,294,384,104,195,33,115,25
 VERGE,correct video,rank,13,8,445,-,11,72,3,1,120,22,680,4,7,15,2,29,9,1,1,4,548,39,30
 VERGE,correct video,time,192s,93s,333s,-,88s,106s,21s,29s,294s,384s,104s,195s,33s,21s,270s,164s,32s,64s,29s,185s,105s,23s,23s
 VERGE,correct submission,time,318s,386s,-,-,89s,-,40s,188s,-,402s,-,212s,150s,170s,297s,186s,45s,96s,44s,-,-,35s,87s
+vitrivr,correct frame,rank,-,9,947,75,2,6,15,25,18,469,551,-,4,6,-,102,23,56,26,11,-,3,26
+vitrivr,correct frame,time,-,196s,37s,45s,22s,362s,100s,144s,139s,375s,161s,-,114s,41s,-,261s,30s,44s,154s,33s,-,239s,20s
+vitrivr,frame in GT+2x5s,rank,-,9s,947s,75s,2s,6s,15s,25s,18s,469s,551s,-,4s,6s,252s,102s,23s,56s,26s,11s,1s,3s,26s
+vitrivr,frame in GT+2x5s,time,-,196,37,45,22,362,100,144,139,375,161,-,114,41,25,261,30,44,154,33,8,239,20
+vitrivr,correct video,rank,9,9,947,75,2,6,15,25,18,469,551,244,4,6,46,102,23,56,26,11,1,3,26
+vitrivr,correct video,time,55s,196s,37s,45s,22s,362s,100s,144s,139s,375s,161s,30s,114s,41s,25s,261s,30s,44s,154s,33s,8s,239s,20s
+vitrivr,correct submission,time,-,225s,-,-,26s,-,131s,-,-,-,-,-,143s,57s,103s,-,218s,227s,184s,57s,25s,244s,42s
 vitrivr-VR,correct frame,rank,-,-,-,-,57,476,33,-,40,-,150,-,117,-,211,-,58,36,15,-,-,10,-
 vitrivr-VR,correct frame,time,-,-,-,-,71s,99s,86s,-,22s,-,231s,-,211s,-,31s,-,233s,30s,195s,-,-,89s,-
 vitrivr-VR,frame in GT+2x5s,rank,-,-,17s,-,57s,476s,24s,278s,40s,265s,150s,621s,117s,2s,211s,-,58s,36s,15s,870s,-,10s,-
 vitrivr-VR,frame in GT+2x5s,time,-,-,191,-,71,99,86,315,22,286,231,201,211,187,31,-,233,30,195,25,-,89,-
-vitrivr-VR,correct video,rank,57,64,17,227,57,14,24,275,40,265,150,8,10,2,187,51,58,36,15,97,1,10,106
-vitrivr-VR,correct video,time,213s,156s,191s,201s,71s,359s,86s,251s,22s,286s,231s,201s,79s,187s,31s,46s,233s,30s,195s,104s,22s,89s,73s
+vitrivr-VR,correct video,rank,57,64,17,227,57,38,24,275,40,265,150,8,10,2,187,51,58,36,15,97,1,10,106
+vitrivr-VR,correct video,time,213s,156s,191s,201s,71s,344s,86s,251s,22s,286s,231s,201s,79s,187s,31s,46s,233s,30s,195s,104s,22s,89s,73s
 vitrivr-VR,correct submission,time,-,-,-,-,160s,-,94s,-,269s,-,-,-,267s,194s,129s,-,-,129s,223s,106s,46s,114s,127s
-vitrivr,correct frame,rank,-,9,947,75,2,6,15,25,18,469,551,-,4,6,-,102,23,56,26,11,-,3,26
-vitrivr,correct frame,time,-,196s,37s,45s,22s,362s,100s,144s,139s,375s,161s,-,114s,41s,-,261s,30s,44s,154s,33s,-,239s,20s
-vitrivr,frame in GT+2x5s,rank,759s,9s,947s,75s,2s,6s,15s,25s,18s,469s,551s,-,4s,6s,252s,102s,23s,56s,26s,11s,1s,3s,26s
-vitrivr,frame in GT+2x5s,time,146,196,37,45,22,362,100,144,139,375,161,-,114,41,25,261,30,44,154,33,8,239,20
-vitrivr,correct video,rank,9,9,947,75,2,6,15,25,18,469,551,244,4,6,46,102,23,56,26,11,1,3,17
-vitrivr,correct video,time,55s,196s,37s,45s,22s,362s,100s,144s,139s,375s,161s,30s,114s,41s,25s,261s,30s,44s,154s,33s,8s,239s,20s
-vitrivr,correct submission,time,-,225s,-,-,26s,-,131s,-,-,-,-,-,143s,57s,103s,-,218s,227s,184s,57s,25s,244s,42s

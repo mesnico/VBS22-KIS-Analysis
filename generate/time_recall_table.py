@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from generate.result import Result
-from generate.utils import get_team_values_df
+from generate.utils import compute_user_penalty, get_team_values_df
 
 class TimeRecallTable(Result):
     def __init__(self, data, teams, logs, **kwargs):
@@ -19,20 +19,17 @@ class TimeRecallTable(Result):
         max_records=kwargs.get('max_records', 10000)
         dfs = []
         for team in self.teams:
-            df = get_team_values_df(self.data, self.logs[team], split_user if not only_best_user else True, max_records)
-            dfs.append(df)
+            team_df = self.logs[team].get_events_dataframe().reset_index()
+            team_df = get_team_values_df(self.data, team_df, split_user if not only_best_user else True, max_records)
+            dfs.append(team_df)
 
         total_df = pd.concat(dfs, axis=0).reset_index()
 
         # keep the results from the best user among the two, for each given (task, team)
         if only_best_user:
             # the best penalty contribution is given by the ranks. If they are equal, then the user that submitted earlier wins
-            rank_video_mod = total_df['rank_video'].replace(-1, max_records + 1)
-            rank_shot_mod = total_df['rank_shot_margin_0'].replace(-1, max_records + 1)
-            time_video_mod = total_df['time_best_video'].replace(-1, 1000)
-            time_shot_mod = total_df['time_best_shot'].replace(-1, 1000)
-
-            user_penalty = (rank_video_mod + rank_shot_mod) * 10000 + (time_video_mod + time_shot_mod)
+            user_penalty = compute_user_penalty(total_df, max_records)
+                        
             total_df['user_penalty'] = user_penalty
             total_df = total_df.loc[total_df.groupby(['team', 'task'])['user_penalty'].idxmin()]
             total_df = total_df.drop(['user_penalty'], axis=1)
