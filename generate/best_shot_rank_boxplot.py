@@ -53,12 +53,16 @@ class BestShotRankBoxplot(Result):
 
         return total_df
 
-    def _render(self, df, figsize=[7, 6], show_boxplot=True, swarmplot=True):
+    def _render(self, df, figsize=[7, 6], show_boxplot=True, swarmplot=True, exclude_teams=[]):
         """
         Render the dataframe into a table or into a nice graph
         """
         # select only r_s
         df = df[["rank_shot_margin_0", "team", "user", "best_user", "task"]]
+
+        # filter out unwanted teams
+        df = df[~df["team"].isin(exclude_teams)]
+
         # discard NaN values
         df = df[df["rank_shot_margin_0"] != -1]
 
@@ -72,7 +76,7 @@ class BestShotRankBoxplot(Result):
         f, ax = plt.subplots(figsize=figsize)
         ax.set_yscale("log")
         ax.set_yticks([1, 10, 100, 1000, 10000, 15000])
-        ax.set_yticklabels([1,10,'10$^2$','10$^3$','10$^4$','>10$^4$'])
+        ax.set_yticklabels([1,10,'10$^2$','10$^3$','10$^4$', 'NA'])#'>10$^4$'])
 
         # Plot the orbital period with horizontal boxes
         if show_boxplot:
@@ -90,9 +94,9 @@ class BestShotRankBoxplot(Result):
         
         handles, labels = ax.get_legend_handles_labels()
         if self.best_user_policy:
-            labels[0] = "Best"
-            labels[1] = "Other"
-        ax.legend(handles[:2], labels[:2], title="User", ncol=2, loc="lower right")
+            labels[0] = "best"
+            labels[1] = "other"
+        ax.legend(handles[:2], labels[:2], title="user", ncol=2, loc="lower right")
 
         # Tweak the visual presentation
         ax.yaxis.grid(True)

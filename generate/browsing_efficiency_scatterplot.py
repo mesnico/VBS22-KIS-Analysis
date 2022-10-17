@@ -1,4 +1,6 @@
+import math
 import pandas as pd
+import numpy as np
 import seaborn as sns
 from generate.result import Result
 from generate.utils import compute_user_penalty, get_team_values_df
@@ -38,7 +40,7 @@ class BrowsingEfficiencyScatterplot(Result):
 
         return total_df
 
-    def _render(self, df, time_of='first_appearance', marker_size=5, figsize=[7, 6], include_incorrect_submissions=False):
+    def _render(self, df, time_of='first_appearance', marker_size=5, figsize=[7, 6], include_incorrect_submissions=False, split_tasks=False, regression_line=False):
         """
         Render the dataframe into a table or into a nice graph
         """
@@ -58,28 +60,51 @@ class BrowsingEfficiencyScatterplot(Result):
         last_appearance_df = df[["elapsed_last_appearance", "rank_shot_last_appearance", "team", "task", "correct_submission"]].rename(columns={"elapsed_last_appearance": "elapsed", "rank_shot_last_appearance": "rank_shot"})
         df = pd.concat([first_appearance_df.assign(dataset='first_appearance'), last_appearance_df.assign(dataset='last_appearance')])
 
+        df["task"] = df["task"].apply(lambda x: 'Textual-KIS' if 'kis-t' in x else 'Visual-KIS')
+
         # Initialize the figure with a logarithmic x axis
         f, ax = plt.subplots(figsize=figsize)
         # ax.set_yscale("log")
 
         if include_incorrect_submissions:
-            df.loc[~df["correct_submission"], "elapsed"] = 420
+            df.loc[~df["correct_submission"], "elapsed"] = 450
 
         df = df[df['dataset'] == time_of]
 
+        if split_tasks == "visual":
+            df = df[df['task'] == 'Visual-KIS']
+        elif split_tasks == "textual":
+            df = df[df['task'] == 'Textual-KIS']
+
+        print(f"total rows: {len(df)}")
+
+        ax.grid(True)
+
         # Plot elapsed (time delta) vs rank of first occurrence
-        sns.scatterplot(data=df, x="rank_shot", y="elapsed", style='team', hue='team', s=marker_size)
+        sns.scatterplot(data=df, x="rank_shot", y="elapsed", style="team", hue="task" if split_tasks=="same_graph" else "team", s=marker_size)
         # sns.scatterplot(data=df, x="rank_shot_last_appearance", y="elapsed_last_appearance")
 
+        if regression_line:
+            df_regression = df.copy()
+            df_regression[~df_regression["correct_submission"]] = np.nan
+            sns.regplot(x ='rank_shot', y ='elapsed', logx=True, scatter_kws={'s':0}, data=df_regression, label="regression line")
+            # df_rolling = df_rolling.sort_values(by=["rank_shot"])
+            # df_rolling['rolling_elapsed'] = df_rolling['elapsed'].rolling(25, min_periods=2).mean()
+            # sns.lineplot(data=df_rolling, x="rank_shot", y="rolling_elapsed")
+
         if include_incorrect_submissions:
-            ax.axhline(420, ls='--', alpha=0.3)
-            ax.text(500, 430, "Incorrect Submissions")
-            ax.set_ylim(0, 450)
+            rang = list(range(0, 500, 100)) + [450]
+            ax.set_yticks(rang)
+            ax.set_yticklabels(list(map(str,rang[:-1])) + ["NCS"])
+            ax.axhline(450, ls='--', alpha=0.3)
+            ax.set_ylim(0, 470)
 
         # Tweak the visual presentation
-        ax.grid(True)
         ax.set(ylabel="time delta (seconds)", xlabel="shot rank")
         # sns.despine(trim=True, left=True)
 
         ax.set_xscale('log')
-        plt.savefig(f'output/browsing_efficiency_scatterplot_timeof_{time_of}_shotrank{self.max_records}.pdf', format='pdf', bbox_inches="tight")
+        r = range(0, int(math.log10(self.max_records)))
+        ax.set_xticks([10**x for x in r])
+        ax.set_xticklabels(['1' if x==0 else '10' if x==1 else f'10$^{x}$' for x in r])
+        plt.savefig(f'output/browsing_efficiency_scatterplot_timeof_{time_of}_splittask_{split_tasks}_shotrank{self.max_records}.pdf', format='pdf', bbox_inches="tight")

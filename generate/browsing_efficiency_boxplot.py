@@ -48,25 +48,36 @@ class BrowsingEfficiencyBoxplot(Result):
 
         return total_df
 
-    def _render(self, df, figsize=[7, 6], show_boxplot=True, time_of='first_appearance', show_only_best=True):
+    def _render(self, df, figsize=[7, 6], show_boxplot=True, time_of=['time_first_appearance'], show_only_best=True):
         """
         Render the dataframe into a table or into a nice graph
         """
+
+        assert not (not show_only_best and len(time_of) > 1)
         
         # discard NaN values
         if show_only_best:
             df = df[df['best_user'] == 0]
 
         df = df[(df["time_correct_submission"] != -1) & (df["rank_shot_last_appearance"] != -1) & (df["rank_shot_first_appearance"] != -1)]
-        time_column = "time_first_appearance" if time_of == 'first_appearance' else "time_last_appearance"
+        # time_column = "time_first_appearance" if time_of == 'first_appearance' else "time_last_appearance"
         user_column = "best_user"
 
         # df = df[df[time_column] != -1]
-        df["elapsed"] = df["time_correct_submission"] - df[time_column]
-        df = df[["elapsed", "team", user_column, "task"]]
+        df = df[["team", user_column, "task", "time_correct_submission", "time_first_appearance", "time_first_appearance_video", "time_last_appearance"]]
+        df = df.melt(id_vars=["team", user_column, "task", "time_correct_submission"], value_vars=["time_first_appearance", "time_first_appearance_video", "time_last_appearance"], var_name="type")
         
-        # rename users column for better visualization
-        df[user_column] = df[user_column].replace({0: '1st' if user_column == "user" else "Best", 1: '2nd' if user_column == "user" else "Other"})
+        df["elapsed"] = df["time_correct_submission"] - df["value"]
+
+        df = df[df["type"].isin(time_of)]
+
+        # rename columns for better visualization
+        df[user_column] = df[user_column].map({0: '1st' if user_column == "user" else "Best", 1: '2nd' if user_column == "user" else "Other"})
+        df["type"] = df["type"].map({
+            "time_first_appearance": "shot",
+            "time_first_appearance_video": "video",
+            "time_last_appearance": "last_shot"
+        })
 
         # df = df.pivot(columns="team", values="r_s")
         # print(df)
@@ -75,21 +86,28 @@ class BrowsingEfficiencyBoxplot(Result):
         f, ax = plt.subplots(figsize=figsize)
         # ax.set_yscale("log")
 
-        # Plot the orbital period with horizontal boxes
+        if not show_only_best:
+            hue = user_column
+        elif len(time_of) > 1:
+            hue = "type"
+        else:
+            hue = None
+
+        ax.yaxis.grid(True)
+
         if show_boxplot:
-            sns.boxplot(x="team", hue=user_column if not show_only_best else None, y="elapsed", data=df,
+            sns.boxplot(x="team", hue=hue, y="elapsed", data=df,
                         whis=[0, 100], width=.6, palette="vlag")
 
         # Add in points to show each observation
-        sns.stripplot(x="team", hue=user_column if not show_only_best else None, y="elapsed", data=df,
+        sns.stripplot(x="team", hue=hue, y="elapsed", data=df,
                     size=5, linewidth=1, dodge=show_boxplot, alpha=0.4 if show_boxplot else 1.0)
 
-        if not show_only_best:
+        if hue is not None:
             handles, labels = ax.get_legend_handles_labels()
-            ax.legend(handles[:2], labels[:2], title="User", ncol=2, loc="lower right")
+            ax.legend(handles[:2], labels[:2], title="User" if not show_only_best else "")# , ncol=2, loc="lower right")
             
         # Tweak the visual presentation
-        ax.yaxis.grid(True)
         ax.set(ylabel="time delta (seconds)")
         # sns.despine(trim=True, left=True)
 

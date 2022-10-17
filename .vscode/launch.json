@@ -13,13 +13,22 @@
             "justMyCode": true
         },
         {
-            "name": "Best Shot Rank Boxplot",
+            "name": "Best Shot Rank Boxplot BestUsers",
             "type": "python",
             "request": "launch",
             "program": "plot.py",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args": ["best_shot_rank_boxplot", "--no_result_cache"]
+            "args": ["best_shot_rank_boxplot_bestusers", "--no_result_cache"]
+        },
+        {
+            "name": "Best Shot Rank Boxplot RealUsers",
+            "type": "python",
+            "request": "launch",
+            "program": "plot.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": ["best_shot_rank_boxplot_realusers", "--no_result_cache"]
         },
         {
             "name": "Browsing Efficiency Boxplot First Appearance",
@@ -40,23 +49,32 @@
         //     "args": ["browsing_efficiency_boxplot_lastappearance", "--no_result_cache"]
         // },
         {
-            "name": "Browsing Efficiency Scatterplot First Appearance",
+            "name": "Browsing Efficiency Scatterplot First Appearance Textual",
             "type": "python",
             "request": "launch",
             "program": "plot.py",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args": ["browsing_efficiency_scatterplot_firstappearance", "--no_result_cache"]
+            "args": ["browsing_efficiency_scatterplot_firstappearance_textual", "--no_result_cache"]
         },
-        // {
-        //     "name": "Browsing Efficiency Scatterplot Last Appearance",
-        //     "type": "python",
-        //     "request": "launch",
-        //     "program": "plot.py",
-        //     "console": "integratedTerminal",
-        //     "justMyCode": true,
-        //     "args": ["browsing_efficiency_scatterplot_lastappearance", "--no_result_cache"]
-        // },
+        {
+            "name": "Browsing Efficiency Scatterplot First Appearance Visual",
+            "type": "python",
+            "request": "launch",
+            "program": "plot.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": ["browsing_efficiency_scatterplot_firstappearance_visual", "--no_result_cache"]
+        },
+        {
+            "name": "Browsing Efficiency Scatterplot Last Appearance",
+            "type": "python",
+            "request": "launch",
+            "program": "plot.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": ["browsing_efficiency_scatterplot_lastappearance", "--no_result_cache"]
+        },
         {
             "name": "Time Recall Table",
             "type": "python",
