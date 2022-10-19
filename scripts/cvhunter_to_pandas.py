@@ -75,12 +75,12 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Read already processed logs and transform in the common pandas dataframe format')
-    parser.add_argument('--input_file', default='../data/2022/team_logs/CVHunter/CVHunter_filtered_data.csv')
-    parser.add_argument('--output_path', default='../cache/team_logs/2022')
-    parser.add_argument('--audits_file', default='../data/2022/audits.json')
-    parser.add_argument('--run_file', default='../data/2022/run.json')
-    parser.add_argument('--v3c_segments_files', nargs='+', default=['../data/v3c1_frame_segments.csv', '../data/v3c2_frame_segments.csv'])
-    parser.add_argument('--v3c_fps_file', default='../data/v3c1_2_fps.csv')
+    parser.add_argument('--input_file', default='data/2022/team_logs/CVHunter/CVHunter_filtered_data.csv')
+    parser.add_argument('--output_path', default='cache/team_logs/2022')
+    parser.add_argument('--audits_file', default='data/2022/audits.json')
+    parser.add_argument('--run_file', default='data/2022/run.json')
+    parser.add_argument('--v3c_segments_files', nargs='+', default=['data/v3c1_frame_segments.csv', 'data/v3c2_frame_segments.csv'])
+    parser.add_argument('--v3c_fps_file', default='data/v3c1_2_fps.csv')
 
     args = parser.parse_args()
     main(args)
