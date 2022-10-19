@@ -96,7 +96,7 @@ class BestShotRankBoxplot(Result):
         if self.best_user_policy:
             labels[0] = "best"
             labels[1] = "other"
-        ax.legend(handles[:2], labels[:2], title="user", ncol=2, loc="lower right")
+        ax.legend(handles[:2], labels[:2], title="user", loc="lower right") # , ncol=2,)
 
         # Tweak the visual presentation
         ax.yaxis.grid(True)
