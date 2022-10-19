@@ -4,3 +4,4 @@ cache
 team_logs
 V3C_dataset*
 venv
+data/cineast_segment.json
