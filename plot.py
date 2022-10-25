@@ -27,11 +27,10 @@ def main(args):
     competition_data['args'] = args
     
     plot_cfgs = [c for c in cfg["generate"] if c["name"] in args.graphs]
-    plot_cfg = plot_cfgs[0]
 
     # create or load logs, for each team
     logs = {}
-    for team in tqdm.tqdm(teams):
+    for team in tqdm.tqdm(teams, desc='Loading (or generating) intermediate DataFrames'):
         team_log = TeamLogs(
             competition_data, 
             team,
@@ -41,13 +40,14 @@ def main(args):
         logs[team] = team_log
 
     # generate results
-    result = eval(plot_cfg["function"])(competition_data, teams, logs, use_cache=args.result_cache)
-    result.generate_and_render(plot_cfg["generate_args"], plot_cfg["render_args"])
+    for plot_cfg in tqdm.tqdm(plot_cfgs, desc='Generating plots'):
+        result = eval(plot_cfg["function"])(competition_data, teams, logs, use_cache=args.result_cache)
+        result.generate_and_render(plot_cfg["generate_args"], plot_cfg["render_args"])
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Perform evaluation on test set')
-    parser.add_argument('graphs', default='time_recall_table', help="Name of the plots to render (see in config.yaml for the names that can be used)")
+    parser.add_argument('graphs', nargs='+', default=['time_recall_table'], help="Name of the plots to render (see in config.yaml for the names that can be used)")
     parser.add_argument('--config', default='config2022.yaml', help='config file to generate the graph')
     parser.add_argument('--audits_file', default='data/2022/audits.json')
     parser.add_argument('--run_file', default='data/2022/run.json')

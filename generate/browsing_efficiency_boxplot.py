@@ -114,4 +114,4 @@ class BrowsingEfficiencyBoxplot(Result):
         # # draw boxplot
         # bplot = df.boxplot(column="rank_shot_margin_0", by="team")
         # bplot.set_yscale('log')
-        plt.savefig(f'output/browsing_efficiency_boxplot_timeof_{time_of}_shotrank{self.max_records}.pdf', format='pdf', bbox_inches="tight")
+        plt.savefig(f'output/kis_browsing_efficiency_boxplot_timeof_{time_of}_shotrank{self.max_records}.pdf', format='pdf', bbox_inches="tight")

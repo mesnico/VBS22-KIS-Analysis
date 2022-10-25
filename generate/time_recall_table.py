@@ -42,7 +42,7 @@ class TimeRecallTable(Result):
         """
 
         # drop unuseful columns
-        df = df.drop(['time_first_appearance', 'rank_shot_first_appearance', 'time_last_appearance', 'rank_shot_last_appearance'], axis=1)
+        df = df.drop(['time_first_appearance', 'rank_shot_first_appearance', 'time_last_appearance', 'rank_shot_last_appearance', 'time_first_appearance_video', 'rank_video_first_appearance'], axis=1)
 
         #renaming task
         rename_fun = lambda x: x.replace('vbs22-kis-t', 'T_').replace('vbs22-kis-v', 'V_')

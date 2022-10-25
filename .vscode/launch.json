@@ -84,5 +84,21 @@
             "justMyCode": true,
             "args": ["time_recall_table", "--no_result_cache"]
         },
+        {
+            "name": "All",
+            "type": "python",
+            "request": "launch",
+            "program": "plot.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [
+                "time_recall_table", 
+                "browsing_efficiency_scatterplot_firstappearance_visual", 
+                "browsing_efficiency_scatterplot_firstappearance_textual", 
+                "browsing_efficiency_boxplot_firstappearance",
+                "best_shot_rank_boxplot_realusers",
+                "best_shot_rank_boxplot_bestusers",
+                "--no_result_cache"]
+        },
     ]
 }

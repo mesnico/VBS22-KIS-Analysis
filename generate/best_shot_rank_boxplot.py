@@ -49,7 +49,7 @@ class BestShotRankBoxplot(Result):
 
         # if fill_missing, missing datapoints are set to max_records + 1
         if fill_missing:
-            total_df["rank_shot_margin_0"] = total_df["rank_shot_margin_0"].replace({-1: max_records + 5000})
+            total_df["rank_shot_margin_0"] = total_df["rank_shot_margin_0"].replace({-1: max_records + 10000})
 
         return total_df
 
@@ -75,7 +75,7 @@ class BestShotRankBoxplot(Result):
         # Initialize the figure with a logarithmic x axis
         f, ax = plt.subplots(figsize=figsize)
         ax.set_yscale("log")
-        ax.set_yticks([1, 10, 100, 1000, 10000, 15000])
+        ax.set_yticks([1, 10, 100, 1000, 10000, 20000])
         ax.set_yticklabels([1,10,'10$^2$','10$^3$','10$^4$', 'NA'])#'>10$^4$'])
 
         # Plot the orbital period with horizontal boxes
@@ -106,4 +106,4 @@ class BestShotRankBoxplot(Result):
         # # draw boxplot
         # bplot = df.boxplot(column="rank_shot_margin_0", by="team")
         # bplot.set_yscale('log')
-        plt.savefig(f'output/best_shot_rank_boxplot_bestuser-policy{self.best_user_policy}_shotrank{self.max_records}.pdf', format='pdf', bbox_inches="tight")
+        plt.savefig(f'output/kis_best_shot_rank_boxplot_bestuser-policy{self.best_user_policy}_shotrank{self.max_records}.pdf', format='pdf', bbox_inches="tight")
