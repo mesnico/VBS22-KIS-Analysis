@@ -15,8 +15,7 @@ class BrowsingEfficiencyBoxplot(Result):
         self.logs = logs
 
     def _generate(self,
-        split_user=False,  
-        fill_missing=False, 
+        split_user=False,
         max_records=10000):
         """
         Returns the view of the data interesting for the current analysis, in the form of a Pandas dataframe
@@ -42,16 +41,15 @@ class BrowsingEfficiencyBoxplot(Result):
         total_df.loc[total_df.groupby(['team', 'task'])['user_penalty'].idxmin(), 'best_user'] = 0
         total_df = total_df.drop(['user_penalty'], axis=1)
 
-        # if fill_missing, missing datapoints are set to max_records + 1
-        if fill_missing:
-            total_df["rank_shot_margin_0"] = total_df["rank_shot_margin_0"].replace({-1: max_records + 1})
-
         return total_df
 
-    def _render(self, df, figsize=[7, 6], show_boxplot=True, time_of=['time_first_appearance'], show_only_best=True):
+    def _render(self, df, figsize=[7, 6], show_boxplot=True, time_of=['time_first_appearance'], show_only_best=True, fill_missing=False):
         """
         Render the dataframe into a table or into a nice graph
         """
+        # if fill_missing, missing datapoints are set to max_records + 1
+        if fill_missing:
+            df["rank_shot_margin_0"] = df["rank_shot_margin_0"].replace({-1: self.max_records + 1})
 
         assert not (not show_only_best and len(time_of) > 1)
         

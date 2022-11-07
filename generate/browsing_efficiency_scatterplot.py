@@ -99,12 +99,15 @@ class BrowsingEfficiencyScatterplot(Result):
             ax.axhline(450, ls='--', alpha=0.3)
             ax.set_ylim(0, 470)
 
+        ax.legend_.remove()
+
         # Tweak the visual presentation
         ax.set(ylabel="time delta (seconds)", xlabel="shot rank")
         # sns.despine(trim=True, left=True)
 
         ax.set_xscale('log')
-        r = range(0, int(math.log10(self.max_records)))
+        r = list(range(0, int(math.log10(self.max_records))))
+        r = r + [r[-1] + 1]
         ax.set_xticks([10**x for x in r])
         ax.set_xticklabels(['1' if x==0 else '10' if x==1 else f'10$^{x}$' for x in r])
         plt.savefig(f'output/kis_browsing_efficiency_scatterplot_timeof_{time_of}_splittask_{split_tasks}_shotrank{self.max_records}.pdf', format='pdf', bbox_inches="tight")

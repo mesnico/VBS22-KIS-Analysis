@@ -1,4 +1,6 @@
+import math
 import pandas as pd
+import numpy as np
 import seaborn as sns
 from generate.result import Result
 from generate.utils import compute_user_penalty, get_team_values_df
@@ -6,6 +8,7 @@ from generate.utils import compute_user_penalty, get_team_values_df
 import matplotlib.pyplot as plt
 import logging
 logging.basicConfig(level=logging.INFO)
+np.random.seed(45)
 
 class BestShotRankBoxplot(Result):
     def __init__(self, data, teams, logs, **kwargs):
@@ -25,6 +28,7 @@ class BestShotRankBoxplot(Result):
         """
         self.max_records = max_records
         self.best_user_policy = best_user_policy
+        self.where_missing_data_is = max_records * 2
 
         dfs = []
         for team in self.teams:
@@ -47,16 +51,23 @@ class BestShotRankBoxplot(Result):
         total_df.loc[total_df.groupby(['team', 'task'])['user_penalty'].idxmin(), 'best_user'] = 0
         total_df = total_df.drop(['user_penalty'], axis=1)
 
-        # if fill_missing, missing datapoints are set to max_records + 1
-        if fill_missing:
-            total_df["rank_shot_margin_0"] = total_df["rank_shot_margin_0"].replace({-1: max_records + 10000})
-
         return total_df
 
-    def _render(self, df, figsize=[7, 6], show_boxplot=True, swarmplot=True, exclude_teams=[]):
+    def _render(self, df, figsize=[7, 6], show_boxplot=True, swarmplot=True, exclude_teams=[], fill_missing=False):
         """
         Render the dataframe into a table or into a nice graph
         """
+
+        # if fill_missing, missing datapoints are set in some random lines after max_records + k
+        if fill_missing:
+            # choices = [self.where_missing_data_is, self.where_missing_data_is * 10**(0.1)] #, self.where_missing_data_is * 10**(0.2)]
+            df.sort_values(by=['rank_shot_margin_0'])
+            df.loc[df['rank_shot_margin_0'] == -1, 'rank_shot_margin_0'] = np.random.uniform(
+                self.where_missing_data_is * 10**(-0.15), 
+                self.where_missing_data_is * 10**(0.15),
+                len(df.loc[df['rank_shot_margin_0'] == -1]))
+            # total_df["rank_shot_margin_0"] = total_df["rank_shot_margin_0"].loc.replace({-1: max_records + 10000})
+
         # select only r_s
         df = df[["rank_shot_margin_0", "team", "user", "best_user", "task"]]
 
@@ -75,8 +86,12 @@ class BestShotRankBoxplot(Result):
         # Initialize the figure with a logarithmic x axis
         f, ax = plt.subplots(figsize=figsize)
         ax.set_yscale("log")
-        ax.set_yticks([1, 10, 100, 1000, 10000, 20000])
-        ax.set_yticklabels([1,10,'10$^2$','10$^3$','10$^4$', 'NA'])#'>10$^4$'])
+        r = list(range(0, int(math.log10(self.max_records))))
+        r = r + [r[-1] + 1]
+        ax.set_yticks([10**x for x in r] + [self.where_missing_data_is])
+        ax.set_yticklabels(['1' if x==0 else '10' if x==1 else f'10$^{x}$' for x in r] + [f'>10$^{r[-1]}$'])
+
+        ax.axhline(y=self.where_missing_data_is, linewidth=17, color='r', alpha=0.2)
 
         # Plot the orbital period with horizontal boxes
         if show_boxplot:
