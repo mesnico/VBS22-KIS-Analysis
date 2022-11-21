@@ -39,6 +39,8 @@ def load_data(
     # load the run file
     if '2021' in run_file:
         version = '2021'
+    elif 'vbse2022' in run_file:
+        version = 'vbse2022'
     elif '2022' in run_file:
         version = '2022'
     else:

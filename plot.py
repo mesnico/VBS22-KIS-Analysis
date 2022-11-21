@@ -41,7 +41,7 @@ def main(args):
 
     # generate results
     for plot_cfg in tqdm.tqdm(plot_cfgs, desc='Generating plots'):
-        result = eval(plot_cfg["function"])(competition_data, teams, logs, use_cache=args.result_cache)
+        result = eval(plot_cfg["function"])(competition_data, teams, logs, use_cache=args.result_cache, cache_path=f"cache/results/{competition_data['version']}")
         result.generate_and_render(plot_cfg["generate_args"], plot_cfg["render_args"])
 
 
@@ -51,8 +51,8 @@ if __name__ == '__main__':
     parser.add_argument('--config', default='config2022.yaml', help='config file to generate the graph')
     parser.add_argument('--v3c_segments_files', nargs='+', default=['data/v3c1_frame_segments.csv', 'data/v3c2_frame_segments.csv'])
     parser.add_argument('--v3c_fps_file', default='data/v3c1_2_fps.csv')
-    parser.add_argument('--no_log_cache', action='store_true', help='Wether to use the log cache from each team')
-    parser.add_argument('--no_result_cache', action='store_true', help='Wether to use the result cache for rendering results')
+    parser.add_argument('--no_log_cache', action='store_true', help='Whether to use the log cache from each team')
+    parser.add_argument('--no_result_cache', action='store_true', help='Whether to use the result cache for rendering results')
 
     args = parser.parse_args()
     args.result_cache = not args.no_result_cache

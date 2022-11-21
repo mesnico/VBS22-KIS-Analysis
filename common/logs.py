@@ -27,6 +27,9 @@ class TeamLogParser():
             if team == 'vitrivr':
                 # patch the v3c_video to use their segments (cineast used other segments)
                 self.v3c_videos = Videos(['data/v3c1_2_cineast_segments.csv'], data['args'].v3c_fps_file)
+        elif version == 'vbse2022':
+            self.get_results = self.get_results_standard_2022
+            self.get_events = self.get_events_standard_2022
         else:
             self.get_results = self.get_results_visione_2021
             self.get_events = self.get_events_standard_2022
