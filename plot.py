@@ -19,8 +19,8 @@ def main(args):
     teams = cfg["teams"]
     competition_data = load_data(
         teams,
-        args.audits_file, 
-        args.run_file, 
+        cfg['audits_file'],
+        cfg['run_file'],
         args.v3c_fps_file,
         args.v3c_segments_files)
     competition_data['config'] = cfg
@@ -49,8 +49,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Perform evaluation on test set')
     parser.add_argument('graphs', nargs='+', default=['time_recall_table'], help="Name of the plots to render (see in config.yaml for the names that can be used)")
     parser.add_argument('--config', default='config2022.yaml', help='config file to generate the graph')
-    parser.add_argument('--audits_file', default='data/2022/audits.json')
-    parser.add_argument('--run_file', default='data/2022/run.json')
     parser.add_argument('--v3c_segments_files', nargs='+', default=['data/v3c1_frame_segments.csv', 'data/v3c2_frame_segments.csv'])
     parser.add_argument('--v3c_fps_file', default='data/v3c1_2_fps.csv')
     parser.add_argument('--no_log_cache', action='store_true', help='Wether to use the log cache from each team')

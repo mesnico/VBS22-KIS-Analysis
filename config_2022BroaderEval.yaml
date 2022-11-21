@@ -1,8 +1,5 @@
 teams: ['vibro', 'CVHunter', 'VISIONE', 'VERGE', 'vitrivr', 'vitrivr-VR'] #'diveXplore',
 
-audits_file: data/2022/audits.json
-run_file: data/2022/run.json
-
 logs:
   VISIONE: data/2022/team_logs/VISIONE
   vibro: data/2022/team_logs/vibro
