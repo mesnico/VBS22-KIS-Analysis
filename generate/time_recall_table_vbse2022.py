@@ -1,7 +1,6 @@
 import pandas as pd
-import numpy as np
 from generate.result import Result
-from generate.utils import compute_user_penalty,get_team_values_df
+from generate.utils import get_team_values_vbse2022_df
 
 class TimeRecallTableVbse2022(Result):
     def __init__(self, data, teams, logs, **kwargs):
@@ -14,26 +13,14 @@ class TimeRecallTableVbse2022(Result):
         """
         Returns the view of the data interesting for the current analysis, in the form of a Pandas dataframe
         """
-        split_user = kwargs.get('split_user', False)
-        only_best_user = kwargs.get('only_best_user', False)
         max_records = kwargs.get('max_records', 10000)
         dfs = []
         for team in self.teams:
             team_df = self.logs[team].get_events_dataframe().reset_index()
-            team_df = get_team_values_df(self.data, team_df, split_user if not only_best_user else True, max_records)
+            team_df = get_team_values_vbse2022_df(self.data, team_df, max_records)
             dfs.append(team_df)
 
         total_df = pd.concat(dfs, axis=0).reset_index()
-
-        # keep the results from the best user among the two, for each given (task, team)
-        if only_best_user:
-            # the best penalty contribution is given by the ranks. If they are equal, then the user that submitted earlier wins
-            user_penalty = compute_user_penalty(total_df, max_records)
-
-            total_df['user_penalty'] = user_penalty
-            total_df = total_df.loc[total_df.groupby(['team', 'task'])['user_penalty'].idxmin()]
-            total_df = total_df.drop(['user_penalty'], axis=1)
-
         return total_df
 
     def _render(self, df):
@@ -48,7 +35,8 @@ class TimeRecallTableVbse2022(Result):
            # renaming task
         #rename_fun = lambda x: x.replace('vbs22-kis-t', 'T_').replace('vbs22-kis-v', 'V_')
         #df['task'] = df['task'].apply(rename_fun)
-        tasks = df[['task', 'task_start']].sort_values(by=['task_start'])['task'].unique()
+        tasks = self.data['runreader'].tasks.tasks_df[['name', 'started']].sort_values(by=['started'])['name'].unique()
+
         df.drop(columns='task_start', inplace=True)
 
         df = df.fillna(-1)
@@ -81,7 +69,7 @@ class TimeRecallTableVbse2022(Result):
         }
         df['metric'] = df['metric'].map(replace_dic)
         df = df.pivot(index=['team', 'metric', 'unit'], columns="task", values="value")
-        df = df.fillna('-')
+        df = df.fillna('!')
 
         # sorting index desired order
         level_0 = self.teams  # order in the conf file

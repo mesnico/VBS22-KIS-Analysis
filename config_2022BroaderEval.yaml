@@ -1,4 +1,4 @@
-teams: ['cvhunter1', 'cvhunter2','cvhunter3', 'cvhunter4',
+teams:  ['cvhunter1', 'cvhunter2','cvhunter3', 'cvhunter4',
         'visione1','visione2','visione3','visione4',
         'vibro1','vibro2','vibro3','vibro4']
 
@@ -14,14 +14,18 @@ logs:
   visione2: data/vbse2022/team_logs/visione2
   visione3: data/vbse2022/team_logs/visione3
   visione4: data/vbse2022/team_logs/visione4
-  vibro1: data/vbse2022/team_logs/vibro1
-  vibro2: data/vbse2022/team_logs/vibro2
-  vibro3: data/vbse2022/team_logs/vibro3
-  vibro4: data/vbse2022/team_logs/vibro4
+  vibro1: data/vbse2022/team_logs/vbse_vibro1_json
+  vibro2: data/vbse2022/team_logs/vbse_vibro2_json
+  vibro3: data/vbse2022/team_logs/vbse_vibro3_json
+  vibro4: data/vbse2022/team_logs/vbse_vibro4_json
 
 generate:
+  - name: task_table_vbse2022
+    function: generate.TasksTableVbse2022
+    generate_args: { }
+    render_args: { }
+
   - name: time_recall_table_vbse2022
     function: generate.TimeRecallTableVbse2022
-    generate_args: {split_user: False, only_best_user: False, max_records: 10000}
+    generate_args: {max_records: 10000}
     render_args: {}
-

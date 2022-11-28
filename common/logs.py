@@ -124,6 +124,7 @@ class TeamLogs:
         """
         retrieve all the data
         """
+        skipped_log_inTask_info=[]
         results_dfs = []
         events_dfs = []
         team = self.team
@@ -156,6 +157,7 @@ class TeamLogs:
                     csts = self.runreader.get_csts()
                     cst = csts[team][task_name]
                     if cst > 0 and timestamp > cst:
+                        skipped_log_inTask_info.append(f"{timestamp}, {cst}, {timestamp-cst},{task_name}")
                         continue
 
                     # grab relevant infos from different team log files
@@ -184,6 +186,10 @@ class TeamLogs:
             if Path(root) != Path(team_log):
                 user_idx += 1   # number of user is the number of folders
 
+        if len(skipped_log_inTask_info)>0:
+            print(f"**{team}**")
+            print(f" log_timestamp, correct_submission_timestamp, timestamp - cst,task_name")
+            print("\n".join(skipped_log_inTask_info))
         assert user_idx <= 2
 
         # prepare the final dataframe

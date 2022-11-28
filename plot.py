@@ -1,7 +1,6 @@
 import tqdm
 from common.load import load_data
 import generate
-import argparse
 import yaml
 import argparse
 

@@ -231,52 +231,52 @@ class RunReaderVbse2022(RunReader):
         tasks = Tasks(self.v3c_videos)
 
         for t in self.run['tasks']:
-            if (t['ended'] - t['started'] <= 1000):
+            if (t['ended'] - t['started'] <= 1000 or t['description']['name'] in ['t1', 't2', 'vbse011', 'vbse027', 'vbse036']):
                 # an invalid task, discard it
                 continue
 
-            if t['description']['taskType']['name'] == 'Visual KIS with initial text query':
-                # assert task.name not in tasks
-                taskname = t['description']['name']
-                videoId = t['description']['target']['item']['name']
-                target_start_ms = int(t['description']['target']['temporalRange']['start'][
-                                          'millisecond'])  # start time of TARGET video segment
-                target_end_ms = int(t['description']['target']['temporalRange']['end'][
-                                        'millisecond'])  # end time of TARGET video segment
+            taskname = t['description']['name']
+            videoId = t['description']['target']['item']['name']
+            target_start_ms = int(t['description']['target']['temporalRange']['start'][
+                                      'millisecond'])  # start time of TARGET video segment
+            target_end_ms = int(t['description']['target']['temporalRange']['end'][
+                                    'millisecond'])  # end time of TARGET video segment
 
-                # for every task, remember which was the correct submission time from each team in csts
-                remaining_team_ids = set(team_ids)
-                submissions = []
-                for s in t['submissions']:
-                    team_name = self.teams.get_teamname_from_id(s['teamId']['string'])
-                    ss = deepcopy(s)
-                    ss['teamName'] = team_name
-                    submissions.append(ss)
-                    if s['status'] == 'CORRECT' and s['teamId']['string'] in remaining_team_ids and len(
-                            remaining_team_ids) > 0:
-                        csts[team_name][taskname] = s['timestamp']
-                        remaining_team_ids.remove(s['teamId']['string'])
+            # for every task, remember which was the correct submission time from each team in csts
+            remaining_team_ids = set(team_ids)
+            submissions = []
+            for s in t['submissions']:
+                team_name = self.teams.get_teamname_from_id(s['teamId']['string'])
+                ss = deepcopy(s)
+                ss['teamName'] = team_name
+                submissions.append(ss)
+                if s['status'] == 'CORRECT' and s['teamId']['string'] in remaining_team_ids and len(
+                        remaining_team_ids) > 0:
+                    csts[team_name][taskname] = s['timestamp']
+                    remaining_team_ids.remove(s['teamId']['string'])
 
-                # the remaining teams have not found the correct result, put -1
-                for r in remaining_team_ids:
-                    csts[self.teams.get_teamname_from_id(r)][taskname] = -1
+            # the remaining teams have not found the correct result, put -1
+            for r in remaining_team_ids:
+                csts[self.teams.get_teamname_from_id(r)][taskname] = -1
 
-                task_started = t[
-                                   'started'] + 5000  # the time when the countdown reached 0 and the first hint was displayed
-                # note t['started']=the time when everybody was confirmed to be ready and the countdown for a task had started
-                tasks.add_task(
-                    taskname,
-                    task_started,
-                    t['ended'],
-                    t['duration'],
-                    t['position'],
-                    t['uid']['string'],
-                    t['description']['taskType']['name'],
-                    videoId,
-                    target_start_ms,
-                    target_end_ms,
-                    submissions
-                )
+            task_started = t['started'] + 5000# the time when the countdown reached 0 and the first hint was displayed
+                #note t['started']=the time when everybody was confirmed to be ready and the countdown for a task had started
+
+            tasks.add_task_vbse2022(
+                taskname,
+                task_started,
+                t['ended'],
+                t['duration'],
+                t['position'],
+                t['uid']['string'],
+                t['description']['taskType']['name'],
+                videoId,
+                t['description']['target']['item']['fps'],
+                target_start_ms,
+                target_end_ms,
+                submissions,
+
+            )
 
         return tasks, csts
 
