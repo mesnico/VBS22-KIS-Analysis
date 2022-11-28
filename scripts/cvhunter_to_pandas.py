@@ -3,9 +3,12 @@ import pandas as pd
 import numpy as np
 import argparse
 import sys
+import json
 sys.path.append(".")
 
 from common.load import load_data
+
+
 
 def main(args):
     # load competition data for CVHunter
@@ -16,6 +19,19 @@ def main(args):
         args.v3c_fps_file,
         args.v3c_segments_files)
     runreader = competition_data['runreader']
+
+    def get_task_start(taskname):
+        x = runreader.tasks.get_task_from_taskname(taskname)
+        if x is None:
+            return np.nan
+        else:
+            return x['started']
+    def get_task_name(timestamp):
+        x = runreader.tasks.get_task_from_timestamp(timestamp)
+        if x is None:
+            return np.nan
+        else:
+            return x['name']
 
     events_df = pd.read_csv(args.input_file)
 
@@ -33,10 +49,17 @@ def main(args):
     events_df.loc[events_df['user'] == 'LP','user'] = 0
     events_df.loc[events_df['user'] == 'JL','user'] = 1
     events_df['timestamp']=events_df['timestamp']*1000
-    task_start = events_df['task'].apply(lambda x: runreader.tasks.get_task_from_taskname(x)['started'])
+    events_df['task'] = events_df['timestamp'].apply(get_task_name)
+    events_df = events_df[events_df['task'].notna()]
+    task_start=events_df['task'].apply(get_task_start)
+
+    #
+    #task_start = events_df['task'].apply(lambda x: runreader.tasks.get_task_from_taskname(x)['started'])
     events_df['elapsed_since_task_start_ms'] = events_df['timestamp'] - task_start
 
-    #CVHunter calculated times in seconds, using DRES we have times in milliseconds. The two times then may differ due to rounding errors. Here we check that the difference between the two times is less than one second
+
+    #CVHunter calculated times in seconds, using DRES we have times in milliseconds. The two times then may differ due to rounding errors.
+    # Here we check that the difference between the two times is less than one second
     assert max(abs((events_df['elapsed_since_task_start_ms'] +5000- events_df['time']*1000)/1000)) <= 1
 
     #storing which user made teh correct submission
@@ -75,12 +98,12 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Read already processed logs and transform in the common pandas dataframe format')
-    parser.add_argument('--input_file', default='data/2022/team_logs/CVHunter/CVHunter_filtered_data.csv')
-    parser.add_argument('--output_path', default='cache/team_logs/2022')
-    parser.add_argument('--audits_file', default='data/2022/audits.json')
-    parser.add_argument('--run_file', default='data/2022/run.json')
-    parser.add_argument('--v3c_segments_files', nargs='+', default=['data/v3c1_frame_segments.csv', 'data/v3c2_frame_segments.csv'])
-    parser.add_argument('--v3c_fps_file', default='data/v3c1_2_fps.csv')
+    parser.add_argument('--input_file', default='../data/2022/team_logs/CVHunter/CVHunter_filtered_data.csv')
+    parser.add_argument('--output_path', default='../cache/team_logs/2022')
+    parser.add_argument('--audits_file', default='../data/2022/audits.json')
+    parser.add_argument('--run_file', default='../data/2022/run.json')
+    parser.add_argument('--v3c_segments_files', nargs='+', default=['../data/v3c1_frame_segments.csv', '../data/v3c2_frame_segments.csv'])
+    parser.add_argument('--v3c_fps_file', default='../data/v3c1_2_fps.csv')
 
     args = parser.parse_args()
     main(args)
