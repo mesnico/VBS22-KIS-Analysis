@@ -35,3 +35,5 @@ Look at the `time_recall_table.py` file for an example.
 Lucia Vadicamo - [lucia.vadicamo@isti.cnr.it](mailto:lucia.vadicamo@isti.cnr.it)
 
 Nicola Messina - [nicola.messina@isti.cnr.it](mailto:nicola.messina@isti.cnr.it)
+
+Ladislav Peška - [ladislav.peska@matfyz.cuni.cz](mailto:Ladislav.Peska@matfyz.cuni.cz)
