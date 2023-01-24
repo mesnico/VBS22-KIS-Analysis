@@ -184,13 +184,15 @@ def get_data_from_raw_files(args):
                 print(f"Reading file {f}, about {round(os.stat(f).st_size / (1024 * 1024))} MB ...", end='   ')
                 for line in ff:
                     raw_event = json.loads(line)  #
-                    event_timestamp = raw_event['timeStamp']
+                    dres_timestamp = raw_event['timeStamp']
 
                     isNotVBS = raw_event['runId']['string'] != vbsRunID
-                    isNotKIStask = (tasks.get_task_from_timestamp(event_timestamp) is None) and (
-                                tasks.get_task_from_timestamp(event_timestamp + 5000) is None) and (
+                    # excluding events not related to Official KIS VBS run # using 5 seconds of tollerance before the start and end of a task
+                    isNotKIStask = (tasks.get_task_from_timestamp(dres_timestamp) is None) and (
+                                tasks.get_task_from_timestamp(dres_timestamp + 5000) is None) and (
                                            tasks.get_task_from_timestamp(
-                                               event_timestamp - 5000) is None)  # excluding events not related to Official KIS VBS run # using 5 seconds of tollerance before the start and end of a task
+                                               dres_timestamp - 5000) is None)
+
                     isResultLogEvent = raw_event['class'] == 'dev.dres.run.eventstream.QueryResultLogEvent'
                     isEventLogEvent = raw_event['class'] == 'dev.dres.run.eventstream.QueryEventLogEvent'
                     isSubmissionEvent = raw_event['class'] == 'dev.dres.run.eventstream.SubmissionEvent'
@@ -203,35 +205,47 @@ def get_data_from_raw_files(args):
                     assert not df.empty, 'Unrecognized session - team'
 
                     intervals = df.apply(lambda x: pd.Interval(x['login'], x['logout'], closed='left'), axis=1)
-                    s_df = df[pd.arrays.IntervalArray(intervals).contains(event_timestamp)]
+                    s_df = df[pd.arrays.IntervalArray(intervals).contains(dres_timestamp)]
 
                     assert len(s_df.index) == 1, 'Not unique assignment of session to team is possible'
 
                     team_name = s_df['team'].iloc[0]
                     session_login = s_df['login'].iloc[0]
                     session_logout = s_df['logout'].iloc[0]
+
                     if (isResultLogEvent):
+                        client_timestamp = raw_event['queryResultLog']['timestamp']
                         log = {'name': team_name,
                                'session': raw_event['session'],
                                'login': session_login,
                                'logout': session_logout,
-                               'timestamp': event_timestamp,
+                               'timestamp': client_timestamp,
+                               'client_timestamp': client_timestamp,
+                               'dres_timestamp': dres_timestamp,
                                'logs': raw_event['queryResultLog']}
+                        if abs(client_timestamp-dres_timestamp)>1000:
+                            print(f"{team_name}, {dres_timestamp}, client_timestamp-dres_timestamp={(client_timestamp-dres_timestamp)}")
                         query_result_and_events_logs.append(log)
                     if (isEventLogEvent):
+                        client_timestamp = raw_event['queryEventLog']['timestamp']
                         log = {'name': team_name,
                                'session': raw_event['session'],
                                'login': session_login,
                                'logout': session_logout,
-                               'timestamp': event_timestamp,
+                               'timestamp': client_timestamp,
+                               'client_timestamp': client_timestamp,
+                               'dres_timestamp': dres_timestamp,
                                'logs': raw_event['queryEventLog']}
                         query_events_logs.append(log)
                     if (isSubmissionEvent):
+                        client_timestamp = raw_event['submission']['timestamp']
                         sub = {'name': team_name,
                                'session': raw_event['session'],
                                'login': session_login,
                                'logout': session_logout,
-                               'timestamp': event_timestamp,
+                               'timestamp': client_timestamp,
+                               'client_timestamp': client_timestamp,
+                               'dres_timestamp': dres_timestamp,
                                'runId': raw_event['runId'],
                                'taskId': raw_event['taskId'],
                                'submission': raw_event['submission']}
@@ -257,7 +271,13 @@ def main(args):
     # {'ivist', 'visione', 'verge', 'vitrivr-vr', 'vitrivr'}
     # ivist has empty logs,
     # visione logs are incomplete, they provided logs saved locally
-    teams_with_logs = [ 'verge', 'vitrivr-vr', 'vitrivr' ]  #
+    teams_with_logs = [  'vitrivr-vr', 'vitrivr' ]  #'verge',
+
+    def contain_res (x):
+        if len(x.get('results',[])) > 0:
+            return len(x.get('results',[]))
+        else:
+            return np.nan
 
     for team in teams_with_logs:
         print(team)
@@ -271,14 +291,22 @@ def main(args):
                               axis=1)
         users = df.user.unique()
         for user in users:
+            print(f"user: {user}")
             out_folder = f"{args.output_folder}/{team}/user{user}"
             os.makedirs(out_folder, exist_ok=True)
             print(f"Saving logs of {team} - user{user}", end=" ...")
-            logs = df.loc[df['user'] == user]['logs']
+            selected_df=df.loc[df['user'] == user]
+            logs = selected_df['logs']
+            ts_df=selected_df[['client_timestamp','dres_timestamp', 'logs']]
+            ts_df['hasRes']=ts_df['logs'].apply(contain_res)
+            ts_df = ts_df[ts_df['hasRes'].notna()]
+            diff=(ts_df['dres_timestamp']-ts_df['client_timestamp'])/1000
+
             for log in logs:
                 filename = f"{out_folder}/{log['timestamp']}.json"
                 with open(filename, 'w') as fp:
                     json.dump(log, fp)
+            print(f"{diff.describe()}")
             print("[DONE]")
     print("End")
 
@@ -286,13 +314,13 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Read Logs (query events + results) only for KIS tasks from raw DRES files')
-    parser.add_argument('--raw_event_log_folder', default='../data/2022/raw event logs')
-    parser.add_argument('--output_folder', default='../data/2022/logs_from_dres')
-    parser.add_argument('--audits_file', default='../data/2022/audits.json')
-    parser.add_argument('--run_file', default='../data/2022/run.json')
-    parser.add_argument('--v3c_fps_file', default='../data/v3c1_2_fps.csv')
+    parser.add_argument('--raw_event_log_folder', default='../../data/2022/raw event logs')
+    parser.add_argument('--output_folder', default='../../data/2022/logs_from_dres')
+    parser.add_argument('--audits_file', default='../../data/2022/audits.json')
+    parser.add_argument('--run_file', default='../../data/2022/run.json')
+    parser.add_argument('--v3c_fps_file', default='../../data/v3c1_2_fps.csv')
     parser.add_argument('--v3c_segments_files', nargs='+',
-                        default=['../data/v3c1_frame_segments.csv', '../data/v3c2_frame_segments.csv'])
+                        default=['../../data/v3c1_frame_segments.csv', '../../data/v3c2_frame_segments.csv'])
 
     args = parser.parse_args()
     main(args)
