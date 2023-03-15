@@ -230,8 +230,8 @@ def get_data_from_raw_files(args):
                     query_result_and_events_logs.append(log)
                 if (isEventLogEvent):
                     client_timestamp = raw_event['queryEventLog']['timestamp']
-                    if (team_name == 'videoclip'):
-                        client_timestamp = client_timestamp * 1000;
+                    if (team_name == 'videoclip'): #len(log['timestamp'])==10
+                        client_timestamp = client_timestamp * 1000
                     log = {'name': team_name,
                            'session': raw_event['session'],
                            'login': session_login,
@@ -244,7 +244,7 @@ def get_data_from_raw_files(args):
                 if (isSubmissionEvent):
                     client_timestamp = raw_event['submission']['timestamp']
                     if (team_name == 'videoclip'):
-                        client_timestamp = client_timestamp * 1000;
+                        client_timestamp = client_timestamp * 1000
                     sub = {'name': team_name,
                            'session': raw_event['session'],
                            'login': session_login,
@@ -285,7 +285,7 @@ def main(args):
         else:
             return np.nan
 
-    for team in teams_with_logs:
+    for team in {'videoclip'}:#teams_with_logs:
         print(team)
         log_list = [log for log in query_result_and_events_logs if log['name'] == team]
         df = pd.DataFrame(log_list)  # data frame with the logs of the selected team
@@ -309,6 +309,8 @@ def main(args):
             diff=(ts_df['dres_timestamp']-ts_df['client_timestamp'])/1000
 
             for log in logs:
+                if len(str(log['timestamp']))==10:
+                    log['timestamp']=log['timestamp']*1000
                 filename = f"{out_folder}/{log['timestamp']}.json"
                 with open(filename, 'w') as fp:
                     json.dump(log, fp)

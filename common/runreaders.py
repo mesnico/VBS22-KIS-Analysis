@@ -27,7 +27,7 @@ class RunReader:
         self.v3c_videos = v3c_videos
         self.teams = teams
 
-        # collects informations about tasks and teams
+        # collects information about tasks and teams
         self.teams = self.build_teams()
         # collect task info and correct_submission_time from every team
         self.tasks, self.csts  = self.build_tasks()

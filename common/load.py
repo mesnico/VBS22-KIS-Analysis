@@ -56,6 +56,7 @@ def load_data(
         raise ValueError("Cannot infer the version to use to read the run file!")
     runreader = build_runreader(run, v3c_videos, teams, version=version)
 
+
     return {
         'audit': audit,
         'runreader': runreader,

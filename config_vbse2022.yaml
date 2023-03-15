@@ -25,6 +25,11 @@ generate:
     generate_args: { }
     render_args: { }
 
+  - name: save_submissions_df
+    function: generate.saveDATAasCSV
+    generate_args: {use_cache: False }
+    render_args: { }
+
   - name: time_recall_table_vbse2022
     function: generate.TimeRecallTableVbse2022
     generate_args: {max_records: 10000}
