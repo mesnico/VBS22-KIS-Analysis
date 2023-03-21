@@ -1,5 +1,9 @@
 import json
 import csv
+import tqdm
+
+import yaml
+from common.logs import TeamLogs
 from common.runreaders import build_runreader
 
 from common.videos import Videos
@@ -16,20 +20,56 @@ class Shot:
     def get_segmentId(self):
         return self.segmentId
 
+def load_competition_data(config):
+    # load config file for this plot
+    with open(config, 'r') as f:
+        cfg = yaml.load(f, Loader=yaml.FullLoader)
+
+    # load competition data
+    teams = cfg["teams"]
+    competition_data = load_data(
+        teams,
+        cfg['audits_file'],
+        cfg['run_file'],
+        cfg['fps_files'],
+        cfg['segment_files'])
+    competition_data['config'] = cfg
+
+    return competition_data
+
+def process_team_logs(config, competition_data, force=False):
+    # create or load logs, for each team
+    # load config file for this plot
+    with open(config, 'r') as f:
+        cfg = yaml.load(f, Loader=yaml.FullLoader)
+
+    logs = {}
+    teams = cfg["teams"]
+    for team in tqdm.tqdm(teams, desc='Loading (or generating) intermediate DataFrames'):
+        team_log = TeamLogs(
+            competition_data, 
+            team,
+            max_records=10000, 
+            use_cache=True, # FIXME: refactor cache in actual output! (cache should be the wanted output)
+            cache_path='cache/team_logs',
+            force=force)
+        logs[team] = team_log
+
+    return logs
 
 def load_data(
         teams,
         audits_file, 
         run_file,
-        fps_file,
+        fps_files,
         v3c_segments_files=None):
 
     # load run file
     with open(run_file) as f:
         run = json.load(f)
 
-    # load v3c segments
-    v3c_videos = Videos(v3c_segments_files, fps_file)
+    # load segments
+    v3c_videos = Videos(v3c_segments_files, fps_files)
 
     # load run and audits file
     audit = []

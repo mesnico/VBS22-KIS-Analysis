@@ -5,100 +5,21 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Current File",
+            "name": "Process",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
+            "program": "preprocess.py",
             "console": "integratedTerminal",
             "justMyCode": true
         },
         {
-            "name": "Best Shot Rank Boxplot BestUsers",
+            "name": "MVK FPS Extraction",
             "type": "python",
             "request": "launch",
-            "program": "plot.py",
+            "program": "scripts/extract_fps_and_segments_mvk.py",
+            "args": ["--marine_videos_path", "/disks/remote/visione/data/vbs/mvk/videos/"],
             "console": "integratedTerminal",
-            "justMyCode": true,
-            "args": ["best_shot_rank_boxplot_bestusers", "--no_result_cache"]
-        },
-        {
-            "name": "Best Shot Rank Boxplot RealUsers",
-            "type": "python",
-            "request": "launch",
-            "program": "plot.py",
-            "console": "integratedTerminal",
-            "justMyCode": true,
-            "args": ["best_shot_rank_boxplot_realusers", "--no_result_cache"]
-        },
-        {
-            "name": "Browsing Efficiency Boxplot First Appearance",
-            "type": "python",
-            "request": "launch",
-            "program": "plot.py",
-            "console": "integratedTerminal",
-            "justMyCode": true,
-            "args": ["browsing_efficiency_boxplot_firstappearance", "--no_result_cache"]
-        },
-        // {
-        //     "name": "Browsing Efficiency Boxplot Last Appearance",
-        //     "type": "python",
-        //     "request": "launch",
-        //     "program": "plot.py",
-        //     "console": "integratedTerminal",
-        //     "justMyCode": true,
-        //     "args": ["browsing_efficiency_boxplot_lastappearance", "--no_result_cache"]
-        // },
-        {
-            "name": "Browsing Efficiency Scatterplot First Appearance Textual",
-            "type": "python",
-            "request": "launch",
-            "program": "plot.py",
-            "console": "integratedTerminal",
-            "justMyCode": true,
-            "args": ["browsing_efficiency_scatterplot_firstappearance_textual", "--no_result_cache"]
-        },
-        {
-            "name": "Browsing Efficiency Scatterplot First Appearance Visual",
-            "type": "python",
-            "request": "launch",
-            "program": "plot.py",
-            "console": "integratedTerminal",
-            "justMyCode": true,
-            "args": ["browsing_efficiency_scatterplot_firstappearance_visual", "--no_result_cache"]
-        },
-        {
-            "name": "Browsing Efficiency Scatterplot Last Appearance",
-            "type": "python",
-            "request": "launch",
-            "program": "plot.py",
-            "console": "integratedTerminal",
-            "justMyCode": true,
-            "args": ["browsing_efficiency_scatterplot_lastappearance", "--no_result_cache"]
-        },
-        {
-            "name": "Time Recall Table",
-            "type": "python",
-            "request": "launch",
-            "program": "plot.py",
-            "console": "integratedTerminal",
-            "justMyCode": true,
-            "args": ["time_recall_table", "--no_result_cache"]
-        },
-        {
-            "name": "All",
-            "type": "python",
-            "request": "launch",
-            "program": "plot.py",
-            "console": "integratedTerminal",
-            "justMyCode": true,
-            "args": [
-                "time_recall_table", 
-                "browsing_efficiency_scatterplot_firstappearance_visual", 
-                "browsing_efficiency_scatterplot_firstappearance_textual", 
-                "browsing_efficiency_boxplot_firstappearance",
-                "best_shot_rank_boxplot_realusers",
-                "best_shot_rank_boxplot_bestusers",
-                "--no_result_cache"]
-        },
+            "justMyCode": true
+        }
     ]
 }

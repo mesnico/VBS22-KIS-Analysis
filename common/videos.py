@@ -7,13 +7,13 @@ class Videos:
     """
     A helper class for managing V3C videos and their shots
     """
-    def __init__(self, v3c_segments_files, fps_file):
+    def __init__(self, segments_files, fps_files):
         """
         shots: pandas dataframe containing shots information
         """
         dfs = []
-        for v3cx in v3c_segments_files:
-            dfs.append(pd.read_csv(v3cx))
+        for seg in segments_files:
+            dfs.append(pd.read_csv(seg, dtype={'video': str}))
             
         videos = pd.concat(dfs, axis=0)
         videos = videos.groupby("video")
@@ -22,8 +22,12 @@ class Videos:
         self.videos = {n:g for n,g in videos}
 
         # create a dict for FPSs
-        fps = pd.read_csv(fps_file, names=['videoId', 'FPS'], index_col='videoId')
-        self.fps = fps.to_dict()
+        fpss = []
+        for ff in fps_files:
+            fpss.append(pd.read_csv(ff, index_col='videoId', dtype={'videoId': str, 'FPS': float}))
+
+        fpss = pd.concat(fpss)
+        self.fps = fpss.to_dict()
 
     def get_shot_from_video_and_frame(self, videoId, frame, unit="frames"):
         """
@@ -32,7 +36,7 @@ class Videos:
         """
 
         assert unit in ["frames", "milliseconds"]
-        videoId = int(videoId) if isinstance(videoId, str) else videoId
+        # videoId = int(videoId) if isinstance(videoId, str) else videoId
         try:
             frame = int(frame) if isinstance(frame, str) else frame
         except ValueError:
@@ -54,7 +58,7 @@ class Videos:
         """
 
         assert unit in ["frames", "milliseconds"]
-        videoId = int(videoId) if isinstance(videoId, str) else videoId
+        # videoId = int(videoId) if isinstance(videoId, str) else videoId
         try:
             startpoint = int(startpoint) if isinstance(startpoint, str) else startpoint
         except ValueError:
@@ -74,7 +78,7 @@ class Videos:
 
     def get_shot_time_from_video_and_frame(self, videoId, frame):
         # use FPS to infer the time in milliseconds from the frame
-        videoId = int(videoId)
+        # videoId = int(videoId)
         try:
             frame = int(frame)
         except ValueError:
@@ -95,7 +99,7 @@ class Videos:
         get middle frame of the given input segment
         """
 
-        videoId = int(videoId) if isinstance(videoId, str) else videoId
+        # videoId = int(videoId) if isinstance(videoId, str) else videoId
         df = self.videos[videoId]
         row = df[df['segment'] == segment]
 

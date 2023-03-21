@@ -1,52 +1,17 @@
-teams: ['videoclip'] #'diveXplore',
+teams: ['VideoCLIP'] # ['VISIONE', 'videoclip', 'VERGE']
 
 audits_file: data/2023/vbs23_audits.jsonl
 run_file: data/2023/vbs23_run.json
+fps_files: 
+ - data/v3c1_2_fps.csv
+ - data/mvk_fps.csv
+segment_files:
+ - data/v3c1_frame_segments.csv
+ - data/v3c2_frame_segments.csv
+ - data/mvk_fps.csv
 
 logs:
-  VISIONE: data/2023/team_logs/from_dres/visione
-  videoclip: data/2023/team_logs/from_dres/videoclip
+  VISIONE: data/2023/team_logs/VISIONE # data/2023/team_logs/from_dres/visione
+  vitrivr: data/2023/team_logs/from_dres/vitrivr
+  VideoCLIP: data/2023/team_logs/from_dres/videoclip
   VERGE: data/2022/team_logs/from_dres/verge
-
-generate:
-  - name: time_recall_table
-    function: generate.TimeRecallTable
-    generate_args: {split_user: False, only_best_user: True, max_records: 1000}
-    render_args: {}
-
-  - name: best_shot_rank_boxplot_bestusers
-    function: generate.BestShotRankBoxplot
-    generate_args: {max_records: 1000, split_user: True, best_user_policy: True, aggregate_users_for: ['verge', 'vitrivr']}
-    render_args: {show_boxplot: False, figsize: [6, 3], fill_missing: True}
-
-  - name: best_shot_rank_boxplot_realusers
-    function: generate.BestShotRankBoxplot
-    generate_args: {max_records: 1000, split_user: True, best_user_policy: False, aggregate_users_for: ['verge', 'vitrivr']}
-    render_args: {show_boxplot: False, figsize: [6, 3], exclude_teams: ['VERGE', 'vitrivr'], fill_missing: True}
-
-  - name: browsing_efficiency_boxplot_firstappearance
-    function: generate.BrowsingEfficiencyBoxplot
-    generate_args: {max_records: 1000, split_user: True}
-    render_args: {show_boxplot: True, figsize: [6, 3], time_of: ['time_first_appearance'], fill_missing: False}
-
-  # Exclude
-  - name: browsing_efficiency_boxplot_lastappearance
-    function: generate.BrowsingEfficiencyBoxplot
-    generate_args: {max_records: 1000, split_user: True}
-    render_args: {show_boxplot: True, figsize: [6, 3], time_of: 'last_appearance', fill_missing: False}
-
-  - name: browsing_efficiency_scatterplot_firstappearance_visual
-    function: generate.BrowsingEfficiencyScatterplot
-    generate_args: {max_records: 1000, split_user: True}
-    render_args: {time_of: 'first_appearance', figsize: [6, 3], marker_size: 60, include_incorrect_submissions: True, split_tasks: "visual", regression_line: True}
-
-  - name: browsing_efficiency_scatterplot_firstappearance_textual
-    function: generate.BrowsingEfficiencyScatterplot
-    generate_args: {max_records: 1000, split_user: True}
-    render_args: {time_of: 'first_appearance', figsize: [6, 3], marker_size: 60, include_incorrect_submissions: True, split_tasks: "textual", regression_line: True}
-
-  # Exclude
-  - name: browsing_efficiency_scatterplot_lastappearance
-    function: generate.BrowsingEfficiencyScatterplot
-    generate_args: {max_records: 1000, split_user: True}
-    render_args: {time_of: 'last_appearance', figsize: [6, 3], marker_size: 60, include_incorrect_submissions: True, split_tasks: True}

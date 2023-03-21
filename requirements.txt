@@ -5,3 +5,5 @@ pandas
 tqdm
 pyyaml
 seaborn
+opencv-python
+ipykernel

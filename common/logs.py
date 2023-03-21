@@ -27,6 +27,9 @@ class TeamLogParser():
             if team == 'vitrivr':
                 # patch the v3c_video to use their segments (cineast used other segments)
                 self.v3c_videos = Videos(['data/v3c1_2_cineast_segments.csv'], data['args'].v3c_fps_file)
+        elif version == '2023':
+            self.get_results = self.get_results_standard_2022
+            self.get_events = self.get_events_standard_2022
         elif version == 'vbse2022':
             self.get_results = self.get_results_standard_2022
             self.get_events = self.get_events_standard_2022
@@ -39,7 +42,7 @@ class TeamLogParser():
         # result['shotId'] = result.apply(lambda x: self.v3c_videos.get_shot_from_video_and_frame(x['videoId'], x['frame'], unit='milliseconds'), axis=1)
         result['shotTimeMs'] = result.apply(lambda x: self.v3c_videos.get_shot_time_from_video_and_frame(x['videoId'], x['frame']), axis=1)
         result = result.filter(['shotTimeMs', 'shotId', 'videoId', 'rank'])
-        result = result.astype(int)
+        result = result.astype({'shotTimeMs': int})
         return result
 
     # submitted the segment, not the frame
@@ -84,7 +87,7 @@ class TeamLogParser():
     
 
 class TeamLogs:
-    def __init__(self, data, team, max_records=10000, use_cache=False, cache_path='cache/team_logs'):
+    def __init__(self, data, team, max_records=10000, use_cache=False, cache_path='cache/team_logs', force=False):
         self.v3c_videos = data['v3c_videos']
         self.runreader = data['runreader']
         self.cache_path = cache_path
@@ -92,7 +95,7 @@ class TeamLogs:
         self.use_cache = use_cache
         self.team = team
 
-        self.df_results, self.df_events = self._cache(data, force=False)
+        self.df_results, self.df_events = self._cache(data, force=force)
 
     def _cache(self, data, force=False):
         # some caching logic for results
@@ -101,7 +104,7 @@ class TeamLogs:
             cache_path.mkdir(parents=True, exist_ok=True)
         results_cache_file = cache_path / '{}_results.pkl'.format(self.team)
         events_cache_file = cache_path / '{}_events.pkl'.format(self.team)
-        if force or (self.use_cache and (results_cache_file.exists() and events_cache_file.exists())):
+        if not force and (self.use_cache and (results_cache_file.exists() and events_cache_file.exists())):
             df_results = pd.read_pickle(results_cache_file)
             df_events = pd.read_pickle(events_cache_file)
         else:
@@ -118,6 +121,11 @@ class TeamLogs:
         except ValueError:
             # try to search for a "timestamp" field in the json and return that one (e.g., vibro)
             timestamp = int(js_list['timestamp'])
+
+        # FIXME: very bad hardcoded way to check if it is milliseconds or seconds
+        if timestamp < 1e11:
+            timestamp = timestamp * 1000
+            
         return timestamp
 
     def get_data(self, data):
@@ -157,7 +165,7 @@ class TeamLogs:
                     csts = self.runreader.get_csts()
                     cst = csts[team][task_name]
                     if cst > 0 and timestamp > cst:
-                        skipped_log_inTask_info.append(f"{timestamp}, {cst}, {timestamp-cst},{task_name}")
+                        skipped_log_inTask_info.append(f"{timestamp}, {cst}, {timestamp-cst}, {task_name}")
                         continue
 
                     # grab relevant infos from different team log files
@@ -186,7 +194,7 @@ class TeamLogs:
             if Path(root) != Path(team_log):
                 user_idx += 1   # number of user is the number of folders
 
-        if len(skipped_log_inTask_info)>0:
+        if len(skipped_log_inTask_info) > 0:
             print(f"**{team}**")
             print(f" log_timestamp, correct_submission_timestamp, timestamp - cst,task_name")
             print("\n".join(skipped_log_inTask_info))
@@ -216,7 +224,7 @@ class TeamLogs:
         standard_attrs = events_fn(events)
 
         # collect non-standard attributes of the event in a single column "additionals"
-        non_standard_attrs = set(events.columns) - set(standard_attrs.columns)
+        non_standard_attrs = list(set(events.columns) - set(standard_attrs.columns))
         standard_attrs['additionals'] = events[non_standard_attrs].apply(lambda x: x.to_json(), axis=1)
         return standard_attrs
 
