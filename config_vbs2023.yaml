@@ -1,4 +1,4 @@
-teams: ['VideoCLIP'] # ['VISIONE', 'videoclip', 'VERGE']
+teams: ['VISIONE', 'VideoCLIP', 'Verge', 'HTW', 'VIREO', 'vitrivr']
 
 audits_file: data/2023/vbs23_audits.jsonl
 run_file: data/2023/vbs23_run.json
@@ -8,10 +8,12 @@ fps_files:
 segment_files:
  - data/v3c1_frame_segments.csv
  - data/v3c2_frame_segments.csv
- - data/mvk_fps.csv
+ - data/mvk_frame_segments.csv
 
 logs:
   VISIONE: data/2023/team_logs/VISIONE # data/2023/team_logs/from_dres/visione
   vitrivr: data/2023/team_logs/from_dres/vitrivr
   VideoCLIP: data/2023/team_logs/from_dres/videoclip
-  VERGE: data/2022/team_logs/from_dres/verge
+  Verge: data/2023/team_logs/from_dres/verge
+  VIREO: data/2023/team_logs/VIREO
+  HTW: data/2023/team_logs/vibro

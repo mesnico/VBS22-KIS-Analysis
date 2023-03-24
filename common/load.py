@@ -20,7 +20,7 @@ class Shot:
     def get_segmentId(self):
         return self.segmentId
 
-def load_competition_data(config):
+def load_competition_data(config, teams_override=None):
     # load config file for this plot
     with open(config, 'r') as f:
         cfg = yaml.load(f, Loader=yaml.FullLoader)
@@ -37,14 +37,19 @@ def load_competition_data(config):
 
     return competition_data
 
-def process_team_logs(config, competition_data, force=False):
+def process_team_logs(config, competition_data, force=False, teams_override=None):
     # create or load logs, for each team
     # load config file for this plot
     with open(config, 'r') as f:
         cfg = yaml.load(f, Loader=yaml.FullLoader)
 
     logs = {}
-    teams = cfg["teams"]
+
+    if teams_override:
+        teams = teams_override
+    else:
+        teams = cfg["teams"]
+
     for team in tqdm.tqdm(teams, desc='Loading (or generating) intermediate DataFrames'):
         team_log = TeamLogs(
             competition_data, 

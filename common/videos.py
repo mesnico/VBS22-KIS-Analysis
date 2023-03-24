@@ -82,7 +82,7 @@ class Videos:
         try:
             frame = int(frame)
         except ValueError:
-            logging.warning('Found an invalid frame number in logs. Setting to -1')
+            logging.warning(f'Found an invalid frame number in logs: {frame}. Setting to -1')
             return -1
         fps = self.fps['FPS'][videoId]
         time = frame * 1000 / fps
