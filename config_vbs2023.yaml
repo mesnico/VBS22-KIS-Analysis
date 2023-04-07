@@ -1,4 +1,4 @@
-teams: ['VISIONE', 'VideoCLIP', 'Verge', 'HTW', 'VIREO', 'vitrivr']
+teams: ['VISIONE', 'VideoCLIP', 'Verge', 'HTW', 'VIREO', 'vitrivr', 'vitrivr-VR', 'FIRST']
 
 audits_file: data/2023/vbs23_audits.jsonl
 run_file: data/2023/vbs23_run.json
@@ -17,3 +17,4 @@ logs:
   Verge: data/2023/team_logs/from_dres/verge
   VIREO: data/2023/team_logs/VIREO
   HTW: data/2023/team_logs/vibro
+  FIRST: data/2023/team_logs/FIRST
