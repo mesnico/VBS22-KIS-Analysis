@@ -1,4 +1,4 @@
-teams: ['VISIONE', 'VideoCLIP', 'Verge', 'HTW', 'VIREO', 'vitrivr', 'vitrivr-VR', 'FIRST']
+teams: ['VISIONE', 'VideoCLIP', 'Verge', 'HTW', 'VIREO', 'vitrivr', 'vitrivr-VR'] #, 'FIRST']
 
 audits_file: data/2023/vbs23_audits.jsonl
 run_file: data/2023/vbs23_run.json

@@ -69,11 +69,11 @@ def main(args):
     
     out_path = Path(args.output_path)
     out_path.mkdir(parents=True, exist_ok=True)
-    events_df.to_pickle(out_path / 'vitrivr-VR_events.pkl')
+    events_df.to_csv(out_path / 'vitrivr-VR_events.csv', index=False)
 
     # write also an empty result dataframe (so that this output is consistent with the cache system used in the TeamLog class)
     results_df = pd.DataFrame()
-    results_df.to_pickle(out_path / 'vitrivr-VR_results.pkl')
+    results_df.to_csv(out_path / 'vitrivr-VR_results.csv', index=False)
     print("done")
     return
 

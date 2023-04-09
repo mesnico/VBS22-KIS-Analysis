@@ -25,15 +25,24 @@ class TeamLogs:
         cache_path = Path(self.cache_path) / data['version'] # append the version to the cache_path
         if not cache_path.exists():
             cache_path.mkdir(parents=True, exist_ok=True)
-        results_cache_file = cache_path / '{}_results.pkl'.format(self.team)
-        events_cache_file = cache_path / '{}_events.pkl'.format(self.team)
+        results_cache_file = cache_path / '{}_results.csv'.format(self.team)
+        events_cache_file = cache_path / '{}_events.csv'.format(self.team)
         if not force and (self.use_cache and (results_cache_file.exists() and events_cache_file.exists())):
-            df_results = pd.read_pickle(results_cache_file)
-            df_events = pd.read_pickle(events_cache_file)
+            try:
+                df_results = pd.read_csv(results_cache_file)
+            except pd.errors.EmptyDataError:
+                logging.warning(f'Empty results dataframe in {results_cache_file}')
+                df_results = pd.DataFrame()
+
+            try:
+                df_events = pd.read_csv(events_cache_file)
+            except pd.errors.EmptyDataError:
+                logging.warning(f'Empty events dataframe in {events_cache_file}')
+                df_events = pd.DataFrame()
         else:
             df_results, df_events = self.get_data(data)
-            df_results.to_pickle(results_cache_file)
-            df_events.to_pickle(events_cache_file)
+            df_results.to_csv(results_cache_file, index=False)
+            df_events.to_csv(events_cache_file, index=False)
 
         return df_results, df_events
 

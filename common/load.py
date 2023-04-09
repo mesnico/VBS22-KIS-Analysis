@@ -45,7 +45,7 @@ def process_team_logs(config, competition_data, force=False, teams_override=None
 
     logs = {}
 
-    if teams_override:
+    if teams_override and 'all' not in teams_override:
         teams = teams_override
     else:
         teams = cfg["teams"]
