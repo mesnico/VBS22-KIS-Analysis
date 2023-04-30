@@ -149,7 +149,7 @@ class TeamLogs:
         events_and_ranks_df.drop_duplicates(inplace=True)
         # reordering columns
         events_and_ranks_df= events_and_ranks_df[['task', 'team', 'user', 'timestamp', 'elapsed_since_task_start_ms', 'correct_submission_time_ms', 
-                            'rank_video', 'rank_shot_margin_0', 'rank_shot_margin_5', 'category', 'type', 'value', 'additionals']]
+                            'rank_video', 'rank_shot_margin_0', 'rank_shot_margin_5', 'max_rank', 'category', 'type', 'value', 'additionals']]
 
         return results_df, events_and_ranks_df
 
@@ -196,6 +196,8 @@ class TeamLogs:
             results.update({'rank_shot_margin_{}'.format(m): float('inf') for m in target_shot_margins})
         else:
             results.update({'rank_shot': float('inf')})
+
+        results['max_rank'] = max(result['rank'])   # FIXME
 
         # find correct videos
         res = res[res['videoId'] == task['correct_video']]

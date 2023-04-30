@@ -66,7 +66,8 @@ def main(args):
 
     events_df[['rank_shot_margin_0','rank_shot_margin_5','rank_video']] = events_df[['rank_shot_margin_0','rank_shot_margin_5','rank_video']].replace(np.nan, np.inf)
     events_df[['type', 'value','additionals']] = events_df[['type', 'value','additionals']].replace(np.nan, "")
-    
+    events_df['max_rank'] = np.nan  # we do not know their maximum logged rank
+
     out_path = Path(args.output_path)
     out_path.mkdir(parents=True, exist_ok=True)
     events_df.to_csv(out_path / 'vitrivr-VR_events.csv', index=False)
