@@ -64,7 +64,12 @@ def main(args):
     events_df['correct_submission_time_ms'] = correct_submission_time - task_start
     events_df = events_df.filter(['task', 'team', 'user', 'timestamp', 'elapsed_since_task_start_ms', 'correct_submission_time_ms', 'rank_video', 'rank_shot_margin_0', 'rank_shot_margin_5', 'category', 'type', 'value','additionals' ])
 
-    events_df[['rank_shot_margin_0','rank_shot_margin_5','rank_video']] = events_df[['rank_shot_margin_0','rank_shot_margin_5','rank_video']].replace(np.nan, np.inf)
+    # replace -1 with infs
+    events_df[['rank_shot_margin_0','rank_shot_margin_5','rank_video']] = events_df[['rank_shot_margin_0','rank_shot_margin_5','rank_video']].replace(-1, np.inf)
+
+    # transform to 1-based ranks
+    events_df[['rank_shot_margin_0','rank_shot_margin_5','rank_video']] += 1
+
     events_df[['type', 'value','additionals']] = events_df[['type', 'value','additionals']].replace(np.nan, "")
     events_df['max_rank'] = np.nan  # we do not know their maximum logged rank
 
