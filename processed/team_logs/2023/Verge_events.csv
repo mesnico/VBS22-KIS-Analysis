@@ -1,0 +1,158 @@
+task,team,user,timestamp,elapsed_since_task_start_ms,correct_submission_time_ms,rank_video,rank_shot_margin_0,rank_shot_margin_5,max_rank,category,type,value,additionals
+vbs23-kis-v1,Verge,0,1673259663856,50543,221930.0,inf,inf,inf,134.0,TEXT,jointEmbedding,man jumping basketball court,{}
+vbs23-kis-v1,Verge,0,1673259665895,52582,221930.0,inf,inf,inf,10000.0,TEXT,jointEmbedding,black guy doing backflip,{}
+vbs23-kis-v1,Verge,0,1673259665991,52678,221930.0,inf,inf,inf,10000.0,TEXT,jointEmbedding,black guy doing backflip,{}
+vbs23-kis-v1,Verge,0,1673259694296,80983,221930.0,inf,inf,inf,3.0,TEXT,jointEmbedding,presenter with pink suit,{}
+vbs23-kis-v1,Verge,0,1673259710901,97588,221930.0,inf,inf,inf,3.0,TEXT,jointEmbedding,presenter with pink suit,{}
+vbs23-kis-v1,Verge,0,1673259712235,98922,221930.0,745.0,761.0,745.0,10000.0,TEXT,jointEmbedding,basketball court indoor pink dress,{}
+vbs23-kis-v1,Verge,0,1673259721374,108061,221930.0,2815.0,inf,2815.0,10000.0,TEXT,jointEmbedding,doing wheels in a basketball court,{}
+vbs23-kis-v1,Verge,0,1673259745829,132516,221930.0,inf,inf,inf,10000.0,TEXT,jointEmbedding,doing a flip flop,{}
+vbs23-kis-v1,Verge,0,1673259754669,141356,221930.0,1063.0,4842.0,1374.0,10000.0,TEXT,jointEmbedding,doing backfilp in a basketball court,{}
+vbs23-kis-v1,Verge,0,1673259776428,163115,221930.0,3347.0,7588.0,6061.0,10000.0,TEXT,jointEmbedding,doing backflip in a basketball court,{}
+vbs23-kis-v1,Verge,0,1673259791980,178667,221930.0,inf,inf,inf,1000.0,IMAGE,globalFeatures,"VId16588,FN16588",{}
+vbs23-kis-v1,Verge,0,1673259814670,201357,221930.0,17.0,518.0,17.0,10000.0,TEXT,jointEmbedding,talent show in a basketball court,{}
+vbs23-kis-v1,Verge,0,1673259819531,206218,221930.0,inf,inf,inf,2691.0,TEXT,concept,",,",{}
+vbs23-kis-v1,Verge,0,1673259834734,221421,221930.0,17.0,518.0,17.0,10000.0,TEXT,jointEmbedding,black guy doing backflip,{}
+vbs23-kis-v1,Verge,0,1673259834734,221421,221930.0,17.0,518.0,17.0,10000.0,TEXT,jointEmbedding,presenter with pink suit,{}
+vbs23-kis-v1,Verge,0,1673259834734,221421,221930.0,17.0,518.0,17.0,10000.0,TEXT,jointEmbedding,doing wheels in a basketball court,{}
+vbs23-kis-v1,Verge,0,1673259834734,221421,221930.0,17.0,518.0,17.0,10000.0,TEXT,jointEmbedding,doing backfilp in a basketball court,{}
+vbs23-kis-v1,Verge,0,1673259834734,221421,221930.0,17.0,518.0,17.0,10000.0,TEXT,jointEmbedding,doing backflip in a basketball court,{}
+vbs23-kis-v1,Verge,0,1673259834734,221421,221930.0,17.0,518.0,17.0,10000.0,TEXT,jointEmbedding,talent show in a basketball court,{}
+vbs23-kis-t1,Verge,0,1673260413326,40465,281491.0,3.0,3.0,3.0,10000.0,TEXT,jointEmbedding,kids in kayaks throwing paddles throught coloured hoops,{}
+vbs23-kis-t1,Verge,0,1673260472229,99368,281491.0,11.0,32.0,32.0,10000.0,TEXT,jointEmbedding,kayaks on a river three hoops,{}
+vbs23-kis-t1,Verge,0,1673260501042,128181,281491.0,19.0,108.0,108.0,10000.0,TEXT,jointEmbedding,two kids in red kayaks,{}
+vbs23-kis-t1,Verge,0,1673260522793,149932,281491.0,10.0,146.0,146.0,10000.0,TEXT,jointEmbedding,two kids in red kayaks in river,{}
+vbs23-kis-t1,Verge,0,1673260586873,214012,281491.0,inf,inf,inf,10000.0,TEXT,concept,,{}
+vbs23-kis-t1,Verge,0,1673260592334,219473,281491.0,22.0,112.0,112.0,10000.0,TEXT,jointEmbedding,kayak competition in river,{}
+vbs23-kis-t1,Verge,0,1673260597146,224285,281491.0,inf,inf,inf,262.0,TEXT,concept,",",{}
+vbs23-kis-t1,Verge,0,1673260632366,259505,281491.0,13.0,15.0,15.0,10000.0,TEXT,jointEmbedding,"kayaks on a river, spectators in spots",{}
+vbs23-kis-t1,Verge,0,1673260653833,280972,281491.0,22.0,112.0,112.0,10000.0,TEXT,jointEmbedding,kids in kayaks throwing paddles throught coloured hoops,{}
+vbs23-kis-t1,Verge,0,1673260653833,280972,281491.0,22.0,112.0,112.0,10000.0,TEXT,jointEmbedding,two kids in red kayaks,{}
+vbs23-kis-t1,Verge,0,1673260653833,280972,281491.0,22.0,112.0,112.0,10000.0,TEXT,jointEmbedding,two kids in red kayaks in river,{}
+vbs23-kis-t1,Verge,0,1673260653833,280972,281491.0,22.0,112.0,112.0,10000.0,TEXT,jointEmbedding,kayak competition in river,{}
+vbs23-kis-t2,Verge,0,1673260924634,27990,,270.0,326.0,326.0,10000.0,TEXT,jointEmbedding,making sculptures with egg carton,{}
+vbs23-kis-t2,Verge,0,1673260935908,39264,,275.0,275.0,275.0,10000.0,TEXT,jointEmbedding,kid glue egg carton,{}
+vbs23-kis-t2,Verge,0,1673260973113,76469,,573.0,2715.0,2715.0,10000.0,TEXT,jointEmbedding,making sculptures with carton,{}
+vbs23-kis-t2,Verge,0,1673260997733,101089,,2056.0,2056.0,2056.0,10000.0,TEXT,jointEmbedding,egg cartons,{}
+vbs23-kis-t2,Verge,0,1673260997786,101142,,555.0,594.0,594.0,10000.0,TEXT,jointEmbedding,kids art,{}
+vbs23-kis-t2,Verge,0,1673261035561,138917,,5879.0,inf,inf,10000.0,TEXT,jointEmbedding,glowing egg cartons,{}
+vbs23-kis-t2,Verge,0,1673261045927,149283,,143.0,143.0,143.0,10000.0,TEXT,jointEmbedding,green and turquoise egg carton,{}
+vbs23-kis-t2,Verge,0,1673261056687,160043,,79.0,79.0,79.0,10000.0,TEXT,jointEmbedding,glueing egg cartons,{}
+vbs23-kis-t2,Verge,0,1673261104401,207757,,inf,inf,inf,10000.0,TEXT,jointEmbedding,kid holding a brush,{}
+vbs23-kis-t2,Verge,0,1673261134755,238111,,inf,inf,inf,10000.0,TEXT,jointEmbedding,egg carton,{}
+vbs23-kis-t2,Verge,0,1673261171254,274610,,inf,inf,inf,1000.0,IMAGE,globalFeatures,"VId01019,FN01019",{}
+vbs23-kis-t2,Verge,0,1673261197464,300820,,159.0,159.0,159.0,10000.0,TEXT,jointEmbedding,kid crafting art,{}
+vbs23-kis-t2,Verge,0,1673261206262,309618,,inf,inf,inf,1174.0,TEXT,concept,",",{}
+vbs23-kis-t2,Verge,0,1673261236813,340169,,181.0,181.0,181.0,10000.0,TEXT,jointEmbedding,kid crafting art with cartons,{}
+vbs23-kis-t2,Verge,0,1673261260002,363358,,333.0,2730.0,2730.0,10000.0,TEXT,jointEmbedding,egg carton sculpture,{}
+vbs23-kis-t2,Verge,0,1673261287047,390403,,inf,inf,inf,10000.0,TEXT,jointEmbedding,kid holding a brush,{}
+vbs23-kis-t2,Verge,0,1673261294482,397838,,219.0,219.0,219.0,10000.0,TEXT,jointEmbedding,applying glue to carton,{}
+vbs23-kis-t3,Verge,0,1673261428321,27022,,1160.0,1160.0,1160.0,10000.0,TEXT,jointEmbedding,glass roof of a lift cabin,{}
+vbs23-kis-t3,Verge,0,1673261436242,34943,,1160.0,1160.0,1160.0,10000.0,TEXT,jointEmbedding,glass roof of a lift cabin,{}
+vbs23-kis-t3,Verge,0,1673261458745,57446,,783.0,783.0,783.0,10000.0,TEXT,jointEmbedding,voew from the glass roof of a lift,{}
+vbs23-kis-t3,Verge,0,1673261503933,102634,,inf,inf,inf,1000.0,IMAGE,globalFeatures,"VId14831,FN14831",{}
+vbs23-kis-t3,Verge,0,1673261521158,119859,,783.0,783.0,783.0,10000.0,TEXT,jointEmbedding,voew from the glass roof of a lift,{}
+vbs23-kis-t3,Verge,0,1673261552171,150872,,7042.0,inf,7042.0,10000.0,TEXT,jointEmbedding,glass lifts,{}
+vbs23-kis-t3,Verge,0,1673261582503,181204,,2098.0,3935.0,2098.0,10000.0,TEXT,jointEmbedding,POV through the top of glass lifts,{}
+vbs23-kis-t3,Verge,0,1673261638929,237630,,272.0,1207.0,272.0,10000.0,TEXT,jointEmbedding,view through the top of a glass lift,{}
+vbs23-kis-t3,Verge,0,1673261690569,289270,,278.0,638.0,638.0,10000.0,TEXT,jointEmbedding,lift glass cabin moving and wires are visible,{}
+vbs23-kis-t3,Verge,0,1673261722032,320733,,557.0,739.0,557.0,10000.0,TEXT,jointEmbedding,viewing a glass lift,{}
+vbs23-kis-t3,Verge,0,1673261783189,381890,,180.0,940.0,180.0,10000.0,TEXT,jointEmbedding,inside a glass lift looking on the top,{}
+vbs23-kis-t4,Verge,0,1673262364107,41352,356336.0,447.0,447.0,447.0,10000.0,TEXT,jointEmbedding,sailing ship leaves a harbour,{}
+vbs23-kis-t4,Verge,0,1673262364612,41857,356336.0,877.0,877.0,877.0,10000.0,TEXT,jointEmbedding,two-masted sailing ship leaves a harbour,{}
+vbs23-kis-t4,Verge,0,1673262402896,80141,356336.0,586.0,586.0,586.0,10000.0,TEXT,jointEmbedding,"sailing ship leaves a harbour, beacon",{}
+vbs23-kis-t4,Verge,0,1673262411771,89016,356336.0,935.0,935.0,935.0,10000.0,TEXT,jointEmbedding,two-masted sailing ship and a white beacon,{}
+vbs23-kis-t4,Verge,0,1673262436237,113482,356336.0,748.0,748.0,748.0,10000.0,TEXT,jointEmbedding,two-masted sailing ship in harbour,{}
+vbs23-kis-t4,Verge,0,1673262469151,146396,356336.0,968.0,968.0,968.0,10000.0,TEXT,jointEmbedding,sailing ship white light beacon cloudy,{}
+vbs23-kis-t4,Verge,0,1673262505519,182764,356336.0,inf,inf,inf,10000.0,TEXT,jointEmbedding,turkish flag,{}
+vbs23-kis-t4,Verge,0,1673262506418,183663,356336.0,376.0,2106.0,2106.0,10000.0,TEXT,jointEmbedding,two-masted sailing ship next to a stone wall,{}
+vbs23-kis-t4,Verge,0,1673262542247,219492,356336.0,1381.0,1381.0,1381.0,10000.0,TEXT,jointEmbedding,turkish flag on a boat next to beacon,{}
+vbs23-kis-t4,Verge,0,1673262569209,246454,356336.0,628.0,628.0,628.0,10000.0,TEXT,jointEmbedding,two-masted sailing ship in harbor with the sun visible,{}
+vbs23-kis-t4,Verge,0,1673262619905,297150,356336.0,478.0,478.0,478.0,10000.0,TEXT,jointEmbedding,two-masted sailing ship next to boats,{}
+vbs23-kis-t1,Verge,0,1673260421127,48266,281491.0,12.0,241.0,241.0,10000.0,TEXT,jointEmbedding,"kayaks on a river, throwing paddles",{}
+vbs23-kis-t2,Verge,0,1673261087073,190429,,inf,inf,inf,1000.0,IMAGE,globalFeatures,"VId04788,FN04788",{}
+vbs23-kis-t3,Verge,0,1673261611270,209971,,124.0,1938.0,1938.0,10000.0,TEXT,jointEmbedding,lift glass cabin moving,{}
+vbs23-kis-t4,Verge,0,1673262643375,320620,356336.0,139.0,139.0,139.0,10000.0,TEXT,jointEmbedding,sailing ship next to boats,{}
+vbs23-kis-t5,Verge,0,1673263173798,347186,,425.0,3057.0,3057.0,10000.0,TEXT,jointEmbedding,bride with blue bow,{}
+vbs23-kis-v-m2,Verge,0,1673271299510,49148,,inf,inf,inf,10000.0,TEXT,jointEmbedding,diver holding a rope,{}
+vbs23-kis-v2,Verge,0,1673276059832,63684,123591.0,948.0,inf,948.0,10000.0,TEXT,jointEmbedding,hairspraying a woman,{}
+vbs23-kis-t4,Verge,0,1673262668093,345338,356336.0,132.0,132.0,132.0,10000.0,TEXT,jointEmbedding,sailing ship and small boats,{}
+vbs23-kis-t4,Verge,0,1673262678569,355814,356336.0,139.0,139.0,139.0,10000.0,TEXT,jointEmbedding,two-masted sailing ship leaves a harbour,{}
+vbs23-kis-t4,Verge,0,1673262678569,355814,356336.0,139.0,139.0,139.0,10000.0,TEXT,jointEmbedding,two-masted sailing ship and a white beacon,{}
+vbs23-kis-t4,Verge,0,1673262678569,355814,356336.0,139.0,139.0,139.0,10000.0,TEXT,jointEmbedding,two-masted sailing ship in harbour,{}
+vbs23-kis-t4,Verge,0,1673262678569,355814,356336.0,139.0,139.0,139.0,10000.0,TEXT,jointEmbedding,two-masted sailing ship next to a stone wall,{}
+vbs23-kis-t4,Verge,0,1673262678569,355814,356336.0,139.0,139.0,139.0,10000.0,TEXT,jointEmbedding,two-masted sailing ship in harbor with the sun visible,{}
+vbs23-kis-t4,Verge,0,1673262678569,355814,356336.0,139.0,139.0,139.0,10000.0,TEXT,jointEmbedding,two-masted sailing ship next to boats,{}
+vbs23-kis-t4,Verge,0,1673262678569,355814,356336.0,139.0,139.0,139.0,10000.0,TEXT,jointEmbedding,sailing ship next to boats,{}
+vbs23-kis-t5,Verge,0,1673262864407,37795,,822.0,inf,inf,10000.0,TEXT,jointEmbedding,wedding party,{}
+vbs23-kis-t5,Verge,0,1673262865566,38954,,182.0,7239.0,7239.0,10000.0,TEXT,jointEmbedding,party grouped around bride and groom,{}
+vbs23-kis-t5,Verge,0,1673262923466,96854,,185.0,1536.0,1536.0,10000.0,TEXT,jointEmbedding,bride wearing a blue blow around the waist,{}
+vbs23-kis-t5,Verge,0,1673262942836,116224,,272.0,2313.0,2313.0,10000.0,TEXT,jointEmbedding,bride blue bow around waist,{}
+vbs23-kis-t5,Verge,0,1673262987137,160525,,1197.0,4790.0,4790.0,10000.0,TEXT,jointEmbedding,guests following bride and groom,{}
+vbs23-kis-t5,Verge,0,1673263001460,174848,,380.0,8634.0,8634.0,10000.0,TEXT,jointEmbedding,"bride blue bow around waist, red jacket",{}
+vbs23-kis-t5,Verge,0,1673263033383,206771,,4966.0,inf,inf,10000.0,TEXT,jointEmbedding,lady in red jacket in a wedding,{}
+vbs23-kis-t5,Verge,0,1673263069270,242658,,1599.0,1875.0,1875.0,10000.0,TEXT,jointEmbedding,people waving,{}
+vbs23-kis-t5,Verge,0,1673263097526,270914,,39.0,39.0,39.0,10000.0,TEXT,jointEmbedding,people waving wedding party,{}
+vbs23-kis-t5,Verge,0,1673263125532,298920,,684.0,684.0,684.0,1000.0,IMAGE,globalFeatures,"VId03350,FN03350",{}
+vbs23-kis-t5,Verge,0,1673263131340,304728,,425.0,3057.0,3057.0,10000.0,TEXT,jointEmbedding,bride with blue bow,{}
+vbs23-kis-t5,Verge,0,1673263133819,307207,,8534.0,inf,9109.0,10000.0,TEXT,concept,,{}
+vbs23-kis-t5,Verge,0,1673263172452,345840,,116.0,inf,4421.0,10000.0,TEXT,jointEmbedding,blue bow,{}
+vbs23-kis-t5,Verge,0,1673263173505,346893,,424.0,3946.0,3946.0,10000.0,TEXT,jointEmbedding,bride with blue blow,{}
+vbs23-kis-t5,Verge,0,1673263195944,369332,,14.0,2725.0,2725.0,10000.0,TEXT,jointEmbedding,bride with blue and white flower bouquet,{}
+vbs23-kis-t5,Verge,0,1673263234234,407622,,14.0,2725.0,2725.0,10000.0,TEXT,jointEmbedding,bride with blue and white flower bouquet,{}
+vbs23-kis-t5,Verge,0,1673263235401,408789,,152.0,200.0,200.0,10000.0,TEXT,jointEmbedding,people waving at the bride,{}
+vbs23-kis-t6,Verge,0,1673264196110,32736,179991.0,738.0,738.0,738.0,10000.0,TEXT,jointEmbedding,balcony with laundry hanging on a rope,{}
+vbs23-kis-t6,Verge,0,1673264209145,45771,179991.0,1234.0,1234.0,1234.0,10000.0,TEXT,jointEmbedding,balcony with laundry on rope,{}
+vbs23-kis-t6,Verge,0,1673264287760,124386,179991.0,1552.0,1552.0,1552.0,10000.0,TEXT,jointEmbedding,wall with posters,{}
+vbs23-kis-t6,Verge,0,1673264294471,131097,179991.0,3.0,3.0,3.0,232.0,FILTER,numberOfObjects,2,{}
+vbs23-kis-t6,Verge,0,1673264317668,154294,179991.0,72.0,78.0,72.0,10000.0,TEXT,jointEmbedding,tombstones,{}
+vbs23-kis-t6,Verge,0,1673264317844,154470,179991.0,150.0,150.0,150.0,10000.0,TEXT,jointEmbedding,railway next to a graveyard,{}
+vbs23-kis-t6,Verge,0,1673264342771,179397,179991.0,150.0,150.0,150.0,10000.0,TEXT,jointEmbedding,balcony with laundry hanging on a rope,{}
+vbs23-kis-t6,Verge,0,1673264342771,179397,179991.0,150.0,150.0,150.0,10000.0,TEXT,jointEmbedding,railway next to a graveyard,{}
+vbs23-kis-v-m2,Verge,0,1673271272331,21969,,inf,inf,inf,10000.0,TEXT,jointEmbedding,two divers,{}
+vbs23-kis-v-m2,Verge,0,1673271331141,80779,,inf,inf,inf,10000.0,TEXT,jointEmbedding,diver breathing out,{}
+vbs23-kis-v-m2,Verge,0,1673271363400,113038,,inf,inf,inf,1000.0,IMAGE,globalFeatures,"VId15394,FN15394",{}
+vbs23-kis-v-m2,Verge,0,1673271377848,127486,,inf,inf,inf,1000.0,IMAGE,globalFeatures,"VId00159,FN00159",{}
+vbs23-kis-v-m2,Verge,0,1673271426570,176208,,inf,inf,inf,10000.0,TEXT,jointEmbedding,diver with yellow suit,{}
+vbs23-kis-v-m2,Verge,0,1673271470432,220070,,inf,inf,inf,10000.0,TEXT,jointEmbedding,diver with yellow sleevers,{}
+vbs23-kis-v-m2,Verge,0,1673271491482,241120,,inf,inf,inf,1000.0,IMAGE,globalFeatures,"VId09810,FN09810",{}
+vbs23-kis-v-m3,Verge,0,1673271638471,14814,62004.0,inf,inf,inf,10000.0,TEXT,jointEmbedding,eel,{}
+vbs23-kis-v-m5,Verge,0,1673272795050,41760,55167.0,inf,inf,inf,10000.0,TEXT,jointEmbedding,diver looking up,{}
+vbs23-kis-v2,Verge,0,1673276029362,33214,123591.0,86.0,inf,86.0,10000.0,TEXT,jointEmbedding,hairspray on one woman,{}
+vbs23-kis-v2,Verge,0,1673276029494,33346,123591.0,6614.0,inf,6614.0,10000.0,TEXT,jointEmbedding,spraying woman next to a lamo,{}
+vbs23-kis-v2,Verge,0,1673276029990,33842,123591.0,3030.0,inf,3030.0,10000.0,TEXT,jointEmbedding,spraying woman next to a lamp,{}
+vbs23-kis-v2,Verge,0,1673276078258,82110,123591.0,86.0,inf,86.0,10000.0,TEXT,jointEmbedding,hairspray on one woman,{}
+vbs23-kis-v2,Verge,0,1673276118891,122743,123591.0,86.0,inf,86.0,10000.0,TEXT,jointEmbedding,hairspray on one woman,{}
+vbs23-kis-v3,Verge,0,1673276424373,17502,39351.0,51.0,393.0,393.0,10000.0,TEXT,jointEmbedding,facemask,{}
+vbs23-kis-v3,Verge,0,1673276431875,25004,39351.0,2.0,inf,inf,2771.0,TEXT,jointEmbedding,face mask beauty,{}
+vbs23-kis-v3,Verge,0,1673276445436,38565,39351.0,51.0,393.0,393.0,10000.0,TEXT,jointEmbedding,facemask,{}
+vbs23-kis-v4,Verge,0,1673277208705,31492,153218.0,inf,inf,inf,10000.0,TEXT,jointEmbedding,clapping hands,{}
+vbs23-kis-v4,Verge,0,1673277209599,32386,153218.0,372.0,661.0,661.0,10000.0,TEXT,jointEmbedding,kids clapping habds,{}
+vbs23-kis-v4,Verge,0,1673277215370,38157,153218.0,470.0,701.0,701.0,10000.0,TEXT,jointEmbedding,kids clapping hands,{}
+vbs23-kis-v4,Verge,0,1673277215576,38363,153218.0,470.0,701.0,701.0,10000.0,TEXT,jointEmbedding,kids clapping hands,{}
+vbs23-kis-v4,Verge,0,1673277231831,54618,153218.0,82.0,82.0,82.0,1000.0,IMAGE,globalFeatures,"VId11904,FN11904",{}
+vbs23-kis-v4,Verge,0,1673277244661,67448,153218.0,168.0,168.0,168.0,10000.0,TEXT,jointEmbedding,crowd of kids clapping hands,{}
+vbs23-kis-v4,Verge,0,1673277272374,95161,153218.0,178.0,178.0,178.0,10000.0,TEXT,jointEmbedding,3 children dancing in front of a big crowd of children,{}
+vbs23-kis-v4,Verge,0,1673277303826,126613,153218.0,114.0,3555.0,3555.0,10000.0,TEXT,jointEmbedding,teacher encouraging childer to clap,{}
+vbs23-kis-v4,Verge,0,1673277326356,149143,153218.0,2214.0,2214.0,2214.0,10000.0,TEXT,jointEmbedding,encouraging childer to clap,{}
+vbs23-kis-v4,Verge,0,1673277329686,152473,153218.0,178.0,178.0,178.0,10000.0,TEXT,jointEmbedding,clapping hands,{}
+vbs23-kis-v4,Verge,0,1673277329686,152473,153218.0,178.0,178.0,178.0,10000.0,TEXT,jointEmbedding,kids clapping hands,{}
+vbs23-kis-v4,Verge,0,1673277329686,152473,153218.0,178.0,178.0,178.0,10000.0,TEXT,jointEmbedding,3 children dancing in front of a big crowd of children,{}
+vbs23-kis-t7,Verge,0,1673277557585,26051,114978.0,4453.0,4453.0,4453.0,10000.0,TEXT,jointEmbedding,view down a surface of a boulder,{}
+vbs23-kis-t7,Verge,0,1673277558195,26661,114978.0,25.0,5384.0,41.0,10000.0,TEXT,jointEmbedding,bearded man in a cyan shirt is climbing a boulder,{}
+vbs23-kis-t7,Verge,0,1673277645818,114284,114978.0,25.0,5384.0,41.0,10000.0,TEXT,jointEmbedding,bearded man in a cyan shirt is climbing a boulder,{}
+vbs23-kis-v5,Verge,0,1673278587214,40973,90313.0,838.0,838.0,838.0,10000.0,TEXT,jointEmbedding,river in forest with white sand,{}
+vbs23-kis-v5,Verge,0,1673278610754,64513,90313.0,122.0,122.0,122.0,10000.0,TEXT,jointEmbedding,river  with white sand,{}
+vbs23-kis-v5,Verge,0,1673278617029,70788,90313.0,2462.0,2462.0,2462.0,10000.0,TEXT,jointEmbedding,river by a mountain,{}
+vbs23-kis-v5,Verge,0,1673278635886,89645,90313.0,122.0,122.0,122.0,10000.0,TEXT,jointEmbedding,river in forest with white sand,{}
+vbs23-kis-v5,Verge,0,1673278635886,89645,90313.0,122.0,122.0,122.0,10000.0,TEXT,jointEmbedding,river  with white sand,{}
+vbs23-kis-v6,Verge,0,1673278913922,26813,,402.0,3904.0,3904.0,10000.0,TEXT,jointEmbedding,parachute or paraglide,{}
+vbs23-kis-v6,Verge,0,1673278914310,27201,,702.0,3078.0,3078.0,10000.0,TEXT,jointEmbedding,yellow parachute,{}
+vbs23-kis-v6,Verge,0,1673278969090,81981,,8.0,143.0,143.0,10000.0,TEXT,jointEmbedding,yellow parachute over the mountains,{}
+vbs23-kis-v6,Verge,0,1673279007207,120098,,2.0,inf,inf,548.0,TEXT,jointEmbedding,paraglider between mountains,{}
+vbs23-kis-v6,Verge,0,1673279023819,136710,,3.0,237.0,237.0,10000.0,TEXT,jointEmbedding,yellow paraglide over mountains,{}
+vbs23-kis-v6,Verge,0,1673279050612,163503,,1549.0,1549.0,1549.0,10000.0,TEXT,jointEmbedding,yellow parachute in clouded sky,{}
+vbs23-kis-v6,Verge,0,1673279091330,204221,,9.0,9.0,9.0,253.0,IMAGE,globalFeatures,"VId01507,FN01507",{}
+vbs23-kis-v6,Verge,0,1673279095429,208320,,440.0,689.0,689.0,1000.0,IMAGE,globalFeatures,"VId11416,FN11416",{}
+vbs23-kis-v6,Verge,0,1673279113946,226837,,388.0,388.0,388.0,1000.0,IMAGE,globalFeatures,"VId10981,FN10981",{}
+vbs23-kis-v6,Verge,0,1673279151893,264784,,4.0,180.0,180.0,10000.0,TEXT,jointEmbedding,yellow paraglide goign away with mountain visible,{}

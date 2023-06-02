@@ -1,0 +1,39 @@
+task,team,user,timestamp,elapsed_since_task_start_ms,correct_submission_time_ms,rank_video,rank_shot_margin_0,rank_shot_margin_5,max_rank,category,type,value,additionals
+vbs23-kis-t3,VideoCLIP,0,1673261592000,190701,,13.0,inf,13.0,3891.0,TEXT,jointEmbedding,a glass lift cabin,{}
+vbs23-kis-v1,VideoCLIP,0,1673259645000,31687,53047.0,52.0,inf,52.0,4854.0,TEXT,jointEmbedding,a man in white and blue shorts on a wooden floor,{}
+vbs23-kis-v1,VideoCLIP,0,1673259661000,47687,53047.0,28.0,inf,28.0,3049.0,TEXT,jointEmbedding,a man in white and blue shorts on a wooden floor in a gym statium,{}
+vbs23-kis-t1,VideoCLIP,0,1673260424000,51139,283307.0,1.0,1.0,1.0,1716.0,TEXT,jointEmbedding,"kids in kayaks on a river, throwing paddles through three coloured hoops placed over the water",{}
+vbs23-kis-t1,VideoCLIP,0,1673260518000,145139,283307.0,inf,inf,inf,50.0,IMAGE,globalFeatures,"Item: 03765, Frame: 381",{}
+vbs23-kis-t1,VideoCLIP,0,1673260644000,271139,283307.0,1.0,2.0,1.0,2174.0,TEXT,jointEmbedding,kids in kayaks on a river through three coloured hoops placed over the water,{}
+vbs23-kis-t2,VideoCLIP,0,1673260917000,20356,,1549.0,1549.0,1549.0,3070.0,TEXT,jointEmbedding,hands of kids applying glue to egg carton,{}
+vbs23-kis-t2,VideoCLIP,0,1673261012000,115356,,1731.0,1731.0,1731.0,3565.0,TEXT,jointEmbedding,green torquioise egg cartons,{}
+vbs23-kis-t2,VideoCLIP,0,1673261058000,161356,,1552.0,1552.0,1552.0,3206.0,TEXT,jointEmbedding,white jar glue and kid hands with egg cartons,{}
+vbs23-kis-t2,VideoCLIP,0,1673261099000,202356,,1540.0,1540.0,1540.0,3391.0,TEXT,jointEmbedding,hands and egg carton,{}
+vbs23-kis-t2,VideoCLIP,0,1673261152000,255356,,3006.0,3006.0,3006.0,3917.0,TEXT,jointEmbedding,hands and carton,{}
+vbs23-kis-t2,VideoCLIP,0,1673261187000,290356,,inf,inf,inf,3866.0,TEXT,jointEmbedding,kid hands and carton,{}
+vbs23-kis-t2,VideoCLIP,0,1673261215000,318356,,1741.0,1741.0,1741.0,3684.0,TEXT,jointEmbedding,kid hands and egg's carton,{}
+vbs23-kis-t2,VideoCLIP,0,1673261231000,334356,,1335.0,1335.0,1335.0,2633.0,TEXT,jointEmbedding,kid making sculpture,{}
+vbs23-kis-t3,VideoCLIP,0,1673261425000,23701,,19.0,inf,19.0,3972.0,TEXT,jointEmbedding,a glass roof of a lift cabin,{}
+vbs23-kis-t3,VideoCLIP,0,1673261491000,89701,,73.0,inf,73.0,3937.0,TEXT,jointEmbedding,a view through a glass roof of a lift cabin,{}
+vbs23-kis-t3,VideoCLIP,0,1673261507000,105701,,25.0,inf,25.0,3976.0,TEXT,jointEmbedding,a view through a glass roof of a lift cabin and the top is made of glass,{}
+vbs23-kis-t3,VideoCLIP,0,1673261694000,292701,,1689.0,inf,1689.0,3323.0,TEXT,jointEmbedding, a view from glass roof lift,{}
+vbs23-kis-t4,VideoCLIP,0,1673262370000,47245,198057.0,193.0,inf,194.0,2941.0,TEXT,jointEmbedding,a two-masted sailing ship leaves a habour moving right behind the stone,{}
+vbs23-kis-t4,VideoCLIP,0,1673262446000,123245,198057.0,inf,inf,inf,50.0,IMAGE,globalFeatures,"Item: 05296, Frame: 5093",{}
+vbs23-kis-t4,VideoCLIP,0,1673262470000,147245,198057.0,inf,inf,inf,50.0,IMAGE,globalFeatures,"Item: 06594, Frame: 5791",{}
+vbs23-kis-t4,VideoCLIP,0,1673262497000,174245,198057.0,25.0,inf,25.0,2895.0,TEXT,jointEmbedding,a two-masted sailing ship leaves a habour moving right behind the stone and a turkish flag. A sun behind the clouds,{}
+vbs23-kis-t5,VideoCLIP,0,1673262859000,32388,,1036.0,inf,inf,1876.0,TEXT,jointEmbedding,wedding at bride,{}
+vbs23-kis-t5,VideoCLIP,0,1673263079000,252388,,inf,inf,inf,213.0,TEXT,jointEmbedding,,{}
+vbs23-kis-t5,VideoCLIP,0,1673263089000,262388,,inf,inf,inf,213.0,TEXT,jointEmbedding,,{}
+vbs23-kis-t5,VideoCLIP,0,1673263104000,277388,,inf,inf,inf,2695.0,TEXT,jointEmbedding,,{}
+vbs23-kis-t5,VideoCLIP,0,1673263136000,309388,,inf,inf,inf,213.0,TEXT,jointEmbedding,,{}
+vbs23-kis-t5,VideoCLIP,0,1673263193000,366388,,inf,inf,inf,227.0,TEXT,jointEmbedding,a lady in red in a wedding,{}
+vbs23-kis-t5,VideoCLIP,0,1673263198000,371388,,904.0,inf,inf,2303.0,TEXT,jointEmbedding,a lady in red in a wedding,{}
+vbs23-kis-t5,VideoCLIP,0,1673263207000,380388,,904.0,inf,inf,2303.0,TEXT,jointEmbedding,a lady in red in a wedding,{}
+vbs23-kis-t5,VideoCLIP,0,1673263243000,416388,,904.0,inf,inf,2303.0,TEXT,jointEmbedding,a lady in red in a wedding,{}
+vbs23-kis-t6,VideoCLIP,0,1673264198000,34626,,3227.0,inf,inf,3658.0,TEXT,jointEmbedding,two people and a wall with posters,{}
+vbs23-kis-t6,VideoCLIP,0,1673264274000,110626,,1270.0,1270.0,1270.0,4273.0,TEXT,jointEmbedding,a laundry hanging on a rope,{}
+vbs23-kis-t6,VideoCLIP,0,1673264338000,174626,,40.0,40.0,40.0,2886.0,TEXT,jointEmbedding,a fence between graveyard and railway running with training passing,{}
+vbs23-kis-t6,VideoCLIP,0,1673264355000,191626,,inf,inf,inf,50.0,IMAGE,globalFeatures,"Item: 08062, Frame: 4331",{}
+vbs23-kis-t6,VideoCLIP,0,1673264437000,273626,,inf,inf,inf,3626.0,TEXT,jointEmbedding,"a person standing on the corning of the wall with posters and the other one is walking, no other people",{}
+vbs23-kis-t6,VideoCLIP,0,1673264478000,314626,,889.0,inf,inf,3574.0,TEXT,jointEmbedding,"a person in front of wall with posters and the other one is walking, no other people",{}
+vbs23-kis-t6,VideoCLIP,0,1673264494000,330626,,1072.0,inf,inf,3643.0,TEXT,jointEmbedding,"two people in front of wall with posters and the other one is walking, no other people",{}

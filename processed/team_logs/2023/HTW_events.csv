@@ -1,0 +1,168 @@
+task,team,user,timestamp,elapsed_since_task_start_ms,correct_submission_time_ms,rank_video,rank_shot_margin_0,rank_shot_margin_5,max_rank,category,type,value,additionals
+vbs23-kis-v1,HTW,0,1673259650000,36687,43981.0,1.0,1.0,1.0,10000.0,TEXT,jointEmbedding,Man in pink closest standing a basketball stadium,{}
+vbs23-kis-t1,HTW,0,1673260401000,28139,36751.0,1.0,1.0,1.0,10000.0,TEXT,jointEmbedding," Kids in kayaks on a river, throwing paddles through three coloured hoops placed over the water. ",{}
+vbs23-kis-t2,HTW,0,1673260903000,6356,26109.0,1.0,1.0,1.0,10000.0,TEXT,jointEmbedding, Hands of a kid applying glue to an egg carton and then a view of a sculpture made of those cartons. ,{}
+vbs23-kis-t3,HTW,0,1673261414000,12701,394938.0,670.0,670.0,670.0,10000.0,TEXT,jointEmbedding, A view through the glass roof of a lift cabin while it is moving upwards. ,{}
+vbs23-kis-t3,HTW,0,1673261434000,32701,394938.0,75.0,75.0,75.0,10000.0,IMAGE,globalFeatures, video 14479 at 00:08:18.500 (Frame #12462),{}
+vbs23-kis-t3,HTW,1,1673261434000,32701,394938.0,75.0,75.0,75.0,10000.0,TEXT,jointEmbedding,a view trough the glass roof of a lift while it is moving upwards,{}
+vbs23-kis-t3,HTW,0,1673261439000,37701,394938.0,670.0,670.0,670.0,10000.0,TEXT,jointEmbedding, A view through the glass roof of a lift cabin while it is moving upwards. ,{}
+vbs23-kis-t3,HTW,0,1673261466000,64701,394938.0,502.0,502.0,502.0,10000.0,TEXT,jointEmbedding,A  glass lift cabin while it is moving upwards. ,{}
+vbs23-kis-t3,HTW,0,1673261527000,125701,394938.0,3687.0,inf,inf,10000.0,TEXT,jointEmbedding,A view through glass of a lift cabin while it is moving upwards. ,{}
+vbs23-kis-t3,HTW,0,1673261571000,169701,394938.0,141.0,276.0,276.0,10000.0,TEXT,jointEmbedding,Two lift cabin made of class with the wire in the middle.,{}
+vbs23-kis-t3,HTW,0,1673261631000,229701,394938.0,546.0,1039.0,1039.0,10000.0,IMAGE,globalFeatures, video 00479 at 00:04:21.000 (Frame #6264),{}
+vbs23-kis-t3,HTW,0,1673261654000,252701,394938.0,185.0,295.0,295.0,10000.0,IMAGE,globalFeatures, video 00479 at 00:04:21.000 (Frame #6264),{}
+vbs23-kis-t3,HTW,0,1673261674000,272701,394938.0,65.0,65.0,65.0,10000.0,IMAGE,globalFeatures, video 00479 at 00:04:21.000 (Frame #6264),{}
+vbs23-kis-t3,HTW,0,1673261733000,331701,394938.0,981.0,981.0,981.0,10000.0,IMAGE,globalFeatures, video 13924 at 00:02:02.000 (Frame #3660),{}
+vbs23-kis-t3,HTW,0,1673261747000,345701,394938.0,36.0,36.0,36.0,10000.0,IMAGE,globalFeatures, video 13924 at 00:02:02.000 (Frame #3660),{}
+vbs23-kis-t3,HTW,0,1673261750000,348701,394938.0,22.0,22.0,22.0,10000.0,IMAGE,globalFeatures, video 13924 at 00:02:02.000 (Frame #3660),{}
+vbs23-kis-t3,HTW,0,1673261751000,349701,394938.0,22.0,22.0,22.0,10000.0,IMAGE,globalFeatures, video 13924 at 00:02:02.000 (Frame #3660),{}
+vbs23-kis-t4,HTW,0,1673262329000,6245,155274.0,69.0,inf,inf,10000.0,TEXT,jointEmbedding," A two-masted sailing ship leaves a harbour, moving right behind a stone wall and a white light beacon. ",{}
+vbs23-kis-t4,HTW,0,1673262414000,91245,155274.0,647.0,647.0,647.0,10000.0,IMAGE,globalFeatures, video 05296 at 00:02:51.500 (Frame #5145),{}
+vbs23-kis-t4,HTW,0,1673262444000,121245,155274.0,1399.0,2266.0,2266.0,10000.0,TEXT,jointEmbedding,"There are mountains in the background, and the sun is behind clouds",{}
+vbs23-kis-t5,HTW,0,1673262854000,27388,149663.0,128.0,5448.0,5448.0,10000.0,IMAGE,globalFeatures, video 05296 at 00:02:51.500 (Frame #5145),{}
+vbs23-kis-t5,HTW,0,1673262856000,29388,149663.0,116.0,116.0,116.0,10000.0,TEXT,jointEmbedding,bride and groom walking and guests following them.,{}
+vbs23-kis-t5,HTW,0,1673262906000,79388,149663.0,1.0,104.0,9.0,10000.0,TEXT,jointEmbedding,"The bride has a blue bow around her waist, and a white/blue flower bouquet",{}
+vbs23-kis-t5,HTW,0,1673262931000,104388,149663.0,4.0,4.0,4.0,10000.0,IMAGE,globalFeatures, video 05722 at 00:03:39.500 (Frame #5487),{}
+vbs23-kis-t6,HTW,0,1673264174000,10626,29069.0,959.0,959.0,959.0,10000.0,TEXT,jointEmbedding,two people and a wall with posters,{}
+vbs23-kis-v-m1,HTW,0,1673270891000,16145,26522.0,8.0,8.0,8.0,10000.0,TEXT,jointEmbedding,ship wreck with a fish a blue water,{}
+vbs23-kis-v-m1,HTW,1,1673270891000,16145,26522.0,8.0,8.0,8.0,10000.0,TEXT,jointEmbedding,diver next to a shipwreck,{}
+vbs23-kis-v-m2,HTW,0,1673271264000,13638,45672.0,4.0,176.0,19.0,10000.0,TEXT,jointEmbedding,A diver in red water near a wall.,{}
+vbs23-kis-v-m3,HTW,0,1673271630000,6343,24472.0,14.0,14.0,14.0,10000.0,TEXT,jointEmbedding,Corals with a snake inside.,{}
+vbs23-kis-v-m4,HTW,0,1673272391000,17815,211429.0,1168.0,4255.0,2859.0,10000.0,TEXT,jointEmbedding,Corals a lot of fish,{}
+vbs23-kis-t3,HTW,0,1673261667000,265701,394938.0,57.0,57.0,57.0,10000.0,IMAGE,globalFeatures, video 00479 at 00:04:21.000 (Frame #6264),{}
+vbs23-kis-v-m4,HTW,0,1673272396000,22815,211429.0,959.0,1366.0,959.0,10000.0,TEXT,jointEmbedding,Corals a lot of fish in blue water.,{}
+vbs23-kis-v5,HTW,0,1673278564000,17759,44588.0,132.0,inf,570.0,10000.0,TEXT,jointEmbedding,A blue river running trough white stone and trees.,{}
+vbs23-kis-v6,HTW,0,1673278995000,107891,,89.0,913.0,913.0,10000.0,IMAGE,globalFeatures, video 03293 at 00:00:09.500 (Frame #228),{}
+vbs23-kis-v6,HTW,1,1673278995000,107891,,89.0,913.0,913.0,10000.0,IMAGE,globalFeatures, video 07852 at 00:04:01.500 (Frame #6037),{}
+vbs23-kis-v6,HTW,0,1673279179000,291891,,6.0,30.0,30.0,10000.0,IMAGE,globalFeatures, video 07385 at 00:02:24.000 (Frame #3600),{}
+vbs23-kis-v-m4,HTW,0,1673272422000,48815,211429.0,35.0,35.0,35.0,10000.0,IMAGE,globalFeatures, video PhuQuoc1_Jun2022_0032 at 00:00:23.000 (Frame #689),{}
+vbs23-kis-v-m4,HTW,0,1673272439000,65815,211429.0,18.0,18.0,18.0,10000.0,IMAGE,globalFeatures, video NusaPenida_Jul2022_0070 at 00:00:27.000 (Frame #809),{}
+vbs23-kis-v-m4,HTW,1,1673272439000,65815,211429.0,18.0,18.0,18.0,10000.0,TEXT,jointEmbedding,fishes over red corals ,{}
+vbs23-kis-v-m4,HTW,0,1673272467000,93815,211429.0,5.0,5.0,5.0,10000.0,IMAGE,globalFeatures, video NusaPenida_Jul2022_0048 at 00:00:23.000 (Frame #689),{}
+vbs23-kis-v-m4,HTW,0,1673272492000,118815,211429.0,23.0,23.0,23.0,10000.0,IMAGE,globalFeatures, video NusaPenida_Jul2022_0045 at 00:00:06.500 (Frame #194),{}
+vbs23-kis-v-m4,HTW,0,1673272524000,150815,211429.0,1880.0,3648.0,1880.0,10000.0,TEXT,jointEmbedding,Blue water and corals,{}
+vbs23-kis-v-m4,HTW,0,1673272547000,173815,211429.0,21.0,21.0,21.0,10000.0,TEMPORAL,text > text,Corals a lot of fish in blue water.  >  Blue water and corals,{}
+vbs23-kis-v-m4,HTW,0,1673272551000,177815,211429.0,17.0,17.0,17.0,10000.0,TEMPORAL,text > text,Corals a lot of fish in blue water.  >  Blue water and corals,{}
+vbs23-kis-v-m4,HTW,0,1673272583000,209815,211429.0,12.0,12.0,12.0,10000.0,TEMPORAL,text > text,Corals a lot of fish in blue water.  >  Blue water and corals,{}
+vbs23-kis-v-m5,HTW,0,1673272776000,22710,53485.0,41.0,41.0,41.0,10000.0,TEXT,jointEmbedding,A diver with blue fins.,{}
+vbs23-kis-v-m5,HTW,0,1673272798000,44710,53485.0,48.0,48.0,48.0,10000.0,TEXT,jointEmbedding,A diver with yellow fins.,{}
+vbs23-kis-v-m7,HTW,0,1673273133000,10632,23330.0,1.0,3.0,1.0,10000.0,TEXT,jointEmbedding,A light shining on a sea star.,{}
+vbs23-kis-v2,HTW,0,1673276013000,16852,52840.0,660.0,660.0,660.0,10000.0,TEXT,jointEmbedding,Woman with hair spray and a yellow lamp behind.,{}
+vbs23-kis-v2,HTW,0,1673276025000,28852,52840.0,19.0,1465.0,19.0,10000.0,TEXT,jointEmbedding,Woman with hair spray,{}
+vbs23-kis-v3,HTW,0,1673276418000,11129,59711.0,7.0,inf,35.0,10000.0,TEXT,jointEmbedding,Woman with a white face mask.,{}
+vbs23-kis-v3,HTW,0,1673276437000,30129,59711.0,57.0,57.0,57.0,10000.0,TEXT,jointEmbedding,Woman with a bandage around the bust.,{}
+vbs23-kis-v3,HTW,0,1673276451000,44129,59711.0,2.0,54.0,54.0,10000.0,TEXT,jointEmbedding,Woman with a white face mask and towel,{}
+vbs23-kis-v4,HTW,0,1673277197000,19787,26165.0,42.0,42.0,42.0,10000.0,TEXT,jointEmbedding,A lot of children clapping in the hands with a pink background.,{}
+vbs23-kis-t7,HTW,0,1673277555000,23466,192545.0,1.0,inf,inf,10000.0,TEXT,jointEmbedding,A boulder with a forest in the background. A bearded man in a cyan shirt climbing up the boulder. ,{}
+vbs23-kis-t7,HTW,0,1673277687000,155466,192545.0,1.0,inf,inf,10000.0,IMAGE,globalFeatures, video 14700 at 00:03:09.500 (Frame #5679),{}
+vbs23-kis-v5,HTW,0,1673278576000,29759,44588.0,9.0,22.0,22.0,10000.0,TEXT,jointEmbedding,A small river running trough white stone and trees.,{}
+vbs23-kis-v5,HTW,1,1673278576000,29759,44588.0,9.0,22.0,22.0,10000.0,IMAGE,globalFeatures, video 01831 at 00:06:39.500 (Frame #9987),{}
+vbs23-kis-v6,HTW,0,1673278899000,11891,,97.0,inf,inf,10000.0,TEXT,jointEmbedding,Yellow paraglider in the sky with mountains below.,{}
+vbs23-kis-v6,HTW,0,1673278922000,34891,,124.0,389.0,389.0,10000.0,TEXT,jointEmbedding,Yellow paraglider in the sky with mountains below and clouds,{}
+vbs23-kis-v6,HTW,0,1673278935000,47891,,134.0,414.0,414.0,10000.0,TEXT,jointEmbedding,Yellow blue  paraglider in the sky with mountains below and clouds,{}
+vbs23-kis-v6,HTW,0,1673278947000,59891,,89.0,266.0,266.0,10000.0,TEXT,jointEmbedding,Yellow blue  paraglider in the sky with mountains below,{}
+vbs23-kis-v6,HTW,0,1673278976000,88891,,730.0,inf,inf,10000.0,IMAGE,globalFeatures, video 03293 at 00:00:09.500 (Frame #228),{}
+vbs23-kis-v6,HTW,0,1673278980000,92891,,675.0,inf,inf,10000.0,IMAGE,globalFeatures, video 03293 at 00:00:09.500 (Frame #228),{}
+vbs23-kis-v6,HTW,0,1673278981000,93891,,182.0,804.0,804.0,10000.0,IMAGE,globalFeatures, video 03293 at 00:00:09.500 (Frame #228),{}
+vbs23-kis-v6,HTW,0,1673278997000,109891,,475.0,1489.0,1489.0,10000.0,IMAGE,globalFeatures, video 03293 at 00:00:09.500 (Frame #228),{}
+vbs23-kis-v6,HTW,0,1673279014000,126891,,120.0,inf,inf,10000.0,IMAGE,globalFeatures, video 12735 at 00:10:26.500 (Frame #15662),{}
+vbs23-kis-v6,HTW,0,1673279017000,129891,,111.0,111.0,111.0,10000.0,IMAGE,globalFeatures, video 12735 at 00:10:26.500 (Frame #15662),{}
+vbs23-kis-v6,HTW,1,1673279017000,129891,,111.0,111.0,111.0,10000.0,IMAGE,globalFeatures, video 13993 at 00:03:21.500 (Frame #5037),{}
+vbs23-kis-v6,HTW,0,1673279025000,137891,,147.0,761.0,761.0,10000.0,IMAGE,globalFeatures, video 12735 at 00:10:26.500 (Frame #15662),{}
+vbs23-kis-v6,HTW,0,1673279031000,143891,,55.0,299.0,299.0,10000.0,IMAGE,globalFeatures, video 12735 at 00:10:26.500 (Frame #15662),{}
+vbs23-kis-v6,HTW,0,1673279070000,182891,,427.0,inf,454.0,10000.0,IMAGE,globalFeatures, video 08379 at 00:02:24.000 (Frame #4315),{}
+vbs23-kis-v6,HTW,0,1673279082000,194891,,898.0,inf,898.0,10000.0,IMAGE,globalFeatures, video 08379 at 00:02:35.500 (Frame #4660),{}
+vbs23-kis-v6,HTW,0,1673279095000,207891,,1331.0,inf,inf,10000.0,IMAGE,globalFeatures, video 08379 at 00:02:35.500 (Frame #4660),{}
+vbs23-kis-v6,HTW,0,1673279096000,208891,,2859.0,7001.0,7001.0,10000.0,IMAGE,globalFeatures, video 08379 at 00:02:35.500 (Frame #4660),{}
+vbs23-kis-v6,HTW,0,1673279097000,209891,,297.0,inf,4923.0,10000.0,IMAGE,globalFeatures, video 08379 at 00:02:35.500 (Frame #4660),{}
+vbs23-kis-v6,HTW,0,1673279098000,210891,,927.0,inf,inf,10000.0,IMAGE,globalFeatures, video 08379 at 00:02:35.500 (Frame #4660),{}
+vbs23-kis-v6,HTW,0,1673279099000,211891,,943.0,inf,inf,10000.0,IMAGE,globalFeatures, video 08379 at 00:02:35.500 (Frame #4660),{}
+vbs23-kis-v6,HTW,0,1673279116000,228891,,144.0,374.0,374.0,10000.0,IMAGE,globalFeatures, video 08379 at 00:02:35.500 (Frame #4660),{}
+vbs23-kis-v6,HTW,0,1673279121000,233891,,592.0,inf,4795.0,10000.0,IMAGE,globalFeatures, video 08379 at 00:02:35.500 (Frame #4660),{}
+vbs23-kis-v6,HTW,0,1673279167000,279891,,12.0,12.0,12.0,10000.0,IMAGE,globalFeatures, video 07385 at 00:07:18.000 (Frame #10950),{}
+vbs23-kis-v6,HTW,0,1673279184000,296891,,2.0,19.0,19.0,10000.0,IMAGE,globalFeatures, video 07385 at 00:02:24.000 (Frame #3600),{}
+vbs23-kis-v6,HTW,1,1673279184000,296891,,2.0,19.0,19.0,10000.0,IMAGE,globalFeatures, video 06651 at 00:00:50.000 (Frame #1498),{}
+vbs23-kis-v1,HTW,1,1673259631000,17687,43981.0,1429.0,1429.0,1429.0,10000.0,TEXT,jointEmbedding,guy in blue shirt performing a backflip,{}
+vbs23-kis-v1,HTW,1,1673259639000,25687,43981.0,172.0,172.0,172.0,10000.0,TEXT,jointEmbedding,guy in blue shirt performing a backflip in a sports arena,{}
+vbs23-kis-t1,HTW,1,1673260403000,30139,36751.0,1.0,1.0,1.0,10000.0,TEXT,jointEmbedding,kids in kayaks on a river throwing paddles trough colored hoops,{}
+vbs23-kis-t2,HTW,1,1673260921000,24356,26109.0,2.0,2.0,2.0,10000.0,TEXT,jointEmbedding,hands applying glue to an egg carton,{}
+vbs23-kis-v1,HTW,1,1673259653000,39687,43981.0,27.0,27.0,27.0,10000.0,TEXT,jointEmbedding,guy in blue shirt in a sports arena,{}
+vbs23-kis-t5,HTW,1,1673262924000,97388,149663.0,2.0,76.0,76.0,10000.0,TEXT,jointEmbedding,bride with blue bow around her waist,{}
+vbs23-kis-v6,HTW,1,1673279091000,203891,,444.0,487.0,444.0,10000.0,IMAGE,globalFeatures, video 06798 at 00:03:56.500 (Frame #7087),{}
+vbs23-kis-t3,HTW,1,1673261468000,66701,394938.0,218.0,218.0,218.0,10000.0,TEXT,jointEmbedding,a view trough the glass roof of a elevator while it is moving upwards,{}
+vbs23-kis-t3,HTW,1,1673261552000,150701,394938.0,32.0,32.0,32.0,10000.0,TEXT,jointEmbedding,glass lift and wires,{}
+vbs23-kis-t3,HTW,1,1673261563000,161701,394938.0,14.0,14.0,14.0,10000.0,TEXT,jointEmbedding,glass lift and wires view from inside,{}
+vbs23-kis-t3,HTW,1,1673261597000,195701,394938.0,1774.0,1774.0,1774.0,10000.0,TEXT,jointEmbedding,view from a glass lift moving up,{}
+vbs23-kis-t3,HTW,1,1673261625000,223701,394938.0,340.0,340.0,340.0,10000.0,IMAGE,globalFeatures, video 00268 at 00:04:15.500 (Frame #7657),{}
+vbs23-kis-t3,HTW,1,1673261655000,253701,394938.0,2241.0,2241.0,2241.0,10000.0,IMAGE,globalFeatures, video 00268 at 00:04:17.000 (Frame #7702),{}
+vbs23-kis-t3,HTW,1,1673261659000,257701,394938.0,75.0,75.0,75.0,10000.0,IMAGE,globalFeatures, video 14479 at 00:05:31.000 (Frame #8275),{}
+vbs23-kis-t3,HTW,1,1673261678000,276701,394938.0,12.0,12.0,12.0,10000.0,IMAGE,globalFeatures, video 01548 at 00:01:58.000 (Frame #3536),{}
+vbs23-kis-t3,HTW,1,1673261717000,315701,394938.0,50.0,50.0,50.0,10000.0,IMAGE,globalFeatures, video 01548 at 00:01:58.000 (Frame #3536),{}
+vbs23-kis-t3,HTW,1,1673261789000,387701,394938.0,31.0,31.0,31.0,10000.0,IMAGE,globalFeatures, video 01548 at 00:01:58.000 (Frame #3536),{}
+vbs23-kis-t4,HTW,1,1673262346000,23245,155274.0,46.0,inf,inf,10000.0,TEXT,jointEmbedding,a two masted sailing ship leaving the harbour,{}
+vbs23-kis-t4,HTW,1,1673262356000,33245,155274.0,28.0,28.0,28.0,10000.0,TEXT,jointEmbedding,a two masted sailing ship leaving the harbour next to a stonewall,{}
+vbs23-kis-t4,HTW,1,1673262430000,107245,155274.0,inf,inf,inf,10000.0,IMAGE,globalFeatures, video 06918 at 00:21:45.500 (Frame #32637),{}
+vbs23-kis-t4,HTW,1,1673262435000,112245,155274.0,4045.0,4045.0,4045.0,10000.0,IMAGE,globalFeatures, video 06918 at 00:21:42.500 (Frame #32562),{}
+vbs23-kis-t4,HTW,1,1673262447000,124245,155274.0,28.0,28.0,28.0,10000.0,IMAGE,globalFeatures, video 06918 at 00:21:42.500 (Frame #32562),{}
+vbs23-kis-t4,HTW,1,1673262463000,140245,155274.0,13.0,13.0,13.0,10000.0,IMAGE,globalFeatures, video 06918 at 00:21:42.500 (Frame #32562),{}
+vbs23-kis-t5,HTW,1,1673262857000,30388,149663.0,760.0,1095.0,1095.0,10000.0,TEXT,jointEmbedding,wedding party grouped around bride and groom,{}
+vbs23-kis-t5,HTW,1,1673262870000,43388,149663.0,284.0,284.0,284.0,10000.0,TEXT,jointEmbedding,bride and groom walking and crowd is following,{}
+vbs23-kis-t6,HTW,1,1673264177000,13626,29069.0,1234.0,1234.0,1234.0,10000.0,TEXT,jointEmbedding,two people and wall with posters,{}
+vbs23-kis-t6,HTW,1,1673264184000,20626,29069.0,16.0,16.0,16.0,10000.0,TEXT,jointEmbedding,balcony with laundry ,{}
+vbs23-kis-v-m1,HTW,1,1673270896000,21145,26522.0,189.0,inf,189.0,10000.0,IMAGE,globalFeatures, video Tulamben2_Jun2022_0009 at 00:01:39.000 (Frame #2967),{}
+vbs23-kis-v-m2,HTW,1,1673271268000,17638,45672.0,11.0,183.0,15.0,10000.0,TEXT,jointEmbedding,a diver in front of red rock,{}
+vbs23-kis-v-m2,HTW,1,1673271280000,29638,45672.0,1.0,4.0,4.0,10000.0,IMAGE,globalFeatures, video Molok,{}
+vbs23-kis-v-m3,HTW,1,1673271639000,15343,24472.0,3.0,6.0,6.0,10000.0,TEXT,jointEmbedding,black and white dotted snake hiding ,{}
+vbs23-kis-v-m4,HTW,1,1673272419000,45815,211429.0,505.0,505.0,505.0,10000.0,TEXT,jointEmbedding,fishes over corals,{}
+vbs23-kis-v-m4,HTW,1,1673272427000,53815,211429.0,393.0,393.0,393.0,10000.0,TEXT,jointEmbedding,fishes over corals with blue water,{}
+vbs23-kis-v-m4,HTW,1,1673272445000,71815,211429.0,508.0,508.0,508.0,10000.0,TEXT,jointEmbedding,manz fishes over red corals ,{}
+vbs23-kis-v-m4,HTW,1,1673272457000,83815,211429.0,203.0,203.0,203.0,10000.0,IMAGE,globalFeatures, video Manza_Feb2020_0039 at 00:00:03.000 (Frame #90),{}
+vbs23-kis-v-m4,HTW,1,1673272461000,87815,211429.0,1355.0,1602.0,1602.0,10000.0,IMAGE,globalFeatures, video Manza_Feb2020_0002 at 00:00:01.500 (Frame #45),{}
+vbs23-kis-v-m4,HTW,1,1673272473000,99815,211429.0,1608.0,4784.0,4784.0,10000.0,TEXT,jointEmbedding,red corals,{}
+vbs23-kis-v-m4,HTW,1,1673272504000,130815,211429.0,636.0,893.0,893.0,10000.0,TEMPORAL,text > text,manz fishes over red corals   >  red corals,{}
+vbs23-kis-v-m4,HTW,1,1673272520000,146815,211429.0,717.0,945.0,945.0,10000.0,TEMPORAL,text > text,manz fishes over red corals   >  red corals,{}
+vbs23-kis-v-m4,HTW,1,1673272531000,157815,211429.0,381.0,381.0,381.0,10000.0,TEMPORAL,text > text,manz fishes over red corals   >  red corals,{}
+vbs23-kis-v-m4,HTW,1,1673272542000,168815,211429.0,450.0,637.0,637.0,10000.0,TEMPORAL,text > text,manz fishes over red corals   >  red corals,{}
+vbs23-kis-v-m4,HTW,1,1673272543000,169815,211429.0,484.0,667.0,667.0,10000.0,TEMPORAL,text > text,manz fishes over red corals   >  red corals,{}
+vbs23-kis-v-m4,HTW,1,1673272544000,170815,211429.0,477.0,682.0,682.0,10000.0,TEMPORAL,text > text,manz fishes over red corals   >  red corals,{}
+vbs23-kis-v-m4,HTW,1,1673272545000,171815,211429.0,521.0,711.0,711.0,10000.0,TEMPORAL,text > text,manz fishes over red corals   >  red corals,{}
+vbs23-kis-v-m4,HTW,1,1673272568000,194815,211429.0,453.0,610.0,610.0,10000.0,TEMPORAL,text > text,manz fishes over red corals   >  red corals,{}
+vbs23-kis-v-m5,HTW,1,1673272763000,9710,53485.0,346.0,346.0,346.0,10000.0,TEXT,jointEmbedding,diver looking up,{}
+vbs23-kis-v-m5,HTW,1,1673272768000,14710,53485.0,141.0,141.0,141.0,10000.0,IMAGE,globalFeatures, video PhuQuoc1_Jun2022_0051 at 00:01:30.500 (Frame #2712),{}
+vbs23-kis-v-m5,HTW,1,1673272773000,19710,53485.0,126.0,126.0,126.0,10000.0,IMAGE,globalFeatures, video NusaPenida_Jul2022_0098 at 00:00:10.000 (Frame #299),{}
+vbs23-kis-v-m5,HTW,1,1673272790000,36710,53485.0,53.0,53.0,53.0,10000.0,IMAGE,globalFeatures, video NusaPenida_Jul2022_0098 at 00:00:12.500 (Frame #374),{}
+vbs23-kis-v-m7,HTW,1,1673273137000,14632,23330.0,1.0,3.0,1.0,10000.0,TEXT,jointEmbedding,light shining on sea star,{}
+vbs23-kis-v2,HTW,1,1673276014000,17852,52840.0,1679.0,6116.0,1679.0,10000.0,TEXT,jointEmbedding,woman getting her hair done next to a lamp,{}
+vbs23-kis-v2,HTW,1,1673276023000,26852,52840.0,5056.0,5056.0,5056.0,10000.0,IMAGE,globalFeatures, video 13034 at 00:01:29.000 (Frame #2133),{}
+vbs23-kis-v2,HTW,1,1673276044000,47852,52840.0,7383.0,9850.0,7383.0,10000.0,IMAGE,globalFeatures, video 13034 at 00:01:29.000 (Frame #2133),{}
+vbs23-kis-v3,HTW,1,1673276417000,10129,59711.0,233.0,inf,233.0,10000.0,TEXT,jointEmbedding,woman in paper mask,{}
+vbs23-kis-v3,HTW,1,1673276426000,19129,59711.0,170.0,inf,575.0,10000.0,TEXT,jointEmbedding,woman in beaty mask,{}
+vbs23-kis-v3,HTW,1,1673276436000,29129,59711.0,2.0,6025.0,30.0,10000.0,TEXT,jointEmbedding,woman in spa mask,{}
+vbs23-kis-v3,HTW,1,1673276449000,42129,59711.0,3.0,inf,39.0,10000.0,TEXT,jointEmbedding,woman in beauty mask,{}
+vbs23-kis-v3,HTW,1,1673276452000,45129,59711.0,24.0,1815.0,26.0,10000.0,IMAGE,globalFeatures, video 12716 at 00:00:18.500 (Frame #462),{}
+vbs23-kis-v3,HTW,1,1673276461000,54129,59711.0,inf,inf,inf,10000.0,TEXT,jointEmbedding,magayine,{}
+vbs23-kis-v4,HTW,1,1673277198000,20787,26165.0,10.0,10.0,10.0,10000.0,TEXT,jointEmbedding,3 children dancing in front of big group of children,{}
+vbs23-kis-t7,HTW,1,1673277579000,47466,192545.0,1.0,inf,inf,10000.0,TEXT,jointEmbedding,a bearded man in cyan shirt climbingup a boulder with a forest in the background,{}
+vbs23-kis-t7,HTW,1,1673277584000,52466,192545.0,1.0,inf,inf,10000.0,TEXT,jointEmbedding,a bearded man in cyan shirt climbing up a boulder with a forest in the background,{}
+vbs23-kis-t7,HTW,1,1673277614000,82466,192545.0,1.0,inf,inf,10000.0,IMAGE,globalFeatures, video 14700 at 00:03:01.000 (Frame #5424),{}
+vbs23-kis-t7,HTW,1,1673277640000,108466,192545.0,1.0,inf,inf,10000.0,IMAGE,globalFeatures, video 14700 at 00:03:01.000 (Frame #5424),{}
+vbs23-kis-t7,HTW,1,1673277674000,142466,192545.0,1.0,inf,inf,10000.0,IMAGE,globalFeatures, video 14700 at 00:03:01.000 (Frame #5424),{}
+vbs23-kis-t7,HTW,1,1673277705000,173466,192545.0,2.0,inf,inf,10000.0,IMAGE,globalFeatures, video 14700 at 00:03:01.000 (Frame #5424),{}
+vbs23-kis-t7,HTW,1,1673277724000,192466,192545.0,35.0,inf,inf,10000.0,TEXT,jointEmbedding,"view from above, man with beard climbing up boulder",{}
+vbs23-kis-v5,HTW,1,1673278562000,15759,44588.0,36.0,inf,54.0,10000.0,TEXT,jointEmbedding,shot of river with white sand,{}
+vbs23-kis-v5,HTW,1,1673278568000,21759,44588.0,123.0,415.0,415.0,10000.0,IMAGE,globalFeatures, video 09050 at 00:01:07.000 (Frame #1675),{}
+vbs23-kis-v5,HTW,1,1673278585000,38759,44588.0,1.0,inf,inf,10000.0,IMAGE,globalFeatures, video 08144 at 00:02:24.500 (Frame #3612),{}
+vbs23-kis-v6,HTW,1,1673278900000,12891,,355.0,inf,inf,10000.0,TEXT,jointEmbedding,yellow paraglider,{}
+vbs23-kis-v6,HTW,1,1673278908000,20891,,68.0,261.0,261.0,10000.0,TEXT,jointEmbedding,yellow paraglider over mountains,{}
+vbs23-kis-v6,HTW,1,1673278915000,27891,,8.0,inf,inf,10000.0,IMAGE,globalFeatures, video 06527 at 00:02:21.000 (Frame #3525),{}
+vbs23-kis-v6,HTW,1,1673278932000,44891,,119.0,359.0,359.0,10000.0,IMAGE,globalFeatures, video 06527 at 00:02:21.000 (Frame #3525),{}
+vbs23-kis-v6,HTW,1,1673278973000,85891,,129.0,422.0,422.0,10000.0,IMAGE,globalFeatures, video 06527 at 00:02:21.000 (Frame #3525),{}
+vbs23-kis-v6,HTW,1,1673278979000,91891,,119.0,359.0,359.0,10000.0,IMAGE,globalFeatures, video 06527 at 00:02:21.000 (Frame #3525),{}
+vbs23-kis-v6,HTW,1,1673278990000,102891,,129.0,422.0,422.0,10000.0,IMAGE,globalFeatures, video 06527 at 00:02:21.000 (Frame #3525),{}
+vbs23-kis-v6,HTW,1,1673279039000,151891,,8.0,36.0,36.0,10000.0,IMAGE,globalFeatures, video 07852 at 00:05:56.500 (Frame #8912),{}
+vbs23-kis-v6,HTW,1,1673279076000,188891,,355.0,inf,inf,10000.0,IMAGE,globalFeatures, video 07852 at 00:05:56.500 (Frame #8912),{}
+vbs23-kis-v6,HTW,1,1673279107000,219891,,243.0,268.0,243.0,10000.0,IMAGE,globalFeatures, video 07660 at 00:01:38.000 (Frame #2937),{}
+vbs23-kis-v6,HTW,1,1673279112000,224891,,245.0,270.0,245.0,10000.0,IMAGE,globalFeatures, video 07660 at 00:01:38.000 (Frame #2937),{}
+vbs23-kis-v6,HTW,1,1673279113000,225891,,246.0,271.0,246.0,10000.0,IMAGE,globalFeatures, video 07660 at 00:01:38.000 (Frame #2937),{}
+vbs23-kis-v6,HTW,1,1673279134000,246891,,44.0,inf,44.0,10000.0,IMAGE,globalFeatures, video 06651 at 00:02:18.000 (Frame #4135),{}
+vbs23-kis-v6,HTW,1,1673279166000,278891,,177.0,665.0,665.0,10000.0,TEXT,jointEmbedding,paraglider starting flying over mountains with sun and clouds in the background,{}

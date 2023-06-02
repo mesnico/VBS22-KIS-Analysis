@@ -1,6 +1,7 @@
 __pycache__
 
 cache
-team_logs
+processed/team_logs/2022
+data/**/team_logs
 V3C_dataset*
 data/cineast_segment.json

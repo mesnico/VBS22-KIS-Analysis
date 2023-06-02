@@ -56,7 +56,7 @@ def process_team_logs(config, competition_data, force=False, teams_override=None
             team,
             max_records=10000, 
             use_cache=True, # FIXME: refactor cache in actual output! (cache should be the wanted output)
-            cache_path='cache/team_logs',
+            cache_path='processed/team_logs',
             force=force)
         logs[team] = team_log
 
